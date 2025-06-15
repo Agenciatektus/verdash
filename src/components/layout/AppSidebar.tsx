@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { 
   LayoutDashboard, 
@@ -14,7 +13,8 @@ import {
   Plug,
   MessageCircle,
   LogOut,
-  CreditCard
+  CreditCard,
+  Database
 } from "lucide-react";
 import { NavLink, useLocation } from "react-router-dom";
 import {
@@ -38,6 +38,7 @@ const mainNavigation = [
   { title: "Projetos", url: "/projects", icon: FolderOpen },
   { title: "Dashboards", url: "/dashboards", icon: Brain },
   { title: "Métricas & KPIs", url: "/metrics", icon: Ruler },
+  { title: "Admin de Dados", url: "/data-admin", icon: Database },
   { title: "Verdash IA", url: "/verdash-ai", icon: Brain },
   { title: "Integrações", url: "/integrations", icon: Plug },
   { title: "Clientes", url: "/clients", icon: Users },

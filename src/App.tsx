@@ -1,4 +1,3 @@
-
 import { useEffect } from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
@@ -21,6 +20,7 @@ import Billing from "./pages/Billing";
 import NotFound from "./pages/NotFound";
 import { AppLayout } from "./components/layout/AppLayout";
 import { AuthProvider } from "./contexts/AuthContext";
+import DataAdmin from "./pages/DataAdmin";
 
 const queryClient = new QueryClient();
 
@@ -48,6 +48,7 @@ const App = () => {
                       <Route path="/projects" element={<Projects />} />
                       <Route path="/dashboards" element={<Dashboards />} />
                       <Route path="/metrics" element={<Metrics />} />
+                      <Route path="/data-admin" element={<DataAdmin />} />
                       <Route path="/verdash-ai" element={<VerdashAI />} />
                       <Route path="/integrations" element={<Integrations />} />
                       <Route path="/clients" element={<Clients />} />

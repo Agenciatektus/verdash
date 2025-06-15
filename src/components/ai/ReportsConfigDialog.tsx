@@ -7,7 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { Badge } from "@/components/ui/badge";
-import { Plus, X, Settings, FileText, Mail, Calendar } from "lucide-react";
+import { X, Settings, FileText, Mail, Calendar } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 
@@ -201,21 +201,16 @@ export function ReportsConfigDialog() {
                 Destinatários
               </FormLabel>
               
-              <div className="flex gap-2">
-                <Input
-                  placeholder="email@exemplo.com, outro@exemplo.com"
-                  value={newRecipient}
-                  onChange={(e) => setNewRecipient(e.target.value)}
-                  className="verdash-input flex-1"
-                  onKeyPress={(e) => e.key === 'Enter' && (e.preventDefault(), addRecipients())}
-                />
-                <Button type="button" onClick={addRecipients} size="sm" className="verdash-btn-secondary">
-                  <Plus className="w-4 h-4" />
-                </Button>
-              </div>
+              <Input
+                placeholder="email@exemplo.com, outro@exemplo.com"
+                value={newRecipient}
+                onChange={(e) => setNewRecipient(e.target.value)}
+                className="verdash-input"
+                onKeyPress={(e) => e.key === 'Enter' && (e.preventDefault(), addRecipients())}
+              />
 
               <p className="text-xs text-white/50">
-                Separe múltiplos e-mails por vírgula
+                Separe múltiplos e-mails por vírgula e pressione Enter para adicionar
               </p>
 
               {recipients.length > 0 && (

@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -7,6 +6,7 @@ import { Brain, Lightbulb, Bell, BarChart3, Zap, TrendingUp, FileText, MessageCi
 import { InsightCard } from "@/components/ai/InsightCard";
 import { AIChat } from "@/components/ai/AIChat";
 import { AlertsPanel } from "@/components/ai/AlertsPanel";
+import { ReportsConfigDialog } from "@/components/ai/ReportsConfigDialog";
 import { Insight, Alert, AIRecommendation } from "@/types/ai";
 
 // Mock data
@@ -138,14 +138,14 @@ export default function VerdashAI() {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-4xl font-bold text-white font-grotesk uppercase tracking-wide verdash-glow-text">
+          <h1 className="text-4xl font-bold text-white font-grotesk uppercase tracking-wide">
             Verdash IA
           </h1>
           <p className="text-white/70 mt-2 font-inter">
             Seu copiloto inteligente de dados • Transforme números em decisões
           </p>
         </div>
-        <Badge className="bg-gradient-to-r from-verdash-cyan to-verdash-coral text-white px-4 py-2">
+        <Badge className="bg-gradient-to-r from-emerald-400 to-cyan-400 text-gray-900 px-4 py-2 font-semibold">
           <Zap className="w-4 h-4 mr-2" />
           Plano Engage+
         </Badge>
@@ -314,14 +314,12 @@ export default function VerdashAI() {
 
       {activeTab === 'reports' && (
         <div className="text-center py-12">
-          <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-gradient-to-r from-verdash-cyan to-verdash-coral flex items-center justify-center">
-            <FileText className="w-8 h-8 text-white" />
+          <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-gradient-to-r from-emerald-400 to-cyan-400 flex items-center justify-center">
+            <FileText className="w-8 h-8 text-gray-900" />
           </div>
           <h3 className="text-xl font-bold text-white mb-2">Relatórios Inteligentes</h3>
-          <p className="text-white/70 mb-6">Em breve: relatórios automáticos diários, semanais e mensais</p>
-          <Button className="verdash-btn-primary">
-            Configurar Relatórios
-          </Button>
+          <p className="text-white/70 mb-6">Configure relatórios automáticos diários, semanais e mensais</p>
+          <ReportsConfigDialog />
         </div>
       )}
     </div>

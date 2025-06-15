@@ -49,7 +49,7 @@ export const PlanCard = ({ plan, currentPlan, onSelectPlan, loading }: PlanCardP
         </CardTitle>
         <CardDescription className="text-white/70">
           <span className="text-4xl font-bold text-white">
-            {plan.price === 0 ? 'Grátis' : `R$ ${plan.price}`}
+            {plan.price === 0 ? 'Sob consulta' : `R$ ${plan.price}`}
           </span>
           {plan.price > 0 && (
             <span className="text-sm">/{plan.interval === 'monthly' ? 'mês' : 'ano'}</span>

@@ -10,7 +10,7 @@ import { SidebarBottomNav } from "./sidebar/SidebarBottomNav";
 
 export function AppSidebar() {
   return (
-    <Sidebar className="border-r border-verdash-divider/30" collapsible="icon" variant="inset">
+    <Sidebar className="border-r border-verdash-divider/30" collapsible="icon">
       <SidebarContent className="bg-verdash-dark">
         <SidebarHeader />
         <SidebarNavigation />

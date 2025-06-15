@@ -1,10 +1,9 @@
-
 import { AppSidebar } from "./AppSidebar";
 import { Header } from "./Header";
 import { useAuth } from "@/contexts/AuthContext";
 import { Navigate } from "react-router-dom";
 import { Skeleton } from "@/components/ui/skeleton";
-import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
+import { SidebarProvider } from "@/components/ui/sidebar";
 
 interface AppLayoutProps {
   children: React.ReactNode;
@@ -33,12 +32,12 @@ export const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
     <SidebarProvider>
       <div className="flex w-full min-h-screen">
         <AppSidebar />
-        <SidebarInset className="flex-1">
+        <div className="flex-1 flex flex-col bg-background">
           <Header />
           <main className="flex-1 p-6 overflow-auto">
             {children}
           </main>
-        </SidebarInset>
+        </div>
       </div>
     </SidebarProvider>
   );

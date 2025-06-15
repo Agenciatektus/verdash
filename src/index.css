@@ -1,11 +1,11 @@
 
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700;800&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* Verdash Design System */
+/* Verdash Design System - Enhanced */
 
 @layer base {
   :root {
@@ -22,11 +22,16 @@
     --verdash-success: 0 255 133; /* #00FF85 */
     --verdash-info: 0 174 239; /* #00AEEF */
     
+    /* Auxiliary Colors */
+    --verdash-divider: 42 46 66; /* #2A2E42 */
+    --verdash-disabled: 122 122 122; /* #7A7A7A */
+    --verdash-input-bg: 22 26 48; /* #161A30 */
+    
     /* Semantic Colors for Dark Theme */
     --background: var(--verdash-dark);
     --foreground: var(--verdash-white);
 
-    --card: 15 20 35; /* Slightly lighter than background */
+    --card: 15 20 35; /* Slightly lighter than background for glassmorphism */
     --card-foreground: var(--verdash-white);
 
     --popover: var(--verdash-dark);
@@ -47,9 +52,9 @@
     --destructive: var(--verdash-error);
     --destructive-foreground: var(--verdash-white);
 
-    --border: 30 40 60;
-    --input: 25 35 55;
-    --ring: var(--verdash-blue);
+    --border: var(--verdash-divider);
+    --input: var(--verdash-input-bg);
+    --ring: var(--verdash-cyan);
 
     --radius: 0.75rem;
 
@@ -58,10 +63,10 @@
     --sidebar-foreground: var(--verdash-white);
     --sidebar-primary: var(--verdash-blue);
     --sidebar-primary-foreground: var(--verdash-white);
-    --sidebar-accent: 20 25 40;
+    --sidebar-accent: var(--verdash-input-bg);
     --sidebar-accent-foreground: var(--verdash-white);
-    --sidebar-border: 25 35 55;
-    --sidebar-ring: var(--verdash-blue);
+    --sidebar-border: var(--verdash-divider);
+    --sidebar-ring: var(--verdash-cyan);
   }
 }
 
@@ -72,94 +77,278 @@
 
   body {
     @apply bg-background text-foreground;
-    font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+    font-family: 'Space Grotesk', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
     font-feature-settings: "rlig" 1, "calt" 1;
+    line-height: 1.6;
   }
 
   h1, h2, h3, h4, h5, h6 {
-    font-family: 'Plus Jakarta Sans', sans-serif;
-    font-weight: 600;
+    font-family: 'Space Grotesk', 'Inter', sans-serif;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.025em;
+  }
+
+  h1 {
+    @apply text-4xl;
+  }
+
+  h2 {
+    @apply text-2xl;
+  }
+
+  h3 {
+    @apply text-xl;
   }
 }
 
 @layer components {
   /* Verdash Gradients */
   .verdash-gradient {
-    @apply bg-gradient-to-r from-[#1042F6] via-[#00FFB0] to-[#FF6F1B];
-  }
-  
-  .verdash-gradient-full {
-    @apply bg-gradient-to-r from-[#1042F6] via-[#00FFB0] via-[#FF6F1B] to-[#FF3871];
+    background: linear-gradient(135deg, #1042F6 0%, #00FFB0 25%, #FF6F1B 75%, #FF3871 100%);
   }
   
   .verdash-gradient-hover {
-    @apply hover:bg-gradient-to-r hover:from-[#1042F6] hover:via-[#00FFB0] hover:to-[#FF6F1B] hover:brightness-110;
+    background: linear-gradient(135deg, #1042F6 0%, #00FFB0 50%, #FF6F1B 100%);
+    filter: brightness(1.1);
   }
   
-  /* Verdash Cards */
-  .verdash-card {
-    @apply bg-card/80 backdrop-blur-sm border border-border/50 rounded-xl shadow-lg;
+  .verdash-gradient-glow {
+    background: linear-gradient(135deg, #1042F6 0%, #00FFB0 25%, #FF6F1B 75%, #FF3871 100%);
+    box-shadow: 0 0 20px rgba(16, 66, 246, 0.3), 0 0 40px rgba(0, 255, 176, 0.2);
   }
-  
-  .verdash-card-hover {
-    @apply hover:shadow-xl hover:border-border/70 transition-all duration-300;
-  }
-  
-  /* Verdash Glass Effect */
+
+  /* Glassmorphism Cards */
   .verdash-glass {
-    @apply bg-background/10 backdrop-blur-md border border-white/10 rounded-xl;
+    background: rgba(10, 14, 30, 0.6);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.4);
+  }
+  
+  .verdash-glass-hover {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  .verdash-glass-hover:hover {
+    transform: scale(1.02);
+    box-shadow: 0 8px 50px rgba(0, 0, 0, 0.6), 0 0 30px rgba(16, 66, 246, 0.2);
+    border-color: rgba(0, 255, 176, 0.3);
   }
 
-  /* Verdash Buttons */
+  /* Buttons Enhanced */
   .verdash-btn-primary {
-    @apply verdash-gradient text-white font-semibold px-6 py-2.5 rounded-lg hover:brightness-110 transition-all duration-200;
+    @apply verdash-gradient text-white font-semibold px-6 py-3 rounded-xl shadow-lg;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
   }
 
-  /* Verdash KPI Cards */
+  .verdash-btn-primary:hover {
+    transform: scale(1.03);
+    filter: brightness(1.15);
+    box-shadow: 0 0 25px rgba(16, 66, 246, 0.4), 0 0 50px rgba(0, 255, 176, 0.3);
+  }
+
+  .verdash-btn-primary:active {
+    transform: scale(0.98);
+  }
+
+  .verdash-btn-secondary {
+    @apply bg-transparent border-2 text-white font-semibold px-6 py-3 rounded-xl;
+    border-image: linear-gradient(135deg, #1042F6 0%, #00FFB0 25%, #FF6F1B 75%, #FF3871 100%) 1;
+    background: linear-gradient(135deg, #1042F6 0%, #00FFB0 25%, #FF6F1B 75%, #FF3871 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .verdash-btn-secondary:hover {
+    background: rgba(22, 26, 48, 0.9);
+    -webkit-text-fill-color: white;
+    transform: scale(1.03);
+  }
+
+  /* Input Fields Enhanced */
+  .verdash-input {
+    @apply bg-[#161A30] border border-[#2A2E42] text-white placeholder-[#7A7A7A] rounded-xl px-4 py-3;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .verdash-input:focus {
+    outline: none;
+    border-color: #00FFB0;
+    box-shadow: 0 0 0 2px rgba(0, 255, 176, 0.2), 0 0 15px rgba(0, 255, 176, 0.3);
+  }
+
+  /* Sidebar Enhanced */
+  .verdash-sidebar-item {
+    @apply flex items-center gap-3 px-4 py-3 rounded-xl text-white/80 hover:text-white transition-all duration-200;
+  }
+
+  .verdash-sidebar-item:hover {
+    background: rgba(22, 26, 48, 0.6);
+    box-shadow: 0 0 15px rgba(0, 255, 176, 0.1);
+  }
+
+  .verdash-sidebar-item.active {
+    background: linear-gradient(90deg, rgba(16, 66, 246, 0.2) 0%, rgba(0, 255, 176, 0.2) 100%);
+    border-left: 3px solid;
+    border-image: linear-gradient(180deg, #1042F6 0%, #00FFB0 100%) 1;
+    color: white;
+    font-weight: 600;
+  }
+
+  /* KPI Cards */
   .verdash-kpi {
-    @apply bg-gradient-to-br from-card/50 to-card/30 border border-border/30 rounded-xl p-6 backdrop-blur-sm;
+    @apply verdash-glass p-6;
+    position: relative;
+    overflow: hidden;
   }
 
-  /* Verdash Animations */
+  .verdash-kpi::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, #1042F6 0%, #00FFB0 50%, #FF6F1B 100%);
+  }
+
+  /* Chart Tooltips */
+  .verdash-tooltip {
+    background: rgba(22, 26, 48, 0.95) !important;
+    border: 1px solid rgba(0, 255, 176, 0.3) !important;
+    border-radius: 8px !important;
+    box-shadow: 0 0 20px rgba(0, 255, 176, 0.2) !important;
+    color: white !important;
+    backdrop-filter: blur(8px);
+  }
+
+  /* Animations */
   .verdash-animate {
-    @apply transition-all duration-300 ease-out;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
-  /* Verdash Hover Effects */
   .verdash-hover-scale {
-    @apply transform hover:scale-105 transition-transform duration-200;
+    transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .verdash-hover-scale:hover {
+    transform: scale(1.02);
+  }
+
+  .verdash-pulse {
+    animation: verdash-pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+
+  .verdash-glow-text {
+    text-shadow: 0 0 10px rgba(0, 255, 176, 0.5);
+  }
+
+  /* Loading States */
+  .verdash-loading {
+    background: linear-gradient(90deg, 
+      rgba(16, 66, 246, 0.8) 0%, 
+      rgba(0, 255, 176, 0.8) 50%, 
+      rgba(255, 111, 27, 0.8) 100%);
+    background-size: 200% 100%;
+    animation: verdash-gradient-shift 2s ease-in-out infinite;
   }
 }
 
-/* Custom Scrollbar with Verdash Theme */
+/* Custom Scrollbar Enhanced */
 ::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
+  width: 8px;
+  height: 8px;
 }
 
 ::-webkit-scrollbar-track {
-  background: hsl(var(--muted));
+  background: rgba(42, 46, 66, 0.3);
+  border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(45deg, hsl(var(--verdash-blue)), hsl(var(--verdash-cyan)));
-  border-radius: 3px;
+  background: linear-gradient(45deg, rgba(16, 66, 246, 0.8), rgba(0, 255, 176, 0.8));
+  border-radius: 4px;
+  transition: all 0.2s;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(45deg, hsl(var(--verdash-cyan)), hsl(var(--verdash-coral)));
+  background: linear-gradient(45deg, rgba(0, 255, 176, 0.9), rgba(255, 111, 27, 0.9));
+  box-shadow: 0 0 10px rgba(0, 255, 176, 0.3);
 }
 
-/* Verdash Loading Animation */
+/* Enhanced Animations */
 @keyframes verdash-pulse {
   0%, 100% {
-    background: linear-gradient(45deg, #1042F6, #00FFB0);
+    opacity: 1;
+    transform: scale(1);
   }
   50% {
-    background: linear-gradient(45deg, #00FFB0, #FF6F1B);
+    opacity: 0.8;
+    transform: scale(1.05);
   }
 }
 
-.verdash-loading {
-  animation: verdash-pulse 2s ease-in-out infinite;
+@keyframes verdash-gradient-shift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@keyframes verdash-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes verdash-scale-in {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Utility Classes */
+.animate-verdash-fade-in {
+  animation: verdash-fade-in 0.6s ease-out;
+}
+
+.animate-verdash-scale-in {
+  animation: verdash-scale-in 0.4s ease-out;
+}
+
+/* Focus States */
+*:focus-visible {
+  outline: 2px solid rgba(0, 255, 176, 0.6);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Selection */
+::selection {
+  background: rgba(0, 255, 176, 0.3);
+  color: white;
 }

@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -6,6 +7,7 @@ import { Brain, Lightbulb, Bell, BarChart3, Zap, TrendingUp, FileText, MessageCi
 import { InsightCard } from "@/components/ai/InsightCard";
 import { AIChat } from "@/components/ai/AIChat";
 import { AlertsPanel } from "@/components/ai/AlertsPanel";
+import { AlertConfigPanel } from "@/components/ai/AlertConfigPanel";
 import { ReportsConfigDialog } from "@/components/ai/ReportsConfigDialog";
 import { Insight, Alert, AIRecommendation } from "@/types/ai";
 
@@ -303,12 +305,13 @@ export default function VerdashAI() {
       )}
 
       {activeTab === 'alerts' && (
-        <div className="max-w-3xl mx-auto">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           <AlertsPanel 
             alerts={mockAlerts} 
             onDismiss={handleDismissAlert}
             onView={handleViewAlert}
           />
+          <AlertConfigPanel />
         </div>
       )}
 

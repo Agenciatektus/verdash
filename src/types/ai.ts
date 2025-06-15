@@ -71,3 +71,20 @@ export interface ConversationMessage {
     project?: string;
   };
 }
+
+export interface CustomAlert {
+  id: string;
+  name: string;
+  client: string;
+  metric: string;
+  status: 'active' | 'inactive';
+  conditions: string;
+  createdAt: string;
+  lastTriggered?: string;
+}
+
+export interface AlertFilter {
+  client: string;
+  status: 'all' | 'active' | 'inactive';
+  alertType: string;
+}

@@ -1,4 +1,5 @@
 
+
 import { 
   LayoutDashboard, 
   FolderOpen, 
@@ -42,7 +43,7 @@ export function SidebarNavigation() {
       : "verdash-sidebar-item";
 
   return (
-    <SidebarGroup className="px-6 py-6">
+    <SidebarGroup className="px-7 py-6">
       <SidebarGroupContent>
         <SidebarMenu className="space-y-3">
           {mainNavigation.map((item) => (
@@ -67,3 +68,4 @@ export function SidebarNavigation() {
     </SidebarGroup>
   );
 }
+

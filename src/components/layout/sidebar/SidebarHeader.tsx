@@ -1,7 +1,8 @@
 
+
 export function SidebarHeader() {
   return (
-    <div className="px-6 py-4 border-b border-verdash-divider/30">
+    <div className="px-7 py-4 border-b border-verdash-divider/30">
       <div className="flex items-center gap-3">
         <div className="w-10 h-10 rounded-xl bg-gradient-to-r from-verdash-primary to-verdash-cyan flex items-center justify-center shadow-lg shrink-0">
           <img 
@@ -18,3 +19,4 @@ export function SidebarHeader() {
     </div>
   );
 }
+

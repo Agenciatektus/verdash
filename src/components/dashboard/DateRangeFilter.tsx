@@ -7,18 +7,19 @@ import { CalendarIcon } from "lucide-react";
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
 import { cn } from "@/lib/utils";
+import { DateRange } from "react-day-picker";
 
 interface DateRangeFilterProps {
-  onRangeChange?: (range: { from?: Date; to?: Date }) => void;
+  onRangeChange?: (range: DateRange | undefined) => void;
 }
 
 export const DateRangeFilter = ({ onRangeChange }: DateRangeFilterProps) => {
-  const [dateRange, setDateRange] = useState<{ from?: Date; to?: Date }>({
+  const [dateRange, setDateRange] = useState<DateRange | undefined>({
     from: new Date(new Date().setDate(new Date().getDate() - 30)),
     to: new Date(),
   });
 
-  const handleRangeChange = (range: { from?: Date; to?: Date }) => {
+  const handleRangeChange = (range: DateRange | undefined) => {
     setDateRange(range);
     onRangeChange?.(range);
   };

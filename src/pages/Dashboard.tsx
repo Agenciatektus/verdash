@@ -284,7 +284,7 @@ const Dashboard = () => {
         {/* Filtros Globais */}
         <div className="space-y-4">
           <h2 className="text-lg font-semibold text-foreground font-grotesk">Filtros Globais</h2>
-          <div className="flex flex-wrap items-center gap-4 p-6 bg-card/20 rounded-xl border border-white/5 backdrop-blur-md">
+          <div className="flex flex-wrap items-center gap-4 p-6 bg-card/20 backdrop-blur-xl border border-white/8 rounded-2xl shadow-2xl">
             <div className="flex flex-col gap-2">
               <label className="text-sm font-medium text-muted-foreground">Período</label>
               <EnhancedDateRangeFilter />
@@ -293,7 +293,7 @@ const Dashboard = () => {
             <div className="flex flex-col gap-2">
               <label className="text-sm font-medium text-muted-foreground">Canal</label>
               <Select value={activeFilters.canal} onValueChange={(value) => setActiveFilters(prev => ({...prev, canal: value}))}>
-                <SelectTrigger className="w-[160px]">
+                <SelectTrigger className="w-[160px] border-0 bg-white/5 backdrop-blur-sm">
                   <SelectValue placeholder="Todos os canais" />
                 </SelectTrigger>
                 <SelectContent>
@@ -310,7 +310,7 @@ const Dashboard = () => {
             <div className="flex flex-col gap-2">
               <label className="text-sm font-medium text-muted-foreground">Time</label>
               <Select value={activeFilters.time} onValueChange={(value) => setActiveFilters(prev => ({...prev, time: value}))}>
-                <SelectTrigger className="w-[160px]">
+                <SelectTrigger className="w-[160px] border-0 bg-white/5 backdrop-blur-sm">
                   <SelectValue placeholder="Todos os times" />
                 </SelectTrigger>
                 <SelectContent>
@@ -325,7 +325,7 @@ const Dashboard = () => {
             <div className="flex flex-col gap-2">
               <label className="text-sm font-medium text-muted-foreground">Região</label>
               <Select value={activeFilters.regiao} onValueChange={(value) => setActiveFilters(prev => ({...prev, regiao: value}))}>
-                <SelectTrigger className="w-[160px]">
+                <SelectTrigger className="w-[160px] border-0 bg-white/5 backdrop-blur-sm">
                   <SelectValue placeholder="Todas as regiões" />
                 </SelectTrigger>
                 <SelectContent>
@@ -351,7 +351,7 @@ const Dashboard = () => {
 
         {/* 🏆 LINHA SUPERIOR - KPIs de Impacto e Saúde do Negócio */}
         {isWidgetVisible('kpis-impact') && (
-          <div className="space-y-6">
+          <div className="space-y-8 mt-12">
             <h2 className="text-2xl font-bold text-foreground font-grotesk flex items-center gap-3">
               <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-verdash-blue to-verdash-cyan flex items-center justify-center">
                 <Award className="w-5 h-5 text-white" />
@@ -443,7 +443,7 @@ const Dashboard = () => {
 
         {/* 📈 LINHA INTERMEDIÁRIA - Visão de Performance ao Longo do Tempo */}
         {isWidgetVisible('performance-charts') && (
-          <div className="space-y-6">
+          <div className="space-y-8 mt-16">
             <h2 className="text-2xl font-bold text-foreground font-grotesk flex items-center gap-3">
               <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-verdash-coral to-verdash-red flex items-center justify-center">
                 <BarChart3 className="w-5 h-5 text-white" />
@@ -566,6 +566,7 @@ const Dashboard = () => {
                           outerRadius={100}
                           paddingAngle={5}
                           dataKey="value"
+                          stroke="none"
                         >
                           {channelRevenue.map((entry, index) => (
                             <Cell key={`cell-${index}`} fill={entry.color} />
@@ -590,7 +591,7 @@ const Dashboard = () => {
         )}
 
         {/* 🔍 LINHA INFERIOR - Operações e Funil de Vendas */}
-        <div className="space-y-6">
+        <div className="space-y-8 mt-16">
           <h2 className="text-2xl font-bold text-foreground font-grotesk flex items-center gap-3">
             <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-verdash-red to-verdash-coral flex items-center justify-center">
               <Target className="w-5 h-5 text-white" />

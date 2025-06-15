@@ -27,7 +27,6 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-  SidebarTrigger,
   useSidebar,
 } from "@/components/ui/sidebar";
 import { Button } from "@/components/ui/button";
@@ -77,20 +76,18 @@ export function AppSidebar() {
       : "verdash-sidebar-item";
 
   return (
-    <Sidebar className={isCollapsed ? "w-16" : "w-72"} collapsible="icon">
-      <SidebarContent className="bg-verdash-dark border-r border-verdash-divider/30">
+    <Sidebar className="border-r border-verdash-divider/30" collapsible="icon">
+      <SidebarContent className="bg-verdash-dark">
         {/* Header */}
         <div className="p-6 border-b border-verdash-divider/30">
           <div className="flex items-center gap-4">
             <div className="w-10 h-10 rounded-xl verdash-gradient flex items-center justify-center shadow-lg verdash-glow">
               <Activity className="w-5 h-5 text-white" />
             </div>
-            {!isCollapsed && (
-              <div>
-                <h1 className="font-bold text-2xl text-white font-grotesk verdash-glow-text">VERDASH</h1>
-                <p className="text-xs text-verdash-disabled uppercase tracking-wider">Analytics Hub</p>
-              </div>
-            )}
+            <div className="group-data-[collapsible=icon]:hidden">
+              <h1 className="font-bold text-2xl text-white font-grotesk verdash-glow-text">VERDASH</h1>
+              <p className="text-xs text-verdash-disabled uppercase tracking-wider">Analytics Hub</p>
+            </div>
           </div>
         </div>
 
@@ -100,7 +97,7 @@ export function AppSidebar() {
             <SidebarMenu className="space-y-2">
               {mainNavigation.map((item) => (
                 <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton asChild>
+                  <SidebarMenuButton asChild tooltip={isCollapsed ? item.title : undefined}>
                     <NavLink 
                       to={item.url} 
                       className={({ isActive: navIsActive }) => {
@@ -109,8 +106,8 @@ export function AppSidebar() {
                       }}
                       end={item.url === "/"}
                     >
-                      <item.icon className="w-5 h-5" />
-                      {!isCollapsed && <span className="font-medium font-grotesk uppercase text-sm tracking-wide">{item.title}</span>}
+                      <item.icon className="w-5 h-5 shrink-0" />
+                      <span className="font-medium font-grotesk uppercase text-sm tracking-wide group-data-[collapsible=icon]:hidden">{item.title}</span>
                     </NavLink>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
@@ -120,44 +117,42 @@ export function AppSidebar() {
         </SidebarGroup>
 
         {/* Projects Section */}
-        {!isCollapsed && (
-          <SidebarGroup className="px-4">
-            <Collapsible open={projectsOpen} onOpenChange={setProjectsOpen}>
-              <SidebarGroupLabel asChild>
-                <CollapsibleTrigger className="flex items-center justify-between w-full p-3 hover:bg-verdash-input-bg/50 rounded-xl verdash-animate">
-                  <span className="text-sm font-semibold text-white font-grotesk uppercase tracking-wide">Projetos Ativos</span>
-                  <div className="flex items-center gap-2">
-                    <Button variant="ghost" size="sm" className="w-7 h-7 p-0 hover:bg-verdash-cyan/20 verdash-hover-scale">
-                      <Plus className="w-4 h-4 text-verdash-cyan" />
-                    </Button>
-                    <ChevronDown className={`w-4 h-4 text-verdash-disabled transition-transform verdash-animate ${projectsOpen ? 'rotate-180' : ''}`} />
-                  </div>
-                </CollapsibleTrigger>
-              </SidebarGroupLabel>
-              <CollapsibleContent>
-                <SidebarGroupContent className="mt-2">
-                  <SidebarMenu className="space-y-1">
-                    {mockProjects.map((project) => (
-                      <SidebarMenuItem key={project.id}>
-                        <SidebarMenuButton asChild>
-                          <NavLink 
-                            to={`/projects/${project.id}`}
-                            className="flex items-center justify-between text-sm p-3 rounded-lg hover:bg-verdash-input-bg/50 verdash-animate text-white/80 hover:text-white"
-                          >
-                            <span className="truncate font-inter">{project.name}</span>
-                            <span className="text-xs text-verdash-disabled bg-verdash-input-bg px-2 py-1 rounded-full border border-verdash-divider">
-                              {project.dashboards}
-                            </span>
-                          </NavLink>
-                        </SidebarMenuButton>
-                      </SidebarMenuItem>
-                    ))}
-                  </SidebarMenu>
-                </SidebarGroupContent>
-              </CollapsibleContent>
-            </Collapsible>
-          </SidebarGroup>
-        )}
+        <SidebarGroup className="px-4 group-data-[collapsible=icon]:hidden">
+          <Collapsible open={projectsOpen} onOpenChange={setProjectsOpen}>
+            <SidebarGroupLabel asChild>
+              <CollapsibleTrigger className="flex items-center justify-between w-full p-3 hover:bg-verdash-input-bg/50 rounded-xl verdash-animate">
+                <span className="text-sm font-semibold text-white font-grotesk uppercase tracking-wide">Projetos Ativos</span>
+                <div className="flex items-center gap-2">
+                  <Button variant="ghost" size="sm" className="w-7 h-7 p-0 hover:bg-verdash-cyan/20 verdash-hover-scale">
+                    <Plus className="w-4 h-4 text-verdash-cyan" />
+                  </Button>
+                  <ChevronDown className={`w-4 h-4 text-verdash-disabled transition-transform verdash-animate ${projectsOpen ? 'rotate-180' : ''}`} />
+                </div>
+              </CollapsibleTrigger>
+            </SidebarGroupLabel>
+            <CollapsibleContent>
+              <SidebarGroupContent className="mt-2">
+                <SidebarMenu className="space-y-1">
+                  {mockProjects.map((project) => (
+                    <SidebarMenuItem key={project.id}>
+                      <SidebarMenuButton asChild>
+                        <NavLink 
+                          to={`/projects/${project.id}`}
+                          className="flex items-center justify-between text-sm p-3 rounded-lg hover:bg-verdash-input-bg/50 verdash-animate text-white/80 hover:text-white"
+                        >
+                          <span className="truncate font-inter">{project.name}</span>
+                          <span className="text-xs text-verdash-disabled bg-verdash-input-bg px-2 py-1 rounded-full border border-verdash-divider">
+                            {project.dashboards}
+                          </span>
+                        </NavLink>
+                      </SidebarMenuButton>
+                    </SidebarMenuItem>
+                  ))}
+                </SidebarMenu>
+              </SidebarGroupContent>
+            </CollapsibleContent>
+          </Collapsible>
+        </SidebarGroup>
 
         {/* Bottom Navigation */}
         <div className="mt-auto">
@@ -166,13 +161,13 @@ export function AppSidebar() {
               <SidebarMenu className="space-y-2">
                 {bottomNavigation.map((item) => (
                   <SidebarMenuItem key={item.title}>
-                    <SidebarMenuButton asChild>
+                    <SidebarMenuButton asChild tooltip={isCollapsed ? item.title : undefined}>
                       <NavLink 
                         to={item.url} 
                         className={({ isActive }) => getNavClass(isActive)}
                       >
-                        <item.icon className="w-5 h-5" />
-                        {!isCollapsed && <span className="font-medium font-grotesk uppercase text-sm tracking-wide">{item.title}</span>}
+                        <item.icon className="w-5 h-5 shrink-0" />
+                        <span className="font-medium font-grotesk uppercase text-sm tracking-wide group-data-[collapsible=icon]:hidden">{item.title}</span>
                       </NavLink>
                     </SidebarMenuButton>
                   </SidebarMenuItem>
@@ -180,13 +175,13 @@ export function AppSidebar() {
                 
                 {/* Logout Button */}
                 <SidebarMenuItem>
-                  <SidebarMenuButton asChild>
+                  <SidebarMenuButton asChild tooltip={isCollapsed ? "Sair" : undefined}>
                     <button 
                       onClick={logout}
                       className="verdash-sidebar-item w-full text-left"
                     >
-                      <LogOut className="w-5 h-5" />
-                      {!isCollapsed && <span className="font-medium font-grotesk uppercase text-sm tracking-wide">Sair</span>}
+                      <LogOut className="w-5 h-5 shrink-0" />
+                      <span className="font-medium font-grotesk uppercase text-sm tracking-wide group-data-[collapsible=icon]:hidden">Sair</span>
                     </button>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
@@ -197,15 +192,13 @@ export function AppSidebar() {
           {/* User Info */}
           <div className="p-6 border-t border-verdash-divider/30">
             <div className="flex items-center gap-4">
-              <div className="w-10 h-10 rounded-full verdash-gradient flex items-center justify-center text-white font-bold shadow-lg">
+              <div className="w-10 h-10 rounded-full verdash-gradient flex items-center justify-center text-white font-bold shadow-lg shrink-0">
                 {user?.name?.charAt(0) || 'U'}
               </div>
-              {!isCollapsed && (
-                <div className="flex-1 min-w-0">
-                  <p className="text-sm font-semibold text-white truncate font-grotesk">{user?.name}</p>
-                  <p className="text-xs text-verdash-disabled capitalize font-inter">{user?.role}</p>
-                </div>
-              )}
+              <div className="flex-1 min-w-0 group-data-[collapsible=icon]:hidden">
+                <p className="text-sm font-semibold text-white truncate font-grotesk">{user?.name}</p>
+                <p className="text-xs text-verdash-disabled capitalize font-inter">{user?.role}</p>
+              </div>
             </div>
           </div>
         </div>

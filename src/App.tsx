@@ -11,6 +11,7 @@ import Dashboard from "./pages/Dashboard";
 import Projects from "./pages/Projects";
 import Dashboards from "./pages/Dashboards";
 import Metrics from "./pages/Metrics";
+import VerdashAI from "./pages/VerdashAI";
 import Integrations from "./pages/Integrations";
 import Clients from "./pages/Clients";
 import Support from "./pages/Support";

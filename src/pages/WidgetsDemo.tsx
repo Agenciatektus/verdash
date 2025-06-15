@@ -2,14 +2,38 @@
 import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Plus, Settings, LayoutGrid } from "lucide-react";
+import { Plus, Settings, LayoutGrid, Edit } from "lucide-react";
+import { DashboardEditor } from "@/components/dashboard/DashboardEditor";
 import { WidgetContainer } from "@/components/widgets/WidgetContainer";
 import { mockWidgets, mockWidgetData } from "@/data/mockWidgetData";
 import { Widget } from "@/types/widgets";
 
 const WidgetsDemo = () => {
   const [widgets, setWidgets] = useState<Widget[]>(mockWidgets);
-  const [isEditing, setIsEditing] = useState(false);
+  const [showEditor, setShowEditor] = useState(false);
+
+  const handleSaveWidgets = (updatedWidgets: Widget[]) => {
+    setWidgets(updatedWidgets);
+    console.log('Widgets salvos:', updatedWidgets);
+  };
+
+  if (showEditor) {
+    return (
+      <div className="h-screen">
+        <DashboardEditor 
+          initialWidgets={widgets}
+          onSave={handleSaveWidgets}
+        />
+        <Button
+          className="absolute top-4 right-4 z-10"
+          variant="outline"
+          onClick={() => setShowEditor(false)}
+        >
+          Voltar
+        </Button>
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-6 animate-fade-in">
@@ -20,17 +44,17 @@ const WidgetsDemo = () => {
             Widgets Funcionais
           </h1>
           <p className="text-white/70 mt-2 font-inter">
-            Demonstração dos widgets interativos com dados reais
+            Demonstração dos widgets interativos com editor drag-and-drop
           </p>
         </div>
         <div className="flex gap-3">
           <Button 
             variant="outline" 
-            onClick={() => setIsEditing(!isEditing)}
+            onClick={() => setShowEditor(true)}
             className="verdash-btn-secondary"
           >
-            <Settings className="w-4 h-4 mr-2" />
-            {isEditing ? 'Sair da Edição' : 'Modo Edição'}
+            <Edit className="w-4 h-4 mr-2" />
+            Editor de Dashboard
           </Button>
           <Button className="verdash-btn-primary verdash-hover-scale">
             <Plus className="w-5 h-5 mr-2" />
@@ -96,17 +120,15 @@ const WidgetsDemo = () => {
         </Card>
       </div>
 
-      {/* Widgets Grid */}
+      {/* Widgets Grid - Static View */}
       <div className="space-y-4">
         <div className="flex items-center justify-between">
           <h2 className="text-xl font-bold text-white font-grotesk">
             Dashboard Principal
           </h2>
-          {isEditing && (
-            <p className="text-sm text-verdash-cyan">
-              Modo de edição ativo - Clique nos widgets para editá-los
-            </p>
-          )}
+          <p className="text-sm text-verdash-cyan">
+            Clique em "Editor de Dashboard" para personalizar
+          </p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 auto-rows-fr">
@@ -121,9 +143,7 @@ const WidgetsDemo = () => {
               <WidgetContainer
                 widget={widget}
                 data={mockWidgetData[widget.id] || []}
-                isEditing={isEditing}
-                onEdit={(w) => console.log('Edit widget:', w)}
-                onDelete={(id) => console.log('Delete widget:', id)}
+                isEditing={false}
               />
             </div>
           ))}
@@ -133,29 +153,29 @@ const WidgetsDemo = () => {
       {/* Instructions */}
       <Card className="verdash-glass">
         <CardHeader>
-          <CardTitle className="text-white">Como usar os Widgets</CardTitle>
+          <CardTitle className="text-white">Como usar o Editor</CardTitle>
         </CardHeader>
         <CardContent>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-sm">
             <div>
-              <h4 className="font-semibold text-verdash-cyan mb-2">📊 KPIs Interativos</h4>
+              <h4 className="font-semibold text-verdash-cyan mb-2">🎯 Arrastar e Soltar</h4>
               <p className="text-white/70">
-                Widgets de KPI mostram métricas importantes com comparação temporal, 
-                metas e indicadores de tendência automáticos.
+                No modo de edição, arraste widgets para reorganizar o layout. 
+                Veja indicadores visuais de onde soltar.
               </p>
             </div>
             <div>
-              <h4 className="font-semibold text-verdash-cyan mb-2">📈 Gráficos Dinâmicos</h4>
+              <h4 className="font-semibold text-verdash-cyan mb-2">➕ Adicionar Widgets</h4>
               <p className="text-white/70">
-                Gráficos de linha responsivos com dados em tempo real, 
-                tooltips interativos e customização de cores.
+                Use o painel lateral para adicionar novos widgets. 
+                Escolha entre KPIs, gráficos, tabelas e mais.
               </p>
             </div>
             <div>
-              <h4 className="font-semibold text-verdash-cyan mb-2">📋 Tabelas Funcionais</h4>
+              <h4 className="font-semibold text-verdash-cyan mb-2">⚙️ Personalizar</h4>
               <p className="text-white/70">
-                Tabelas com ordenação, formatação automática de dados 
-                e paginação para grandes volumes de informações.
+                Edite configurações, exclua widgets e salve layouts personalizados. 
+                Tudo em tempo real.
               </p>
             </div>
           </div>

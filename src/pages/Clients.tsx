@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Users, Plus, Building, BarChart3, Settings } from "lucide-react";
 import { toast } from "sonner";
+import ClientManagementDialog from "@/components/clients/ClientManagementDialog";
 
 const clients = [
   {
@@ -38,6 +39,8 @@ const clients = [
 
 export default function Clients() {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [selectedClient, setSelectedClient] = useState<typeof clients[0] | null>(null);
+  const [isManagementDialogOpen, setIsManagementDialogOpen] = useState(false);
 
   const handleNewClient = () => {
     setIsDialogOpen(true);
@@ -46,6 +49,11 @@ export default function Clients() {
   const handleCreateClient = () => {
     toast.success("Cliente criado com sucesso!");
     setIsDialogOpen(false);
+  };
+
+  const handleClientManagement = (client: typeof clients[0]) => {
+    setSelectedClient(client);
+    setIsManagementDialogOpen(true);
   };
 
   return (
@@ -189,7 +197,11 @@ export default function Clients() {
                   </div>
                 </div>
                 <div className="flex gap-2">
-                  <Button size="sm" className="verdash-btn-primary">
+                  <Button 
+                    size="sm" 
+                    className="verdash-btn-primary"
+                    onClick={() => handleClientManagement(client)}
+                  >
                     <BarChart3 className="w-4 h-4 mr-2" />
                     Dashboards
                   </Button>
@@ -218,6 +230,13 @@ export default function Clients() {
           </Card>
         ))}
       </div>
+
+      {/* Client Management Dialog */}
+      <ClientManagementDialog
+        client={selectedClient}
+        isOpen={isManagementDialogOpen}
+        onClose={() => setIsManagementDialogOpen(false)}
+      />
     </div>
   );
 }

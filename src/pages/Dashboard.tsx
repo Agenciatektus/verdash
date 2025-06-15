@@ -362,7 +362,7 @@ const Dashboard = () => {
             {/* Primeira linha de KPIs - Métricas principais */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
               {mainKpis.map((kpi, index) => (
-                <Card key={index} className="bg-card/30 backdrop-blur-xl border border-white/12 rounded-2xl shadow-2xl hover:bg-card/20 hover:border-white/8 transition-all duration-300 hover:transform hover:scale-[1.02]">
+                <Card key={index} className="bg-card/20 backdrop-blur-xl rounded-2xl shadow-2xl hover:bg-card/30 hover:shadow-[0_8px_32px_rgba(0,255,176,0.04)] transition-all duration-300 hover:transform hover:scale-[1.02]">
                   <CardContent className="p-6">
                     <div className="flex items-center justify-between mb-4">
                       <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${kpi.gradient} flex items-center justify-center`}>
@@ -402,7 +402,7 @@ const Dashboard = () => {
             {isWidgetVisible('kpis-financial') && (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {financialKpis.map((kpi, index) => (
-                  <Card key={index} className="bg-card/30 backdrop-blur-xl border border-white/12 rounded-2xl shadow-2xl hover:bg-card/20 hover:border-white/8 transition-all duration-300 hover:transform hover:scale-[1.02]">
+                  <Card key={index} className="bg-card/20 backdrop-blur-xl rounded-2xl shadow-2xl hover:bg-card/30 hover:shadow-[0_8px_32px_rgba(0,255,176,0.04)] transition-all duration-300 hover:transform hover:scale-[1.02]">
                     <CardContent className="p-6">
                       <div className="flex items-center justify-between mb-4">
                         <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${kpi.gradient} flex items-center justify-center`}>
@@ -454,7 +454,7 @@ const Dashboard = () => {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
               {/* Gráfico de Linha - Receita, Investimento, Leads e MRR */}
               {isWidgetVisible('revenue-evolution') && (
-                <Card className="bg-card/30 backdrop-blur-xl border border-white/12 rounded-2xl shadow-2xl hover:bg-card/20 hover:border-white/8 transition-all duration-300 hover:transform hover:scale-[1.02] lg:col-span-2">
+                <Card className="bg-card/20 backdrop-blur-xl rounded-2xl shadow-2xl hover:bg-card/30 hover:shadow-[0_8px_32px_rgba(0,255,176,0.04)] transition-all duration-300 hover:transform hover:scale-[1.02] lg:col-span-2">
                   <CardHeader>
                     <CardTitle className="text-white text-xl font-grotesk flex items-center gap-3">
                       <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-verdash-blue to-verdash-cyan flex items-center justify-center">
@@ -518,7 +518,7 @@ const Dashboard = () => {
 
               {/* Gráfico de Barras Empilhadas - Investimento por Canal */}
               {isWidgetVisible('investment-by-channel') && (
-                <Card className="bg-card/30 backdrop-blur-xl border border-white/12 rounded-2xl shadow-2xl hover:bg-card/20 hover:border-white/8 transition-all duration-300 hover:transform hover:scale-[1.02]">
+                <Card className="bg-card/20 backdrop-blur-xl rounded-2xl shadow-2xl hover:bg-card/30 hover:shadow-[0_8px_32px_rgba(0,255,176,0.04)] transition-all duration-300 hover:transform hover:scale-[1.02]">
                   <CardHeader>
                     <CardTitle className="text-white text-lg font-grotesk">Investimento por Canal</CardTitle>
                     <CardDescription className="text-white/70 font-inter">Distribuição mensal</CardDescription>
@@ -536,7 +536,7 @@ const Dashboard = () => {
                             borderRadius: '8px',
                             color: 'white'
                           }} 
-                          cursor={{ fill: 'rgba(255, 255, 255, 0.05)' }}
+                          cursor={{ fill: 'rgba(255, 255, 255, 0.02)' }}
                         />
                         <Bar dataKey="meta" stackId="a" fill="#1877F2" name="Meta Ads" />
                         <Bar dataKey="google" stackId="a" fill="#4285F4" name="Google Ads" />
@@ -551,7 +551,7 @@ const Dashboard = () => {
 
               {/* Gráfico de Donut - Participação na Receita */}
               {isWidgetVisible('revenue-participation') && (
-                <Card className="bg-card/30 backdrop-blur-xl border border-white/12 rounded-2xl shadow-2xl hover:bg-card/20 hover:border-white/8 transition-all duration-300 hover:transform hover:scale-[1.02]">
+                <Card className="bg-card/20 backdrop-blur-xl rounded-2xl shadow-2xl hover:bg-card/30 hover:shadow-[0_8px_32px_rgba(0,255,176,0.04)] transition-all duration-300 hover:transform hover:scale-[1.02]">
                   <CardHeader>
                     <CardTitle className="text-white text-lg font-grotesk">Participação na Receita</CardTitle>
                     <CardDescription className="text-white/70 font-inter">Por canal de aquisição</CardDescription>
@@ -603,7 +603,7 @@ const Dashboard = () => {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             {/* Funil de Vendas */}
             {isWidgetVisible('sales-funnel') && (
-              <Card className="bg-card/30 backdrop-blur-xl border border-white/12 rounded-2xl shadow-2xl hover:bg-card/20 hover:border-white/8 transition-all duration-300 hover:transform hover:scale-[1.02]">
+              <Card className="bg-card/20 backdrop-blur-xl rounded-2xl shadow-2xl hover:bg-card/30 hover:shadow-[0_8px_32px_rgba(0,255,176,0.04)] transition-all duration-300 hover:transform hover:scale-[1.02]">
                 <CardHeader>
                   <CardTitle className="text-white text-lg font-grotesk">Pipeline de Vendas</CardTitle>
                   <CardDescription className="text-white/70 font-inter">Funil completo do processo comercial</CardDescription>
@@ -634,7 +634,7 @@ const Dashboard = () => {
 
             {/* Conversão por Canal */}
             {isWidgetVisible('conversion-by-channel') && (
-              <Card className="bg-card/30 backdrop-blur-xl border border-white/12 rounded-2xl shadow-2xl hover:bg-card/20 hover:border-white/8 transition-all duration-300 hover:transform hover:scale-[1.02]">
+              <Card className="bg-card/20 backdrop-blur-xl rounded-2xl shadow-2xl hover:bg-card/30 hover:shadow-[0_8px_32px_rgba(0,255,176,0.04)] transition-all duration-300 hover:transform hover:scale-[1.02]">
                 <CardHeader>
                   <CardTitle className="text-white text-lg font-grotesk">Taxa de Conversão por Canal</CardTitle>
                   <CardDescription className="text-white/70 font-inter">Performance de cada fonte</CardDescription>
@@ -653,7 +653,7 @@ const Dashboard = () => {
                           color: 'white'
                         }} 
                         formatter={(value: any) => [`${value}%`, 'Taxa de Conversão']}
-                        cursor={{ fill: 'rgba(255, 255, 255, 0.05)' }}
+                        cursor={{ fill: 'rgba(255, 255, 255, 0.02)' }}
                       />
                       <Bar dataKey="taxa" fill="#00FFB0" radius={[0, 4, 4, 0]} />
                     </BarChart>
@@ -667,7 +667,7 @@ const Dashboard = () => {
           {isWidgetVisible('additional-kpis') && (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
               {additionalKpis.map((kpi, index) => (
-                <Card key={index} className="bg-card/30 backdrop-blur-xl border border-white/12 rounded-2xl shadow-2xl hover:bg-card/20 hover:border-white/8 transition-all duration-300 hover:transform hover:scale-[1.02]">
+                <Card key={index} className="bg-card/20 backdrop-blur-xl rounded-2xl shadow-2xl hover:bg-card/30 hover:shadow-[0_8px_32px_rgba(0,255,176,0.04)] transition-all duration-300 hover:transform hover:scale-[1.02]">
                   <CardContent className="p-6">
                     <div className="flex items-center justify-between mb-4">
                       <div className={`w-10 h-10 rounded-lg bg-gradient-to-br ${

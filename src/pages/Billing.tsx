@@ -170,7 +170,7 @@ const Billing = () => {
     }
     switch (subscription.status) {
       case 'active':
-        return <Badge className="bg-verdash-success text-white">Ativo</Badge>;
+        return <Badge className="bg-[#0A0E1E] text-white">Ativo</Badge>;
       case 'past_due':
         return <Badge variant="destructive">Vencido</Badge>;
       case 'trialing':
@@ -184,7 +184,7 @@ const Billing = () => {
     <div className="space-y-8">
       {/* Header */}
       <div>
-        <h1 className="text-4xl font-bold text-white font-grotesk uppercase tracking-wide verdash-glow-text">
+        <h1 className="text-4xl font-bold text-white font-grotesk uppercase tracking-wide">
           Planos & Faturamento
         </h1>
         <p className="text-white/70 mt-2 font-inter">

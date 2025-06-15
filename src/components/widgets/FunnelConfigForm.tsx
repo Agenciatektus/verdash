@@ -1,5 +1,5 @@
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Widget, FunnelStage } from "@/types/widgets";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -11,7 +11,6 @@ import { Plus, Trash2, GripVertical } from "lucide-react";
 interface FunnelConfigFormProps {
   widget: Widget;
   onUpdate: (updatedWidget: Widget) => void;
-  availableMetrics?: string[];
 }
 
 const iconOptions = [
@@ -32,12 +31,41 @@ const colorOptions = [
   '#2ecc71', '#e74c3c', '#f39c12', '#9b59b6', '#34495e'
 ];
 
+// Mock de métricas - na implementação real, isso viria de uma API
+const getClientMetrics = (clientId?: string) => {
+  // Simulando métricas específicas do cliente
+  const allMetrics = [
+    { id: 'leads', name: 'Leads Totais', category: 'Marketing' },
+    { id: 'leads_qualificados', name: 'Leads Qualificados', category: 'Marketing' },
+    { id: 'visitas_agendadas', name: 'Visitas Agendadas', category: 'Vendas' },
+    { id: 'propostas_enviadas', name: 'Propostas Enviadas', category: 'Vendas' },
+    { id: 'orcamentos', name: 'Orçamentos Criados', category: 'Vendas' },
+    { id: 'aguardando_pagamento', name: 'Aguardando Pagamento', category: 'Financeiro' },
+    { id: 'vendas', name: 'Vendas Fechadas', category: 'Vendas' },
+    { id: 'receita', name: 'Receita Total', category: 'Financeiro' },
+    { id: 'custo_aquisicao', name: 'Custo de Aquisição', category: 'Marketing' },
+    { id: 'ltv', name: 'Lifetime Value', category: 'Financeiro' },
+    { id: 'churn_rate', name: 'Taxa de Churn', category: 'Retenção' },
+    { id: 'tempo_ciclo_vendas', name: 'Tempo do Ciclo de Vendas', category: 'Vendas' }
+  ];
+
+  // Em uma implementação real, filtrar por cliente
+  return allMetrics;
+};
+
 export const FunnelConfigForm = ({ 
   widget, 
-  onUpdate, 
-  availableMetrics = ['leads', 'visitas', 'orcamentos', 'vendas', 'receita'] 
+  onUpdate
 }: FunnelConfigFormProps) => {
   const [stages, setStages] = useState<FunnelStage[]>(widget.config.stages || []);
+  const [availableMetrics, setAvailableMetrics] = useState<any[]>([]);
+
+  useEffect(() => {
+    // Carregar métricas do cliente
+    // Em uma implementação real, pegar o clientId do contexto do dashboard
+    const metrics = getClientMetrics();
+    setAvailableMetrics(metrics);
+  }, []);
 
   const addStage = () => {
     const newStage: FunnelStage = {
@@ -46,7 +74,8 @@ export const FunnelConfigForm = ({
       percentage: 0,
       conversion: 0,
       icon: 'Target',
-      color: colorOptions[stages.length % colorOptions.length]
+      color: colorOptions[stages.length % colorOptions.length],
+      metric: ''
     };
     setStages([...stages, newStage]);
   };
@@ -88,6 +117,18 @@ export const FunnelConfigForm = ({
     };
     onUpdate(updatedWidget);
   };
+
+  const getMetricsByCategory = () => {
+    return availableMetrics.reduce((acc, metric) => {
+      if (!acc[metric.category]) {
+        acc[metric.category] = [];
+      }
+      acc[metric.category].push(metric);
+      return acc;
+    }, {} as Record<string, any[]>);
+  };
+
+  const metricsByCategory = getMetricsByCategory();
 
   return (
     <div className="space-y-6">
@@ -196,10 +237,17 @@ export const FunnelConfigForm = ({
                       <SelectValue placeholder="Selecionar métrica" />
                     </SelectTrigger>
                     <SelectContent>
-                      {availableMetrics.map((metric) => (
-                        <SelectItem key={metric} value={metric}>
-                          {metric}
-                        </SelectItem>
+                      {Object.entries(metricsByCategory).map(([category, metrics]) => (
+                        <div key={category}>
+                          <div className="px-2 py-1 text-xs font-semibold text-muted-foreground border-b">
+                            {category}
+                          </div>
+                          {metrics.map((metric) => (
+                            <SelectItem key={metric.id} value={metric.id}>
+                              {metric.name}
+                            </SelectItem>
+                          ))}
+                        </div>
                       ))}
                     </SelectContent>
                   </Select>

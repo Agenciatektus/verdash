@@ -157,11 +157,11 @@ export const WidgetPalette = ({ onWidgetAdd, isVisible }: WidgetPaletteProps) =>
       icon: TrendingDown,
       config: {
         stages: [
-          { step: "Novos Leads", value: 1000, percentage: 100, conversion: 0, icon: "Users", color: '#1042F6' },
-          { step: "Visita Agendada", value: 350, percentage: 35, conversion: 35, icon: "Calendar", color: '#00FFB0' },
-          { step: "Em Orçamento", value: 210, percentage: 21, conversion: 60, icon: "Calculator", color: '#FF6F1B' },
-          { step: "Aguardando Pagamento", value: 105, percentage: 10.5, conversion: 50, icon: "Clock", color: '#9c88ff' },
-          { step: "Vendas", value: 84, percentage: 8.4, conversion: 80, icon: "DollarSign", color: '#FF4757' }
+          { step: "Novos Leads", value: 1000, percentage: 100, conversion: 0, icon: "Users", color: '#1042F6', metric: 'leads' },
+          { step: "Visita Agendada", value: 350, percentage: 35, conversion: 35, icon: "Calendar", color: '#00FFB0', metric: 'visitas_agendadas' },
+          { step: "Em Orçamento", value: 210, percentage: 21, conversion: 60, icon: "Calculator", color: '#FF6F1B', metric: 'orcamentos' },
+          { step: "Aguardando Pagamento", value: 105, percentage: 10.5, conversion: 50, icon: "Clock", color: '#9c88ff', metric: 'aguardando_pagamento' },
+          { step: "Vendas", value: 84, percentage: 8.4, conversion: 80, icon: "DollarSign", color: '#FF4757', metric: 'vendas' }
         ]
       },
       position: { x: 0, y: 0, width: 1, height: 3 }

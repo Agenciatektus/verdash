@@ -20,7 +20,8 @@ const defaultFunnelData = [
     percentage: 100, 
     conversion: 0, 
     icon: "Users",
-    color: "#1042F6" 
+    color: "#1042F6",
+    metric: "leads"
   },
   { 
     step: "Visita Agendada", 
@@ -28,7 +29,8 @@ const defaultFunnelData = [
     percentage: 35, 
     conversion: 35, 
     icon: "Calendar",
-    color: "#00FFB0" 
+    color: "#00FFB0",
+    metric: "visitas_agendadas"
   },
   { 
     step: "Em Orçamento", 
@@ -36,7 +38,8 @@ const defaultFunnelData = [
     percentage: 21, 
     conversion: 60, 
     icon: "Calculator",
-    color: "#FF6F1B" 
+    color: "#FF6F1B",
+    metric: "orcamentos"
   },
   { 
     step: "Aguardando Pagamento", 
@@ -44,7 +47,8 @@ const defaultFunnelData = [
     percentage: 10.5, 
     conversion: 50, 
     icon: "Clock",
-    color: "#9c88ff" 
+    color: "#9c88ff",
+    metric: "aguardando_pagamento"
   },
   { 
     step: "Vendas", 
@@ -52,7 +56,8 @@ const defaultFunnelData = [
     percentage: 8.4, 
     conversion: 80, 
     icon: "DollarSign",
-    color: "#FF4757" 
+    color: "#FF4757",
+    metric: "vendas"
   }
 ];
 

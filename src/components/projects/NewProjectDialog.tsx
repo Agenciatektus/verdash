@@ -70,10 +70,10 @@ export const NewProjectDialog = ({ open, onOpenChange, onCreateProject }: NewPro
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-2xl">
+      <DialogContent className="max-w-2xl bg-background border-border/20 shadow-2xl">
         <DialogHeader>
-          <DialogTitle className="text-2xl font-semibold">Criar Novo Projeto</DialogTitle>
-          <DialogDescription>
+          <DialogTitle className="text-2xl font-semibold text-foreground">Criar Novo Projeto</DialogTitle>
+          <DialogDescription className="text-muted-foreground">
             Configure os detalhes do seu novo projeto de analytics
           </DialogDescription>
         </DialogHeader>
@@ -81,42 +81,44 @@ export const NewProjectDialog = ({ open, onOpenChange, onCreateProject }: NewPro
         <form onSubmit={handleSubmit} className="space-y-6">
           {/* Nome do Projeto */}
           <div className="space-y-2">
-            <Label htmlFor="projectName">Nome do Projeto *</Label>
+            <Label htmlFor="projectName" className="text-foreground">Nome do Projeto *</Label>
             <Input
               id="projectName"
               placeholder="Ex: Análise de Vendas 2024"
               value={projectData.name}
               onChange={(e) => setProjectData(prev => ({ ...prev, name: e.target.value }))}
               required
+              className="bg-background border-border/30 text-foreground placeholder:text-muted-foreground focus:border-verdash-cyan"
             />
           </div>
 
           {/* Descrição */}
           <div className="space-y-2">
-            <Label htmlFor="projectDescription">Descrição</Label>
+            <Label htmlFor="projectDescription" className="text-foreground">Descrição</Label>
             <Textarea
               id="projectDescription"
               placeholder="Descreva brevemente o objetivo deste projeto..."
               value={projectData.description}
               onChange={(e) => setProjectData(prev => ({ ...prev, description: e.target.value }))}
               rows={3}
+              className="bg-background border-border/30 text-foreground placeholder:text-muted-foreground focus:border-verdash-cyan"
             />
           </div>
 
           {/* Template */}
           <div className="space-y-2">
-            <Label htmlFor="projectTemplate">Template *</Label>
+            <Label htmlFor="projectTemplate" className="text-foreground">Template *</Label>
             <Select 
               value={projectData.template} 
               onValueChange={(value) => setProjectData(prev => ({ ...prev, template: value }))}
               required
             >
-              <SelectTrigger>
+              <SelectTrigger className="bg-background border-border/30 text-foreground focus:border-verdash-cyan">
                 <SelectValue placeholder="Selecione um template" />
               </SelectTrigger>
-              <SelectContent>
+              <SelectContent className="bg-background border-border/20">
                 {projectTemplates.map((template) => (
-                  <SelectItem key={template.id} value={template.id}>
+                  <SelectItem key={template.id} value={template.id} className="text-foreground hover:bg-sidebar-accent/30">
                     <div>
                       <div className="font-medium">{template.name}</div>
                       <div className="text-sm text-muted-foreground">{template.description}</div>
@@ -134,7 +136,7 @@ export const NewProjectDialog = ({ open, onOpenChange, onCreateProject }: NewPro
 
           {/* Métricas */}
           <div className="space-y-3">
-            <Label>Métricas Principais (opcional)</Label>
+            <Label className="text-foreground">Métricas Principais (opcional)</Label>
             <p className="text-sm text-muted-foreground">
               Selecione as métricas que você pretende acompanhar neste projeto
             </p>
@@ -145,8 +147,8 @@ export const NewProjectDialog = ({ open, onOpenChange, onCreateProject }: NewPro
                   variant={projectData.metrics.includes(metric) ? "default" : "outline"}
                   className={`cursor-pointer transition-colors ${
                     projectData.metrics.includes(metric)
-                      ? "bg-verdash-cyan text-white"
-                      : "hover:bg-verdash-cyan/10"
+                      ? "bg-verdash-cyan text-white hover:bg-verdash-cyan/80"
+                      : "border-border/30 text-foreground hover:bg-verdash-cyan/10 hover:border-verdash-cyan/50"
                   }`}
                   onClick={() => toggleMetric(metric)}
                 >
@@ -170,6 +172,7 @@ export const NewProjectDialog = ({ open, onOpenChange, onCreateProject }: NewPro
               type="button" 
               variant="outline" 
               onClick={() => onOpenChange(false)}
+              className="border-border/30 text-foreground hover:bg-sidebar-accent/30"
             >
               Cancelar
             </Button>

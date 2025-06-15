@@ -4,10 +4,19 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { DashboardEditor as DashboardEditorComponent } from "@/components/dashboard/DashboardEditor";
+import { DashboardSettings } from "@/components/dashboard/DashboardSettings";
 import { mockWidgets } from "@/data/mockWidgetData";
 import { Widget } from "@/types/widgets";
 import { ArrowLeft, Save, Eye } from "lucide-react";
 import { toast } from "sonner";
+
+interface DashboardConfig {
+  name: string;
+  description: string;
+  project: string;
+  client: string;
+  dataSource: string;
+}
 
 const DashboardEditor = () => {
   const { id } = useParams();
@@ -16,18 +25,43 @@ const DashboardEditor = () => {
 
   // Mock dashboard data based on ID
   const dashboardData = {
-    1: { name: "Performance de Vendas", project: "E-commerce Principal" },
-    2: { name: "Marketing ROI", project: "Marketing Digital" },
-    3: { name: "Funil de Conversão", project: "Vendas B2B" },
+    1: { 
+      name: "Performance de Vendas", 
+      project: "E-commerce Principal",
+      description: "Dashboard focado em métricas de vendas e conversão",
+      client: "Client A",
+      dataSource: "google-ads"
+    },
+    2: { 
+      name: "Marketing ROI", 
+      project: "Marketing Digital",
+      description: "Análise de retorno sobre investimento em marketing",
+      client: "Client B",
+      dataSource: "meta-ads"
+    },
+    3: { 
+      name: "Funil de Conversão", 
+      project: "Vendas B2B",
+      description: "Acompanhamento do funil de vendas B2B",
+      client: "Client C",
+      dataSource: "crm"
+    },
   };
 
   const dashboardId = id ? parseInt(id) : 1;
-  const dashboard = dashboardData[dashboardId as keyof typeof dashboardData] || dashboardData[1];
+  const initialDashboard = dashboardData[dashboardId as keyof typeof dashboardData] || dashboardData[1];
+  
+  const [dashboardConfig, setDashboardConfig] = useState<DashboardConfig>(initialDashboard);
 
   const handleSaveWidgets = (updatedWidgets: Widget[]) => {
     setWidgets(updatedWidgets);
     toast.success("Dashboard salvo com sucesso!");
     console.log('Widgets salvos:', updatedWidgets);
+  };
+
+  const handleSaveConfig = (newConfig: DashboardConfig) => {
+    setDashboardConfig(newConfig);
+    console.log('Configurações salvas:', newConfig);
   };
 
   const handlePreview = () => {
@@ -49,12 +83,19 @@ const DashboardEditor = () => {
             Voltar
           </Button>
           <div>
-            <h1 className="text-2xl font-bold text-foreground">Editando: {dashboard.name}</h1>
-            <p className="text-sm text-muted-foreground">{dashboard.project}</p>
+            <h1 className="text-2xl font-bold text-foreground">Editando: {dashboardConfig.name}</h1>
+            <p className="text-sm text-muted-foreground">{dashboardConfig.project}</p>
+            {dashboardConfig.description && (
+              <p className="text-xs text-muted-foreground mt-1">{dashboardConfig.description}</p>
+            )}
           </div>
         </div>
         
         <div className="flex gap-3">
+          <DashboardSettings
+            currentConfig={dashboardConfig}
+            onSave={handleSaveConfig}
+          />
           <Button
             variant="outline"
             onClick={handlePreview}

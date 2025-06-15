@@ -6,7 +6,7 @@ import { DataSource } from "@/types/data";
 import { 
   Sheet, 
   TrendingUp, 
-  Api, 
+  Globe, 
   Webhook, 
   Database,
   CheckCircle,
@@ -43,7 +43,7 @@ export const DataSourceCard = ({ source }: DataSourceCardProps) => {
       case 'meta_ads':
         return <TrendingUp className="w-8 h-8 text-blue-500" />;
       case 'api':
-        return <Api className="w-8 h-8 text-purple-500" />;
+        return <Globe className="w-8 h-8 text-purple-500" />;
       case 'webhook':
         return <Webhook className="w-8 h-8 text-orange-500" />;
       default:

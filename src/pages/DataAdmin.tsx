@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -11,7 +12,7 @@ import {
   Settings, 
   Zap,
   Sheet,
-  Api,
+  Globe,
   Webhook,
   Calculator,
   TrendingUp,
@@ -132,7 +133,7 @@ const DataAdmin = () => {
       case 'meta_ads':
         return <TrendingUp className="w-5 h-5 text-blue-500" />;
       case 'api':
-        return <Api className="w-5 h-5 text-purple-500" />;
+        return <Globe className="w-5 h-5 text-purple-500" />;
       case 'webhook':
         return <Webhook className="w-5 h-5 text-orange-500" />;
       default:

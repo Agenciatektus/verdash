@@ -134,24 +134,24 @@ const Dashboard = () => {
           <CardContent>
             <ResponsiveContainer width="100%" height={300}>
               <LineChart data={mockData}>
-                <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
+                <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.1)" />
                 <XAxis 
                   dataKey="name" 
-                  stroke="hsl(var(--foreground))" 
+                  stroke="white"
                   fontSize={12}
-                  tick={{ fill: 'hsl(var(--foreground))' }}
+                  tick={{ fill: 'white' }}
                 />
                 <YAxis 
-                  stroke="hsl(var(--foreground))" 
+                  stroke="white"
                   fontSize={12}
-                  tick={{ fill: 'hsl(var(--foreground))' }}
+                  tick={{ fill: 'white' }}
                 />
                 <Tooltip 
                   contentStyle={{ 
-                    backgroundColor: 'hsl(var(--card))', 
-                    border: '1px solid hsl(var(--border))',
+                    backgroundColor: 'rgba(16, 24, 44, 0.95)', 
+                    border: '1px solid rgba(255,255,255,0.1)',
                     borderRadius: '12px',
-                    color: 'hsl(var(--foreground))'
+                    color: 'white'
                   }} 
                 />
                 <Line 
@@ -185,24 +185,24 @@ const Dashboard = () => {
           <CardContent>
             <ResponsiveContainer width="100%" height={300}>
               <BarChart data={mockData}>
-                <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
+                <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.1)" />
                 <XAxis 
                   dataKey="name" 
-                  stroke="hsl(var(--foreground))" 
+                  stroke="white"
                   fontSize={12}
-                  tick={{ fill: 'hsl(var(--foreground))' }}
+                  tick={{ fill: 'white' }}
                 />
                 <YAxis 
-                  stroke="hsl(var(--foreground))" 
+                  stroke="white"
                   fontSize={12}
-                  tick={{ fill: 'hsl(var(--foreground))' }}
+                  tick={{ fill: 'white' }}
                 />
                 <Tooltip 
                   contentStyle={{ 
-                    backgroundColor: 'hsl(var(--card))', 
-                    border: '1px solid hsl(var(--border))',
+                    backgroundColor: 'rgba(16, 24, 44, 0.95)', 
+                    border: '1px solid rgba(255,255,255,0.1)',
                     borderRadius: '12px',
-                    color: 'hsl(var(--foreground))'
+                    color: 'white'
                   }} 
                 />
                 <Bar dataKey="value" fill="url(#barGradient)" radius={[6, 6, 0, 0]} />

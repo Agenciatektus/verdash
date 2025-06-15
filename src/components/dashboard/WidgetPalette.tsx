@@ -1,4 +1,3 @@
-
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Widget } from '@/types/widgets';
@@ -8,7 +7,7 @@ import {
   Table, 
   PieChart, 
   Target,
-  Funnel
+  funnel
 } from 'lucide-react';
 
 interface WidgetPaletteProps {
@@ -86,7 +85,7 @@ export const WidgetPalette = ({ onWidgetAdd, isVisible }: WidgetPaletteProps) =>
       type: 'funnel' as const,
       title: 'Funil',
       description: 'Processo de conversão',
-      icon: Funnel,
+      icon: funnel,
       config: {
         stages: [
           { name: 'Visitantes', value: 1000, color: '#1042F6' },

@@ -1,3 +1,4 @@
+
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Brain, Plus, BarChart3, Users, Eye } from "lucide-react";
@@ -46,7 +47,7 @@ export default function Dashboards() {
     <div className="space-y-8">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-4xl font-bold text-white font-grotesk uppercase tracking-wide verdash-glow-text">
+          <h1 className="text-4xl font-bold text-white font-grotesk uppercase tracking-wide">
             Dashboards
           </h1>
           <p className="text-white/70 mt-2 font-inter">

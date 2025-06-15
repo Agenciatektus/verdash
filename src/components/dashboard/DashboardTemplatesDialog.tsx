@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
@@ -119,12 +120,11 @@ export const DashboardTemplatesDialog = ({ onCreateDashboard }: DashboardTemplat
         </Button>
       </DialogTrigger>
       <DialogContent 
-        className="max-w-6xl max-h-[90vh] overflow-hidden" 
-        style={{ backgroundColor: '#0A0E1E' }}
+        className="max-w-6xl max-h-[90vh] overflow-hidden bg-verdash-dark border-verdash-divider/30" 
       >
         <DialogHeader>
-          <DialogTitle className="text-foreground">Criar Novo Dashboard</DialogTitle>
-          <DialogDescription className="text-muted-foreground">
+          <DialogTitle className="text-white font-grotesk">Criar Novo Dashboard</DialogTitle>
+          <DialogDescription className="text-white/60">
             Escolha um template pré-configurado ou crie um dashboard personalizado
           </DialogDescription>
         </DialogHeader>
@@ -132,15 +132,15 @@ export const DashboardTemplatesDialog = ({ onCreateDashboard }: DashboardTemplat
         <ScrollArea className="h-[600px] pr-4">
           <div className="space-y-6">
             {/* Custom Dashboard Option */}
-            <Card className="border-2 border-dashed border-primary/30 hover:border-primary/50 transition-colors cursor-pointer" onClick={handleCreateCustom}>
+            <Card className="border-2 border-dashed border-verdash-cyan/30 hover:border-verdash-cyan/50 transition-colors cursor-pointer bg-verdash-dark/50" onClick={handleCreateCustom}>
               <CardHeader>
                 <div className="flex items-center gap-3">
-                  <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center">
-                    <Plus className="w-6 h-6 text-primary" />
+                  <div className="w-12 h-12 bg-verdash-cyan/10 rounded-lg flex items-center justify-center">
+                    <Plus className="w-6 h-6 text-verdash-cyan" />
                   </div>
                   <div>
-                    <CardTitle className="text-foreground">Dashboard Personalizado</CardTitle>
-                    <CardDescription>Comece do zero e configure seu próprio dashboard</CardDescription>
+                    <CardTitle className="text-white font-grotesk">Dashboard Personalizado</CardTitle>
+                    <CardDescription className="text-white/60">Comece do zero e configure seu próprio dashboard</CardDescription>
                   </div>
                 </div>
               </CardHeader>
@@ -148,12 +148,12 @@ export const DashboardTemplatesDialog = ({ onCreateDashboard }: DashboardTemplat
 
             {/* Template Categories */}
             <div className="space-y-4">
-              <h3 className="text-lg font-semibold text-foreground">Templates Disponíveis</h3>
+              <h3 className="text-lg font-semibold text-white font-grotesk">Templates Disponíveis</h3>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 {dashboardTemplates.map((template) => (
                   <Card 
                     key={template.id} 
-                    className="hover:shadow-lg transition-all duration-200 cursor-pointer group" 
+                    className="hover:shadow-lg transition-all duration-200 cursor-pointer group bg-verdash-dark/50 border-verdash-divider/30 hover:border-verdash-cyan/50" 
                     onClick={() => handleSelectTemplate(template.id, template.name)}
                   >
                     <CardHeader className="pb-3">
@@ -161,28 +161,28 @@ export const DashboardTemplatesDialog = ({ onCreateDashboard }: DashboardTemplat
                         <div className={`w-10 h-10 ${template.color} rounded-lg flex items-center justify-center mb-3`}>
                           <template.icon className="w-5 h-5 text-white" />
                         </div>
-                        <Badge variant="outline" className="text-xs">
+                        <Badge variant="outline" className="text-xs border-verdash-divider/30 text-white/70">
                           {template.category}
                         </Badge>
                       </div>
-                      <CardTitle className="text-sm font-semibold text-foreground group-hover:text-primary transition-colors">
+                      <CardTitle className="text-sm font-semibold text-white group-hover:text-verdash-cyan transition-colors font-grotesk">
                         {template.name}
                       </CardTitle>
-                      <CardDescription className="text-xs">
+                      <CardDescription className="text-xs text-white/60">
                         {template.description}
                       </CardDescription>
                     </CardHeader>
                     <CardContent className="pt-0">
                       <div className="space-y-2">
-                        <p className="text-xs font-medium text-muted-foreground">Principais métricas:</p>
+                        <p className="text-xs font-medium text-white/60">Principais métricas:</p>
                         <div className="flex flex-wrap gap-1">
                           {template.metrics.slice(0, 3).map((metric, index) => (
-                            <Badge key={index} variant="secondary" className="text-xs">
+                            <Badge key={index} variant="secondary" className="text-xs bg-verdash-divider/20 border-verdash-divider/30 text-white/70">
                               {metric}
                             </Badge>
                           ))}
                           {template.metrics.length > 3 && (
-                            <Badge variant="secondary" className="text-xs">
+                            <Badge variant="secondary" className="text-xs bg-verdash-divider/20 border-verdash-divider/30 text-white/70">
                               +{template.metrics.length - 3}
                             </Badge>
                           )}

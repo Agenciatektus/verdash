@@ -78,8 +78,8 @@ export function AppSidebar() {
     <Sidebar className="border-r border-verdash-divider/30" collapsible="icon">
       <SidebarContent className="bg-verdash-dark">
         {/* Header */}
-        <div className="p-4 border-b border-verdash-divider/30">
-          <div className="flex items-center gap-4">
+        <div className="px-4 py-4 border-b border-verdash-divider/30">
+          <div className="flex items-center gap-3 px-2">
             <div className="w-10 h-10 rounded-xl bg-gradient-to-r from-verdash-primary to-verdash-cyan flex items-center justify-center shadow-lg shrink-0">
               <img 
                 src="/lovable-uploads/10cfd476-2094-4d85-aaa8-884b089f6dc8.png" 
@@ -193,8 +193,8 @@ export function AppSidebar() {
           </SidebarGroup>
 
           {/* User Info */}
-          <div className="p-4 border-t border-verdash-divider/30">
-            <div className="flex items-center gap-4">
+          <div className="px-4 py-4 border-t border-verdash-divider/30">
+            <div className="flex items-center gap-3 px-2">
               <div className="w-12 h-12 rounded-full flex items-center justify-center text-white font-bold shadow-lg shrink-0 bg-gradient-to-r from-verdash-primary to-verdash-cyan">
                 {user?.name?.charAt(0) || 'U'}
               </div>

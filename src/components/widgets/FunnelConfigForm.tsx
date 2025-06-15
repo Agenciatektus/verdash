@@ -13,6 +13,12 @@ interface FunnelConfigFormProps {
   onUpdate: (updatedWidget: Widget) => void;
 }
 
+interface Metric {
+  id: string;
+  name: string;
+  category: string;
+}
+
 const iconOptions = [
   { value: 'Users', label: 'Usuários' },
   { value: 'UserCheck', label: 'Usuário Verificado' },
@@ -32,9 +38,9 @@ const colorOptions = [
 ];
 
 // Mock de métricas - na implementação real, isso viria de uma API
-const getClientMetrics = (clientId?: string) => {
+const getClientMetrics = (clientId?: string): Metric[] => {
   // Simulando métricas específicas do cliente
-  const allMetrics = [
+  const allMetrics: Metric[] = [
     { id: 'leads', name: 'Leads Totais', category: 'Marketing' },
     { id: 'leads_qualificados', name: 'Leads Qualificados', category: 'Marketing' },
     { id: 'visitas_agendadas', name: 'Visitas Agendadas', category: 'Vendas' },
@@ -58,7 +64,7 @@ export const FunnelConfigForm = ({
   onUpdate
 }: FunnelConfigFormProps) => {
   const [stages, setStages] = useState<FunnelStage[]>(widget.config.stages || []);
-  const [availableMetrics, setAvailableMetrics] = useState<any[]>([]);
+  const [availableMetrics, setAvailableMetrics] = useState<Metric[]>([]);
 
   useEffect(() => {
     // Carregar métricas do cliente
@@ -118,14 +124,14 @@ export const FunnelConfigForm = ({
     onUpdate(updatedWidget);
   };
 
-  const getMetricsByCategory = () => {
+  const getMetricsByCategory = (): Record<string, Metric[]> => {
     return availableMetrics.reduce((acc, metric) => {
       if (!acc[metric.category]) {
         acc[metric.category] = [];
       }
       acc[metric.category].push(metric);
       return acc;
-    }, {} as Record<string, any[]>);
+    }, {} as Record<string, Metric[]>);
   };
 
   const metricsByCategory = getMetricsByCategory();

@@ -63,14 +63,14 @@ export const DashboardEditor = ({ initialWidgets, onSave }: DashboardEditorProps
   };
 
   return (
-    <div className="h-full flex">
+    <div className="h-full flex bg-background/50">
       {/* Main Editor Area */}
-      <div className="flex-1 flex flex-col">
-        {/* Header */}
-        <div className="flex items-center justify-between p-4 border-b border-border">
+      <div className="flex-1 flex flex-col min-w-0">
+        {/* Toolbar */}
+        <div className="flex items-center justify-between p-4 border-b border-border bg-card/50">
           <div>
-            <h2 className="text-xl font-semibold text-white">Editor de Dashboard</h2>
-            <p className="text-sm text-white/60">
+            <h2 className="text-lg font-semibold text-foreground">Editor de Dashboard</h2>
+            <p className="text-sm text-muted-foreground">
               {isEditing ? 'Arraste widgets para reorganizar' : 'Visualização do dashboard'}
             </p>
           </div>
@@ -120,7 +120,7 @@ export const DashboardEditor = ({ initialWidgets, onSave }: DashboardEditorProps
         </div>
 
         {/* Grid Editor */}
-        <div className="flex-1 overflow-auto bg-background/50">
+        <div className="flex-1 overflow-auto p-6">
           <EditableGrid
             widgets={widgets}
             onWidgetUpdate={handleWidgetUpdate}
@@ -132,9 +132,9 @@ export const DashboardEditor = ({ initialWidgets, onSave }: DashboardEditorProps
 
         {/* Status Bar */}
         {isEditing && (
-          <div className="p-3 bg-background border-t border-border">
+          <div className="p-4 bg-card/30 border-t border-border">
             <div className="flex items-center justify-between text-sm">
-              <span className="text-white/60">
+              <span className="text-muted-foreground">
                 {widgets.length} widgets • Modo de edição ativo
               </span>
               <span className="text-verdash-cyan">

@@ -8,7 +8,8 @@ import {
   Table, 
   PieChart, 
   Target,
-  TrendingDown
+  TrendingDown,
+  X
 } from 'lucide-react';
 
 interface WidgetPaletteProps {
@@ -115,21 +116,23 @@ export const WidgetPalette = ({ onWidgetAdd, isVisible }: WidgetPaletteProps) =>
   if (!isVisible) return null;
 
   return (
-    <div className="w-80 h-full bg-background border-l border-border overflow-y-auto">
-      <div className="p-4">
-        <h3 className="text-lg font-semibold text-white mb-4">Adicionar Widgets</h3>
+    <div className="w-80 h-full bg-card border-l border-border overflow-y-auto flex-shrink-0">
+      <div className="p-6">
+        <div className="flex items-center justify-between mb-6">
+          <h3 className="text-lg font-semibold text-foreground">Widgets Disponíveis</h3>
+        </div>
         
-        <div className="space-y-3">
+        <div className="space-y-4">
           {widgetTemplates.map((template, index) => (
-            <Card key={index} className="verdash-glass cursor-pointer hover:bg-white/5 transition-colors">
+            <Card key={index} className="verdash-glass cursor-pointer hover:bg-accent/10 transition-colors border-border">
               <CardContent className="p-4">
-                <div className="flex items-center gap-3 mb-2">
-                  <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-verdash-blue to-verdash-cyan flex items-center justify-center">
-                    <template.icon className="w-4 h-4 text-white" />
+                <div className="flex items-start gap-3 mb-3">
+                  <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-verdash-blue to-verdash-cyan flex items-center justify-center flex-shrink-0">
+                    <template.icon className="w-5 h-5 text-white" />
                   </div>
-                  <div className="flex-1">
-                    <h4 className="text-sm font-medium text-white">{template.title}</h4>
-                    <p className="text-xs text-white/60">{template.description}</p>
+                  <div className="flex-1 min-w-0">
+                    <h4 className="text-sm font-medium text-foreground truncate">{template.title}</h4>
+                    <p className="text-xs text-muted-foreground">{template.description}</p>
                   </div>
                 </div>
                 
@@ -138,7 +141,7 @@ export const WidgetPalette = ({ onWidgetAdd, isVisible }: WidgetPaletteProps) =>
                   className="w-full verdash-btn-primary text-xs"
                   onClick={() => handleAddWidget(template)}
                 >
-                  Adicionar
+                  Adicionar Widget
                 </Button>
               </CardContent>
             </Card>

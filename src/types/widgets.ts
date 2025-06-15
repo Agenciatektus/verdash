@@ -1,7 +1,7 @@
 
 export interface Widget {
   id: string;
-  type: 'kpi' | 'line-chart' | 'bar-chart' | 'pie-chart' | 'table' | 'funnel';
+  type: 'kpi' | 'line-chart' | 'bar-chart' | 'pie-chart' | 'table' | 'funnel' | 'area-chart' | 'stacked-area-chart' | 'horizontal-bar-chart' | 'stacked-bar-chart' | 'grouped-bar-chart' | 'donut-chart' | 'waterfall-chart' | 'gauge-chart' | 'progress-bar' | 'scatter-chart' | 'bubble-chart' | 'heatmap' | 'radar-chart';
   title: string;
   description?: string;
   position: {
@@ -38,6 +38,23 @@ export interface WidgetConfig {
   
   // Funil
   stages?: FunnelStage[];
+  
+  // Gauge específico
+  min?: number;
+  max?: number;
+  unit?: string;
+  
+  // Progress Bar
+  percentage?: number;
+  
+  // Scatter/Bubble específico
+  xKey?: string;
+  yKey?: string;
+  sizeKey?: string;
+  
+  // Radar específico
+  subjects?: string[];
+  fullMark?: number;
 }
 
 export interface TableColumn {

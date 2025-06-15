@@ -1,4 +1,3 @@
-
 import { Widget, WidgetData } from "@/types/widgets";
 
 export const mockWidgets: Widget[] = [
@@ -84,21 +83,21 @@ export const mockWidgets: Widget[] = [
 
 export const mockWidgetData: Record<string, any[]> = {
   '4': [ // Line chart data
-    { date: '01/01', revenue: 45000 },
-    { date: '02/01', revenue: 52000 },
-    { date: '03/01', revenue: 48000 },
-    { date: '04/01', revenue: 61000 },
-    { date: '05/01', revenue: 55000 },
-    { date: '06/01', revenue: 67000 },
-    { date: '07/01', revenue: 72000 },
-    { date: '08/01', revenue: 68000 },
-    { date: '09/01', revenue: 75000 },
-    { date: '10/01', revenue: 82000 },
-    { date: '11/01', revenue: 78000 },
-    { date: '12/01', revenue: 85000 },
-    { date: '13/01', revenue: 91000 },
-    { date: '14/01', revenue: 87000 },
-    { date: '15/01', revenue: 94000 }
+    { date: '01/01', value: 45000 },
+    { date: '02/01', value: 52000 },
+    { date: '03/01', value: 48000 },
+    { date: '04/01', value: 61000 },
+    { date: '05/01', value: 55000 },
+    { date: '06/01', value: 67000 },
+    { date: '07/01', value: 72000 },
+    { date: '08/01', value: 68000 },
+    { date: '09/01', value: 75000 },
+    { date: '10/01', value: 82000 },
+    { date: '11/01', value: 78000 },
+    { date: '12/01', value: 85000 },
+    { date: '13/01', value: 91000 },
+    { date: '14/01', value: 87000 },
+    { date: '15/01', value: 94000 }
   ],
   '5': [ // Table data
     { produto: 'Plano Premium', vendas: 245, receita: 73500 },
@@ -111,5 +110,36 @@ export const mockWidgetData: Record<string, any[]> = {
     { produto: 'White Label', vendas: 23, receita: 11500 },
     { produto: 'Custom Reports', vendas: 19, receita: 5700 },
     { produto: 'Data Export', vendas: 12, receita: 2400 }
+  ],
+  'pie-chart-data': [
+    { name: 'Facebook Ads', value: 35, color: '#1877F2' },
+    { name: 'Google Ads', value: 28, color: '#4285F4' },
+    { name: 'Instagram Ads', value: 20, color: '#E4405F' },
+    { name: 'Email Marketing', value: 12, color: '#FF6B35' },
+    { name: 'LinkedIn Ads', value: 5, color: '#0077B5' }
+  ],
+  'bar-chart-data': [
+    { category: 'Jan', value: 45000 },
+    { category: 'Fev', value: 52000 },
+    { category: 'Mar', value: 48000 },
+    { category: 'Abr', value: 61000 },
+    { category: 'Mai', value: 55000 },
+    { category: 'Jun', value: 67000 }
+  ],
+  'area-chart-data': [
+    { date: 'Jan', value: 4000, users: 2400 },
+    { date: 'Fev', value: 3000, users: 1398 },
+    { date: 'Mar', value: 2000, users: 9800 },
+    { date: 'Abr', value: 2780, users: 3908 },
+    { date: 'Mai', value: 1890, users: 4800 },
+    { date: 'Jun', value: 2390, users: 3800 }
+  ],
+  'radar-chart-data': [
+    { subject: 'Vendas', value: 80, fullMark: 100 },
+    { subject: 'Marketing', value: 65, fullMark: 100 },
+    { subject: 'Atendimento', value: 90, fullMark: 100 },
+    { subject: 'Produto', value: 75, fullMark: 100 },
+    { subject: 'Tecnologia', value: 85, fullMark: 100 },
+    { subject: 'Financeiro', value: 70, fullMark: 100 }
   ]
 };

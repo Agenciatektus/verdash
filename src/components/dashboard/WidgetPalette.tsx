@@ -9,7 +9,11 @@ import {
   PieChart, 
   Target,
   TrendingDown,
-  X
+  AreaChart,
+  Gauge,
+  BarChart2,
+  Activity,
+  Radar
 } from 'lucide-react';
 
 interface WidgetPaletteProps {
@@ -45,6 +49,19 @@ export const WidgetPalette = ({ onWidgetAdd, isVisible }: WidgetPaletteProps) =>
       position: { x: 0, y: 0, width: 2, height: 2 }
     },
     {
+      type: 'area-chart' as const,
+      title: 'Gráfico de Área',
+      description: 'Área preenchida',
+      icon: AreaChart,
+      config: {
+        xAxisKey: 'date',
+        yAxisKey: 'value',
+        showGrid: true,
+        colors: ['#00FFB0']
+      },
+      position: { x: 0, y: 0, width: 2, height: 2 }
+    },
+    {
       type: 'bar-chart' as const,
       title: 'Gráfico de Barras',
       description: 'Comparação de valores',
@@ -54,6 +71,68 @@ export const WidgetPalette = ({ onWidgetAdd, isVisible }: WidgetPaletteProps) =>
         yAxisKey: 'value',
         showGrid: true,
         colors: ['#1042F6']
+      },
+      position: { x: 0, y: 0, width: 2, height: 2 }
+    },
+    {
+      type: 'pie-chart' as const,
+      title: 'Gráfico de Pizza',
+      description: 'Distribuição percentual',
+      icon: PieChart,
+      config: {
+        dataKey: 'value',
+        showLegend: true,
+        colors: ['#1042F6', '#00FFB0', '#FF6F1B', '#FF4757']
+      },
+      position: { x: 0, y: 0, width: 2, height: 2 }
+    },
+    {
+      type: 'donut-chart' as const,
+      title: 'Gráfico de Rosca',
+      description: 'Pizza com centro vazado',
+      icon: PieChart,
+      config: {
+        dataKey: 'value',
+        showLegend: true,
+        colors: ['#1042F6', '#00FFB0', '#FF6F1B', '#FF4757']
+      },
+      position: { x: 0, y: 0, width: 2, height: 2 }
+    },
+    {
+      type: 'gauge-chart' as const,
+      title: 'Velocímetro',
+      description: 'Indicador gauge',
+      icon: Gauge,
+      config: {
+        value: 75,
+        min: 0,
+        max: 100,
+        unit: '%',
+        colors: ['#00FFB0']
+      },
+      position: { x: 0, y: 0, width: 1, height: 1 }
+    },
+    {
+      type: 'progress-bar' as const,
+      title: 'Barra de Progresso',
+      description: 'Progresso visual',
+      icon: BarChart2,
+      config: {
+        percentage: 65,
+        value: 65,
+        target: 100
+      },
+      position: { x: 0, y: 0, width: 1, height: 1 }
+    },
+    {
+      type: 'radar-chart' as const,
+      title: 'Gráfico Radar',
+      description: 'Múltiplos critérios',
+      icon: Radar,
+      config: {
+        showLegend: true,
+        fullMark: 100,
+        colors: ['#00FFB0']
       },
       position: { x: 0, y: 0, width: 2, height: 2 }
     },
@@ -70,18 +149,6 @@ export const WidgetPalette = ({ onWidgetAdd, isVisible }: WidgetPaletteProps) =>
         pageSize: 10
       },
       position: { x: 0, y: 0, width: 1, height: 2 }
-    },
-    {
-      type: 'pie-chart' as const,
-      title: 'Gráfico de Pizza',
-      description: 'Distribuição percentual',
-      icon: PieChart,
-      config: {
-        dataKey: 'value',
-        showLegend: true,
-        colors: ['#1042F6', '#00FFB0', '#FF6F1B', '#FF4757']
-      },
-      position: { x: 0, y: 0, width: 2, height: 2 }
     },
     {
       type: 'funnel' as const,

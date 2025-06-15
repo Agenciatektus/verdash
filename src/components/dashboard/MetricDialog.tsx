@@ -65,7 +65,7 @@ export const MetricDialog = ({ onNewMetric }: MetricDialogProps) => {
           Nova Métrica
         </Button>
       </DialogTrigger>
-      <DialogContent className="max-w-4xl max-h-[90vh] overflow-hidden bg-background/95 backdrop-blur-sm border-border">
+      <DialogContent className="max-w-4xl max-h-[90vh] overflow-hidden border-border" style={{ backgroundColor: '#0A0E1E' }}>
         <DialogHeader>
           <DialogTitle className="text-foreground">Criar Nova Métrica</DialogTitle>
           <DialogDescription className="text-muted-foreground">
@@ -143,7 +143,7 @@ export const MetricDialog = ({ onNewMetric }: MetricDialogProps) => {
                       <SelectTrigger className="mt-1 bg-background/50 border-border">
                         <SelectValue placeholder="Selecione um projeto" />
                       </SelectTrigger>
-                      <SelectContent className="bg-background border-border">
+                      <SelectContent className="border-border" style={{ backgroundColor: '#0A0E1E' }}>
                         <SelectItem value="ecommerce">E-commerce Principal</SelectItem>
                         <SelectItem value="marketing">Marketing Digital</SelectItem>
                         <SelectItem value="b2b">Vendas B2B</SelectItem>

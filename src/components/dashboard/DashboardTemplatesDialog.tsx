@@ -119,7 +119,7 @@ export const DashboardTemplatesDialog = ({ onCreateDashboard }: DashboardTemplat
           Novo Dashboard
         </Button>
       </DialogTrigger>
-      <DialogContent className="max-w-6xl max-h-[90vh] overflow-hidden">
+      <DialogContent className="max-w-6xl max-h-[90vh] overflow-hidden border-border" style={{ backgroundColor: '#0A0E1E' }}>
         <DialogHeader>
           <DialogTitle className="text-foreground">Criar Novo Dashboard</DialogTitle>
           <DialogDescription className="text-muted-foreground">

@@ -38,6 +38,7 @@ const mainNavigation = [
   { title: "Projetos", url: "/projects", icon: FolderOpen },
   { title: "Dashboards", url: "/dashboards", icon: Brain },
   { title: "Métricas & KPIs", url: "/metrics", icon: Ruler },
+  { title: "Verdash IA", url: "/verdash-ai", icon: Brain },
   { title: "Integrações", url: "/integrations", icon: Plug },
   { title: "Clientes", url: "/clients", icon: Users },
 ];

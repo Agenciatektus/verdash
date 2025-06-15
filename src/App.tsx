@@ -47,6 +47,7 @@ const App = () => {
                       <Route path="/projects" element={<Projects />} />
                       <Route path="/dashboards" element={<Dashboards />} />
                       <Route path="/metrics" element={<Metrics />} />
+                      <Route path="/verdash-ai" element={<VerdashAI />} />
                       <Route path="/integrations" element={<Integrations />} />
                       <Route path="/clients" element={<Clients />} />
                       <Route path="/support" element={<Support />} />

@@ -39,7 +39,7 @@ const kpis = [
     change: "+8.2%",
     trend: "up", 
     icon: Users,
-    gradient: "from-verdash-cyan to-verdash-coral"
+    gradient: "from-verdash-blue to-verdash-cyan"
   },
   {
     title: "Taxa de Conversão",
@@ -47,7 +47,7 @@ const kpis = [
     change: "-2.1%",
     trend: "down",
     icon: Target,
-    gradient: "from-verdash-coral to-verdash-red"
+    gradient: "from-verdash-red to-verdash-coral"
   },
   {
     title: "Sessões",
@@ -55,7 +55,7 @@ const kpis = [
     change: "+15.3%",
     trend: "up",
     icon: Activity,
-    gradient: "from-verdash-red to-verdash-blue"
+    gradient: "from-verdash-blue to-verdash-cyan"
   }
 ];
 
@@ -97,9 +97,9 @@ const Dashboard = () => {
                   <kpi.icon className="w-6 h-6 text-white" />
                 </div>
                 {kpi.trend === "up" ? (
-                  <TrendingUp className="w-5 h-5 text-verdash-success" />
+                  <TrendingUp className="w-5 h-5 text-verdash-cyan" />
                 ) : (
-                  <TrendingDown className="w-5 h-5 text-verdash-error" />
+                  <TrendingDown className="w-5 h-5 text-verdash-red" />
                 )}
               </div>
               <div>
@@ -107,7 +107,7 @@ const Dashboard = () => {
                 <p className="text-3xl font-bold text-foreground mb-2">{kpi.value}</p>
                 <div className="flex items-center">
                   <span className={`text-sm font-semibold ${
-                    kpi.trend === "up" ? "text-verdash-success" : "text-verdash-error"
+                    kpi.trend === "up" ? "text-verdash-cyan" : "text-verdash-red"
                   }`}>
                     {kpi.change}
                   </span>
@@ -155,8 +155,7 @@ const Dashboard = () => {
                 <defs>
                   <linearGradient id="verdashGradient" x1="0%" y1="0%" x2="100%" y2="0%">
                     <stop offset="0%" stopColor="#1042F6" />
-                    <stop offset="50%" stopColor="#00FFB0" />
-                    <stop offset="100%" stopColor="#FF6F1B" />
+                    <stop offset="100%" stopColor="#00FFB0" />
                   </linearGradient>
                 </defs>
               </LineChart>
@@ -167,7 +166,7 @@ const Dashboard = () => {
         <Card className="verdash-card">
           <CardHeader>
             <CardTitle className="flex items-center gap-3 text-xl font-semibold">
-              <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-verdash-cyan to-verdash-coral flex items-center justify-center">
+              <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-verdash-blue to-verdash-cyan flex items-center justify-center">
                 <Users className="w-4 h-4 text-white" />
               </div>
               Usuários por Mês
@@ -232,8 +231,8 @@ const Dashboard = () => {
                   <Badge 
                     variant={metric.status === 'active' ? 'default' : 'secondary'}
                     className={metric.status === 'active' 
-                      ? 'bg-gradient-to-r from-verdash-success/20 to-verdash-cyan/20 text-verdash-success border-verdash-success/30' 
-                      : 'bg-gradient-to-r from-verdash-coral/20 to-verdash-red/20 text-verdash-coral border-verdash-coral/30'
+                      ? 'bg-gradient-to-r from-verdash-cyan/20 to-verdash-blue/20 text-verdash-cyan border-verdash-cyan/30' 
+                      : 'bg-gradient-to-r from-verdash-red/20 to-verdash-coral/20 text-verdash-red border-verdash-red/30'
                     }
                   >
                     {metric.status === 'active' ? 'Ativo' : 'Atenção'}

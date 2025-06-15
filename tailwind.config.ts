@@ -75,8 +75,8 @@ export default {
 					cyan: '#00FFB0',
 					coral: '#FF6F1B',
 					red: '#FF3871',
-					error: '#FF6F61',
-					success: '#00FF85',
+					error: '#FF3871',
+					success: '#00FFB0',
 					info: '#00AEEF',
 					divider: '#2A2E42',
 					disabled: '#7A7A7A',
@@ -156,8 +156,9 @@ export default {
 				'verdash-glow': 'verdash-glow 2s ease-in-out infinite',
 			},
 			backgroundImage: {
-				'verdash-gradient': 'linear-gradient(135deg, #1042F6 0%, #00FFB0 25%, #FF6F1B 75%, #FF3871 100%)',
+				'verdash-gradient': 'linear-gradient(135deg, #1042F6 0%, #00FFB0 100%)',
 				'verdash-gradient-hover': 'linear-gradient(135deg, #1042F6 0%, #00FFB0 50%, #FF6F1B 100%)',
+				'verdash-gradient-negative': 'linear-gradient(135deg, #FF3871 0%, #FF6F1B 100%)',
 				'verdash-glass': 'rgba(10, 14, 30, 0.6)',
 			},
 			backdropBlur: {

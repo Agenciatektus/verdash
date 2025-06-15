@@ -32,19 +32,19 @@ body {
 
 /* Verdash Brand Classes */
 .verdash-gradient {
-  background: linear-gradient(135deg, #2DD4BF 0%, #06B6D4 25%, #F97316 75%, #EF4444 100%);
+  background: linear-gradient(135deg, #1042F6 0%, #00FFB0 100%);
 }
 
 .verdash-glow-text {
-  text-shadow: 0 0 20px rgba(45, 212, 191, 0.5);
+  text-shadow: 0 0 20px rgba(0, 255, 176, 0.5);
 }
 
 .verdash-glow {
-  box-shadow: 0 0 20px rgba(45, 212, 191, 0.3);
+  box-shadow: 0 0 20px rgba(0, 255, 176, 0.3);
 }
 
 .verdash-shadow-glow {
-  box-shadow: 0 8px 32px rgba(45, 212, 191, 0.2);
+  box-shadow: 0 8px 32px rgba(0, 255, 176, 0.2);
 }
 
 /* Glass Components */
@@ -62,50 +62,50 @@ body {
 
 .verdash-glass-hover:hover {
   background: rgba(16, 24, 44, 0.9);
-  border-color: rgba(45, 212, 191, 0.3);
-  box-shadow: 0 8px 32px rgba(45, 212, 191, 0.15);
+  border-color: rgba(0, 255, 176, 0.3);
+  box-shadow: 0 8px 32px rgba(0, 255, 176, 0.15);
   transform: translateY(-2px);
 }
 
 /* KPI Cards */
 .verdash-kpi {
   background: linear-gradient(135deg, rgba(16, 24, 44, 0.9) 0%, rgba(16, 24, 44, 0.7) 100%);
-  border: 1px solid rgba(45, 212, 191, 0.2);
+  border: 1px solid rgba(0, 255, 176, 0.2);
   border-radius: 16px;
   backdrop-filter: blur(16px);
   transition: all 0.3s ease;
 }
 
 .verdash-kpi:hover {
-  border-color: rgba(45, 212, 191, 0.4);
-  box-shadow: 0 8px 32px rgba(45, 212, 191, 0.1);
+  border-color: rgba(0, 255, 176, 0.4);
+  box-shadow: 0 8px 32px rgba(0, 255, 176, 0.1);
 }
 
 /* Button Styles */
 .verdash-btn-primary {
-  background: linear-gradient(135deg, #2DD4BF 0%, #06B6D4 50%, #F97316 100%);
+  background: linear-gradient(135deg, #1042F6 0%, #00FFB0 100%);
   color: white;
   border: none;
   transition: all 0.3s ease;
-  box-shadow: 0 4px 16px rgba(45, 212, 191, 0.3);
+  box-shadow: 0 4px 16px rgba(0, 255, 176, 0.3);
 }
 
 .verdash-btn-primary:hover {
   transform: translateY(-1px);
-  box-shadow: 0 8px 24px rgba(45, 212, 191, 0.4);
+  box-shadow: 0 8px 24px rgba(0, 255, 176, 0.4);
   filter: brightness(1.1);
 }
 
 .verdash-btn-secondary {
   background: rgba(16, 24, 44, 0.8);
   color: white;
-  border: 1px solid rgba(45, 212, 191, 0.3);
+  border: 1px solid rgba(0, 255, 176, 0.3);
   transition: all 0.3s ease;
 }
 
 .verdash-btn-secondary:hover {
-  background: rgba(45, 212, 191, 0.1);
-  border-color: rgba(45, 212, 191, 0.5);
+  background: rgba(0, 255, 176, 0.1);
+  border-color: rgba(0, 255, 176, 0.5);
   color: white;
 }
 
@@ -119,8 +119,8 @@ body {
 }
 
 .verdash-input:focus {
-  border-color: rgba(45, 212, 191, 0.5);
-  box-shadow: 0 0 0 3px rgba(45, 212, 191, 0.1);
+  border-color: rgba(0, 255, 176, 0.5);
+  box-shadow: 0 0 0 3px rgba(0, 255, 176, 0.1);
   background: rgba(16, 24, 44, 0.8);
 }
 
@@ -146,7 +146,7 @@ body {
   top: 0;
   width: 0;
   height: 100%;
-  background: linear-gradient(90deg, #2DD4BF, #06B6D4);
+  background: linear-gradient(90deg, #1042F6, #00FFB0);
   transition: width 0.3s ease;
   border-radius: 12px;
   z-index: -1;
@@ -159,7 +159,7 @@ body {
 
 .verdash-sidebar-item:hover {
   color: white;
-  background: rgba(45, 212, 191, 0.1);
+  background: rgba(0, 255, 176, 0.1);
 }
 
 .verdash-sidebar-item.active {
@@ -212,15 +212,15 @@ body {
 
 /* Progress Bar Styles */
 .progress-success .bg-gradient-to-r {
-  background: linear-gradient(90deg, #2DD4BF, #06B6D4) !important;
+  background: linear-gradient(90deg, #1042F6, #00FFB0) !important;
 }
 
 .progress-warning .bg-gradient-to-r {
-  background: linear-gradient(90deg, #F97316, #EAB308) !important;
+  background: linear-gradient(90deg, #FF6F1B, #FF3871) !important;
 }
 
 .progress-error .bg-gradient-to-r {
-  background: linear-gradient(90deg, #EF4444, #DC2626) !important;
+  background: linear-gradient(90deg, #FF3871, #FF6F1B) !important;
 }
 
 /* Custom scrollbar */
@@ -233,12 +233,12 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(45, 212, 191, 0.3);
+  background: rgba(0, 255, 176, 0.3);
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(45, 212, 191, 0.5);
+  background: rgba(0, 255, 176, 0.5);
 }
 
 /* Mobile Responsive */
@@ -259,7 +259,7 @@ button:focus-visible,
 input:focus-visible,
 select:focus-visible,
 textarea:focus-visible {
-  outline: 2px solid #2DD4BF;
+  outline: 2px solid #00FFB0;
   outline-offset: 2px;
 }
 
@@ -273,6 +273,6 @@ textarea:focus-visible {
 }
 
 .verdash-card:hover {
-  border-color: rgba(45, 212, 191, 0.3);
-  box-shadow: 0 8px 32px rgba(45, 212, 191, 0.1);
+  border-color: rgba(0, 255, 176, 0.3);
+  box-shadow: 0 8px 32px rgba(0, 255, 176, 0.1);
 }

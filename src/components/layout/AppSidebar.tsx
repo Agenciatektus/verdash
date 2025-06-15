@@ -78,7 +78,7 @@ export function AppSidebar() {
     <Sidebar className="border-r border-verdash-divider/30" collapsible="icon">
       <SidebarContent className="bg-verdash-dark">
         {/* Header */}
-        <div className="p-6 border-b border-verdash-divider/30">
+        <div className="p-4 border-b border-verdash-divider/30">
           <div className="flex items-center gap-4">
             <div className="w-10 h-10 rounded-xl bg-gradient-to-r from-verdash-primary to-verdash-cyan flex items-center justify-center shadow-lg shrink-0">
               <img 
@@ -95,7 +95,7 @@ export function AppSidebar() {
         </div>
 
         {/* Main Navigation */}
-        <SidebarGroup className="px-6 py-6">
+        <SidebarGroup className="px-4 py-6">
           <SidebarGroupContent>
             <SidebarMenu className="space-y-3">
               {mainNavigation.map((item) => (
@@ -120,7 +120,7 @@ export function AppSidebar() {
         </SidebarGroup>
 
         {/* Projects Section */}
-        <SidebarGroup className="px-6 group-data-[collapsible=icon]:hidden">
+        <SidebarGroup className="px-4 group-data-[collapsible=icon]:hidden">
           <Collapsible open={projectsOpen} onOpenChange={setProjectsOpen}>
             <SidebarGroupLabel asChild>
               <CollapsibleTrigger className="flex items-center justify-between w-full p-3 hover:bg-verdash-input-bg/50 rounded-xl verdash-animate">
@@ -159,7 +159,7 @@ export function AppSidebar() {
 
         {/* Bottom Navigation */}
         <div className="mt-auto">
-          <SidebarGroup className="px-6 py-4">
+          <SidebarGroup className="px-4 py-4">
             <SidebarGroupContent>
               <SidebarMenu className="space-y-3">
                 {bottomNavigation.map((item) => (
@@ -193,7 +193,7 @@ export function AppSidebar() {
           </SidebarGroup>
 
           {/* User Info */}
-          <div className="p-6 border-t border-verdash-divider/30">
+          <div className="p-4 border-t border-verdash-divider/30">
             <div className="flex items-center gap-4">
               <div className="w-12 h-12 rounded-full flex items-center justify-center text-white font-bold shadow-lg shrink-0 bg-gradient-to-r from-verdash-primary to-verdash-cyan">
                 {user?.name?.charAt(0) || 'U'}

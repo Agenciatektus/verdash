@@ -1,4 +1,3 @@
-
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -15,7 +14,10 @@ import {
   Eye,
   Zap,
   MessageCircle,
-  Award
+  Award,
+  Wallet,
+  RefreshCw,
+  UserX
 } from "lucide-react";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, BarChart, Bar, PieChart, Pie, Cell, AreaChart, Area } from "recharts";
 import { DashboardTemplatesDialog } from "@/components/dashboard/DashboardTemplatesDialog";
@@ -23,12 +25,12 @@ import { DateRangeFilter } from "@/components/dashboard/DateRangeFilter";
 
 // Dados mockados para os gráficos
 const revenueData = [
-  { month: 'Jan', receita: 125000, investimento: 45000, leads: 1250 },
-  { month: 'Fev', receita: 148000, investimento: 52000, leads: 1380 },
-  { month: 'Mar', receita: 167000, investimento: 48000, leads: 1520 },
-  { month: 'Abr', receita: 195000, investimento: 55000, leads: 1680 },
-  { month: 'Mai', receita: 234000, investimento: 62000, leads: 1850 },
-  { month: 'Jun', receita: 267000, investimento: 68000, leads: 2100 }
+  { month: 'Jan', receita: 125000, investimento: 45000, leads: 1250, mrr: 85000 },
+  { month: 'Fev', receita: 148000, investimento: 52000, leads: 1380, mrr: 92000 },
+  { month: 'Mar', receita: 167000, investimento: 48000, leads: 1520, mrr: 98000 },
+  { month: 'Abr', receita: 195000, investimento: 55000, leads: 1680, mrr: 105000 },
+  { month: 'Mai', receita: 234000, investimento: 62000, leads: 1850, mrr: 112000 },
+  { month: 'Jun', receita: 267000, investimento: 68000, leads: 2100, mrr: 118000 }
 ];
 
 const investmentByChannel = [
@@ -64,8 +66,8 @@ const conversionByChannel = [
   { channel: 'Offline', leads: 50, vendas: 4, taxa: 8.0 }
 ];
 
-// KPIs principais
-const kpis = [
+// KPIs principais expandidos com novos indicadores financeiros
+const mainKpis = [
   {
     title: "Receita Total",
     value: "R$ 267.000",
@@ -104,7 +106,10 @@ const kpis = [
     trend: "up",
     icon: Users,
     gradient: "from-verdash-blue to-verdash-cyan"
-  },
+  }
+];
+
+const financialKpis = [
   {
     title: "Conversões (Vendas)",
     value: "147",
@@ -124,6 +129,45 @@ const kpis = [
     trend: "up",
     icon: Award,
     gradient: "from-verdash-coral to-verdash-red"
+  },
+  {
+    title: "MRR",
+    value: "R$ 118.000",
+    previousValue: "R$ 112.000",
+    target: "R$ 125.000",
+    change: "+5.4%",
+    trend: "up",
+    icon: RefreshCw,
+    gradient: "from-verdash-blue to-verdash-cyan"
+  },
+  {
+    title: "LTV",
+    value: "R$ 15.840",
+    previousValue: "R$ 14.200",
+    target: "R$ 18.000",
+    change: "+11.5%",
+    trend: "up",
+    icon: TrendingUp,
+    gradient: "from-verdash-blue to-verdash-cyan"
+  },
+  {
+    title: "Churn Rate",
+    value: "3.2%",
+    previousValue: "4.1%",
+    target: "2.5%",
+    change: "-21.9%",
+    trend: "up",
+    icon: UserX,
+    gradient: "from-verdash-cyan to-verdash-blue"
+  },
+  {
+    title: "Valor em Caixa",
+    value: "R$ 485.000",
+    previousValue: "R$ 427.000",
+    change: "+13.6%",
+    trend: "up",
+    icon: Wallet,
+    gradient: "from-verdash-blue to-verdash-cyan"
   }
 ];
 
@@ -148,6 +192,13 @@ const additionalKpis = [
     target: "9.0",
     status: "success",
     icon: Award
+  },
+  {
+    title: "Receita Nova vs Perdida",
+    value: "+R$ 142k",
+    change: "Nova: +R$ 165k | Churn: -R$ 23k",
+    status: "success",
+    icon: TrendingUp
   }
 ];
 
@@ -162,7 +213,7 @@ const Dashboard = () => {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-4xl font-bold text-foreground mb-2 font-grotesk">Dashboard Principal</h1>
-          <p className="text-muted-foreground text-lg font-inter">Visão executiva completa do seu negócio</p>
+          <p className="text-muted-foreground text-lg font-inter">Visão executiva completa da saúde do seu negócio</p>
         </div>
         <div className="flex gap-3">
           <Button variant="outline" className="verdash-animate">
@@ -236,16 +287,18 @@ const Dashboard = () => {
         </div>
       </div>
 
-      {/* 🏆 LINHA SUPERIOR - KPIs de Impacto */}
-      <div className="space-y-4">
+      {/* 🏆 LINHA SUPERIOR - KPIs de Impacto e Saúde do Negócio */}
+      <div className="space-y-6">
         <h2 className="text-2xl font-bold text-foreground font-grotesk flex items-center gap-3">
           <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-verdash-blue to-verdash-cyan flex items-center justify-center">
             <Award className="w-5 h-5 text-white" />
           </div>
-          KPIs de Impacto
+          KPIs de Impacto e Saúde do Negócio
         </h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {kpis.map((kpi, index) => (
+
+        {/* Primeira linha de KPIs - Métricas principais */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          {mainKpis.map((kpi, index) => (
             <Card key={index} className="verdash-glass verdash-glass-hover verdash-hover-scale">
               <CardContent className="p-6">
                 <div className="flex items-center justify-between mb-4">
@@ -281,9 +334,48 @@ const Dashboard = () => {
             </Card>
           ))}
         </div>
+
+        {/* Segunda linha de KPIs - Métricas financeiras e conversão */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {financialKpis.map((kpi, index) => (
+            <Card key={index} className="verdash-glass verdash-glass-hover verdash-hover-scale">
+              <CardContent className="p-6">
+                <div className="flex items-center justify-between mb-4">
+                  <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${kpi.gradient} flex items-center justify-center`}>
+                    <kpi.icon className="w-6 h-6 text-white" />
+                  </div>
+                  {kpi.trend === "up" ? (
+                    <TrendingUp className="w-5 h-5 text-verdash-cyan" />
+                  ) : (
+                    <TrendingDown className="w-5 h-5 text-verdash-red" />
+                  )}
+                </div>
+                <div>
+                  <p className="text-sm font-medium text-muted-foreground mb-1 font-inter">{kpi.title}</p>
+                  <p className="text-2xl font-bold text-foreground mb-2 font-grotesk">{kpi.value}</p>
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center">
+                      <span className={`text-sm font-semibold ${
+                        kpi.trend === "up" ? "text-verdash-cyan" : "text-verdash-red"
+                      }`}>
+                        {kpi.change}
+                      </span>
+                      <span className="text-sm text-muted-foreground ml-2">vs. período anterior</span>
+                    </div>
+                    {kpi.target && (
+                      <div className="text-xs text-muted-foreground">
+                        Meta: {kpi.target}
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
       </div>
 
-      {/* 📈 LINHA INTERMEDIÁRIA - Visão de Performance */}
+      {/* 📈 LINHA INTERMEDIÁRIA - Visão de Performance ao Longo do Tempo */}
       <div className="space-y-6">
         <h2 className="text-2xl font-bold text-foreground font-grotesk flex items-center gap-3">
           <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-verdash-coral to-verdash-red flex items-center justify-center">
@@ -293,14 +385,14 @@ const Dashboard = () => {
         </h2>
         
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          {/* Gráfico de Linha - Receita, Investimento e Leads */}
+          {/* Gráfico de Linha - Receita, Investimento, Leads e MRR */}
           <Card className="verdash-glass lg:col-span-2">
             <CardHeader>
               <CardTitle className="text-white text-xl font-grotesk flex items-center gap-3">
                 <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-verdash-blue to-verdash-cyan flex items-center justify-center">
                   <TrendingUp className="w-4 h-4 text-white" />
                 </div>
-                Evolução de Receita, Investimento e Leads
+                Evolução de Receita, Investimento, Leads e MRR
               </CardTitle>
               <CardDescription className="text-white/70 font-inter">Últimos 6 meses - Visão comparativa</CardDescription>
             </CardHeader>
@@ -341,6 +433,14 @@ const Dashboard = () => {
                     strokeWidth={3}
                     name="Leads"
                     dot={{ fill: '#1042F6', strokeWidth: 2, r: 5 }}
+                  />
+                  <Line 
+                    type="monotone" 
+                    dataKey="mrr" 
+                    stroke="#FF3871" 
+                    strokeWidth={3}
+                    name="MRR"
+                    dot={{ fill: '#FF3871', strokeWidth: 2, r: 5 }}
                   />
                 </LineChart>
               </ResponsiveContainer>
@@ -482,8 +582,8 @@ const Dashboard = () => {
           </Card>
         </div>
 
-        {/* KPIs Adicionais */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        {/* KPIs Adicionais Expandidos */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {additionalKpis.map((kpi, index) => (
             <Card key={index} className="verdash-glass verdash-glass-hover">
               <CardContent className="p-6">
@@ -507,9 +607,9 @@ const Dashboard = () => {
                 </div>
                 <div>
                   <p className="text-sm font-medium text-muted-foreground mb-1 font-inter">{kpi.title}</p>
-                  <p className="text-2xl font-bold text-foreground mb-2 font-grotesk">{kpi.value}</p>
+                  <p className="text-xl font-bold text-foreground mb-2 font-grotesk">{kpi.value}</p>
                   {kpi.change && (
-                    <p className="text-sm text-verdash-cyan font-inter">{kpi.change} vs. período anterior</p>
+                    <p className="text-xs text-verdash-cyan font-inter">{kpi.change}</p>
                   )}
                   {kpi.target && (
                     <p className="text-xs text-muted-foreground font-inter">Meta: {kpi.target}</p>

@@ -25,10 +25,11 @@ export const MetricDialog = ({ onNewMetric }: MetricDialogProps) => {
   const [selectedDataSources, setSelectedDataSources] = useState<string[]>([]);
   const [formula, setFormula] = useState("");
   const [selectedMetric, setSelectedMetric] = useState("");
+  const [metricType, setMetricType] = useState("");
 
   const handleCreateMetric = () => {
-    if (!metricName || !formula) {
-      toast.error("Nome e fórmula são obrigatórios");
+    if (!metricName || !formula || !metricType) {
+      toast.error("Nome, fórmula e tipo são obrigatórios");
       return;
     }
 
@@ -45,6 +46,7 @@ export const MetricDialog = ({ onNewMetric }: MetricDialogProps) => {
     setSelectedDataSources([]);
     setFormula("");
     setSelectedMetric("");
+    setMetricType("");
   };
 
   const insertFormulaFunction = (func: string) => {
@@ -66,20 +68,23 @@ export const MetricDialog = ({ onNewMetric }: MetricDialogProps) => {
         </Button>
       </DialogTrigger>
       <DialogContent 
-        className="max-w-4xl max-h-[90vh] overflow-hidden" 
-        style={{ backgroundColor: '#0A0E1E' }}
+        className="max-w-4xl max-h-[90vh] overflow-hidden bg-verdash-background border-verdash-divider/30" 
       >
         <DialogHeader>
-          <DialogTitle className="text-foreground">Criar Nova Métrica</DialogTitle>
-          <DialogDescription className="text-muted-foreground">
+          <DialogTitle className="text-white font-grotesk">Criar Nova Métrica</DialogTitle>
+          <DialogDescription className="text-white/60">
             Escolha uma métrica pré-definida ou configure uma métrica personalizada
           </DialogDescription>
         </DialogHeader>
         
         <Tabs value={activeTab} onValueChange={setActiveTab} className="h-full">
-          <TabsList className="grid w-full grid-cols-2" style={{ backgroundColor: '#0A0E1E' }}>
-            <TabsTrigger value="available">Métricas Disponíveis</TabsTrigger>
-            <TabsTrigger value="create">Criar Personalizada</TabsTrigger>
+          <TabsList className="grid w-full grid-cols-2 bg-verdash-input-bg/30">
+            <TabsTrigger value="available" className="data-[state=active]:bg-verdash-cyan/20 data-[state=active]:text-verdash-cyan">
+              Métricas Disponíveis
+            </TabsTrigger>
+            <TabsTrigger value="create" className="data-[state=active]:bg-verdash-cyan/20 data-[state=active]:text-verdash-cyan">
+              Criar Personalizada
+            </TabsTrigger>
           </TabsList>
 
           <TabsContent value="available" className="mt-6">
@@ -88,21 +93,21 @@ export const MetricDialog = ({ onNewMetric }: MetricDialogProps) => {
                 {Object.entries(availableMetrics).map(([key, category]) => (
                   <div key={key} className="space-y-3">
                     <div className="flex items-center gap-2 mb-3">
-                      <category.icon className="w-5 h-5 text-primary" />
-                      <h3 className="text-lg font-semibold text-foreground">{category.title}</h3>
+                      <category.icon className="w-5 h-5 text-verdash-cyan" />
+                      <h3 className="text-lg font-semibold text-white font-grotesk">{category.title}</h3>
                     </div>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
                       {category.metrics.map((metric, index) => (
                         <button
                           key={index}
                           onClick={() => selectPredefinedMetric(metric)}
-                          className="text-left p-3 rounded-lg bg-card/20 hover:bg-card/40 transition-all duration-200 group"
+                          className="text-left p-3 rounded-lg bg-verdash-input-bg/20 hover:bg-verdash-input-bg/40 transition-all duration-200 group border border-verdash-divider/30 hover:border-verdash-cyan/50"
                         >
                           <div className="flex items-center justify-between">
-                            <span className="text-sm text-foreground group-hover:text-primary transition-colors">
+                            <span className="text-sm text-white group-hover:text-verdash-cyan transition-colors">
                               {metric}
                             </span>
-                            <Plus className="w-4 h-4 text-muted-foreground group-hover:text-primary transition-colors" />
+                            <Plus className="w-4 h-4 text-white/60 group-hover:text-verdash-cyan transition-colors" />
                           </div>
                         </button>
                       ))}
@@ -119,54 +124,73 @@ export const MetricDialog = ({ onNewMetric }: MetricDialogProps) => {
                 {/* Basic Info */}
                 <div className="space-y-4">
                   <div>
-                    <Label htmlFor="metric-name" className="text-foreground">Nome da Métrica *</Label>
+                    <Label htmlFor="metric-name" className="text-white text-sm font-grotesk">Nome da Métrica *</Label>
                     <Input
                       id="metric-name"
                       value={metricName}
                       onChange={(e) => setMetricName(e.target.value)}
                       placeholder="Ex: CAC - Custo de Aquisição"
-                      className="mt-1 bg-background/50"
+                      className="mt-1 bg-verdash-input-bg/50 border-verdash-divider/30 text-white placeholder:text-white/40"
                     />
                   </div>
                   
                   <div>
-                    <Label htmlFor="metric-description" className="text-foreground">Descrição</Label>
+                    <Label htmlFor="metric-description" className="text-white text-sm font-grotesk">Descrição</Label>
                     <Textarea
                       id="metric-description"
                       value={description}
                       onChange={(e) => setDescription(e.target.value)}
                       placeholder="Descreva o que esta métrica representa..."
-                      className="mt-1 bg-background/50"
+                      className="mt-1 bg-verdash-input-bg/50 border-verdash-divider/30 text-white placeholder:text-white/40"
                     />
                   </div>
 
-                  <div>
-                    <Label htmlFor="metric-project" className="text-foreground">Projeto</Label>
-                    <Select value={selectedProject} onValueChange={setSelectedProject}>
-                      <SelectTrigger className="mt-1 bg-background/50">
-                        <SelectValue placeholder="Selecione um projeto" />
-                      </SelectTrigger>
-                      <SelectContent style={{ backgroundColor: '#0A0E1E', border: '1px solid rgba(255,255,255,0.1)' }}>
-                        <SelectItem value="ecommerce" style={{ backgroundColor: '#0A0E1E' }}>E-commerce Principal</SelectItem>
-                        <SelectItem value="marketing" style={{ backgroundColor: '#0A0E1E' }}>Marketing Digital</SelectItem>
-                        <SelectItem value="b2b" style={{ backgroundColor: '#0A0E1E' }}>Vendas B2B</SelectItem>
-                        <SelectItem value="global" style={{ backgroundColor: '#0A0E1E' }}>Global (Todos os projetos)</SelectItem>
-                      </SelectContent>
-                    </Select>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                      <Label htmlFor="metric-project" className="text-white text-sm font-grotesk">Projeto</Label>
+                      <Select value={selectedProject} onValueChange={setSelectedProject}>
+                        <SelectTrigger className="mt-1 bg-verdash-input-bg/50 border-verdash-divider/30 text-white">
+                          <SelectValue placeholder="Selecione um projeto" />
+                        </SelectTrigger>
+                        <SelectContent className="bg-verdash-background border-verdash-divider/30">
+                          <SelectItem value="ecommerce" className="text-white hover:bg-verdash-input-bg/50">E-commerce Principal</SelectItem>
+                          <SelectItem value="marketing" className="text-white hover:bg-verdash-input-bg/50">Marketing Digital</SelectItem>
+                          <SelectItem value="b2b" className="text-white hover:bg-verdash-input-bg/50">Vendas B2B</SelectItem>
+                          <SelectItem value="global" className="text-white hover:bg-verdash-input-bg/50">Global (Todos os projetos)</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+
+                    <div>
+                      <Label htmlFor="metric-type" className="text-white text-sm font-grotesk">Tipo de Métrica *</Label>
+                      <Select value={metricType} onValueChange={setMetricType}>
+                        <SelectTrigger className="mt-1 bg-verdash-input-bg/50 border-verdash-divider/30 text-white">
+                          <SelectValue placeholder="Selecione o tipo" />
+                        </SelectTrigger>
+                        <SelectContent className="bg-verdash-background border-verdash-divider/30">
+                          <SelectItem value="currency" className="text-white hover:bg-verdash-input-bg/50">Moeda (R$)</SelectItem>
+                          <SelectItem value="percentage" className="text-white hover:bg-verdash-input-bg/50">Porcentagem (%)</SelectItem>
+                          <SelectItem value="number" className="text-white hover:bg-verdash-input-bg/50">Número</SelectItem>
+                          <SelectItem value="text" className="text-white hover:bg-verdash-input-bg/50">Texto</SelectItem>
+                          <SelectItem value="ratio" className="text-white hover:bg-verdash-input-bg/50">Proporção</SelectItem>
+                          <SelectItem value="boolean" className="text-white hover:bg-verdash-input-bg/50">Verdadeiro/Falso</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
                   </div>
                 </div>
 
                 {/* Data Sources */}
                 <div>
-                  <Label className="text-foreground">Fontes de Dados</Label>
+                  <Label className="text-white text-sm font-grotesk">Fontes de Dados</Label>
                   <div className="grid grid-cols-2 gap-3 mt-2">
                     {dataSources.map((source) => (
                       <div
                         key={source.id}
-                        className={`p-3 rounded-lg cursor-pointer transition-colors ${
+                        className={`p-3 rounded-lg cursor-pointer transition-colors border ${
                           selectedDataSources.includes(source.id)
-                            ? 'bg-primary/10'
-                            : 'hover:bg-muted/50'
+                            ? 'bg-verdash-cyan/10 border-verdash-cyan/50'
+                            : 'hover:bg-verdash-input-bg/30 border-verdash-divider/30 hover:border-verdash-divider/50'
                         }`}
                         onClick={() => {
                           setSelectedDataSources(prev =>
@@ -178,7 +202,7 @@ export const MetricDialog = ({ onNewMetric }: MetricDialogProps) => {
                       >
                         <div className="flex items-center gap-2">
                           <span className="text-lg">{source.icon}</span>
-                          <span className="text-sm font-medium text-foreground">{source.name}</span>
+                          <span className="text-sm font-medium text-white">{source.name}</span>
                         </div>
                       </div>
                     ))}
@@ -187,7 +211,7 @@ export const MetricDialog = ({ onNewMetric }: MetricDialogProps) => {
 
                 {/* Formula Builder */}
                 <div>
-                  <Label htmlFor="formula" className="text-foreground">Fórmula *</Label>
+                  <Label htmlFor="formula" className="text-white text-sm font-grotesk">Fórmula *</Label>
                   <div className="space-y-3 mt-2">
                     {/* Function Buttons */}
                     <div className="flex flex-wrap gap-2">
@@ -198,7 +222,7 @@ export const MetricDialog = ({ onNewMetric }: MetricDialogProps) => {
                           variant="outline"
                           size="sm"
                           onClick={() => insertFormulaFunction(func)}
-                          className="text-xs"
+                          className="text-xs border-verdash-divider/30 text-white hover:bg-verdash-coral/20 hover:border-verdash-coral"
                         >
                           {func}
                         </Button>
@@ -210,12 +234,12 @@ export const MetricDialog = ({ onNewMetric }: MetricDialogProps) => {
                       id="formula"
                       value={formula}
                       onChange={(e) => setFormula(e.target.value)}
-                      placeholder="Ex: SUM(marketing_spend) / COUNT(new_customers)"
-                      className="font-mono text-sm bg-background/50"
+                      placeholder="Ex: (gasto_meta + gasto_google) / total_leads"
+                      className="font-mono text-sm bg-verdash-input-bg/50 border-verdash-divider/30 text-white placeholder:text-white/40"
                       rows={4}
                     />
                     
-                    <p className="text-xs text-muted-foreground">
+                    <p className="text-xs text-white/60">
                       Use as funções acima ou digite sua própria fórmula. Você pode referenciar campos das fontes de dados selecionadas.
                     </p>
                   </div>
@@ -223,11 +247,11 @@ export const MetricDialog = ({ onNewMetric }: MetricDialogProps) => {
 
                 {/* Actions */}
                 <div className="flex gap-3 pt-4">
-                  <Button onClick={handleCreateMetric} className="flex-1 verdash-gradient">
+                  <Button onClick={handleCreateMetric} className="flex-1 verdash-btn-primary">
                     <Calculator className="w-4 h-4 mr-2" />
                     Criar Métrica
                   </Button>
-                  <Button variant="outline" onClick={() => setIsDialogOpen(false)}>
+                  <Button variant="outline" onClick={() => setIsDialogOpen(false)} className="verdash-btn-secondary">
                     Cancelar
                   </Button>
                 </div>

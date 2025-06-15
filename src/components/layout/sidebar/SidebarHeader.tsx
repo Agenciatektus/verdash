@@ -11,7 +11,7 @@ export function SidebarHeader() {
           />
         </div>
         <div className="group-data-[collapsible=icon]:hidden">
-          <h1 className="font-semibold text-2xl text-white font-inter">VERDASH</h1>
+          <h1 className="font-semibold text-xl text-white font-inter">Verdash</h1>
           <p className="text-xs text-verdash-disabled uppercase tracking-wider">Analytics Hub</p>
         </div>
       </div>

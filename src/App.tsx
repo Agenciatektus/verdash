@@ -8,6 +8,8 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { SidebarProvider } from "@/components/ui/sidebar";
 import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
+import DashboardView from "./pages/DashboardView";
+import DashboardEditor from "./pages/DashboardEditor";
 import Projects from "./pages/Projects";
 import Dashboards from "./pages/Dashboards";
 import Metrics from "./pages/Metrics";
@@ -47,6 +49,8 @@ function App() {
                     <Routes>
                       <Route path="/" element={<Dashboard />} />
                       <Route path="/dashboard" element={<Dashboard />} />
+                      <Route path="/dashboard-view/:id" element={<DashboardView />} />
+                      <Route path="/dashboard-editor/:id" element={<DashboardEditor />} />
                       <Route path="/projects" element={<Projects />} />
                       <Route path="/dashboards" element={<Dashboards />} />
                       <Route path="/metrics" element={<Metrics />} />

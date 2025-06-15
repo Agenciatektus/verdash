@@ -1,4 +1,3 @@
-
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Brain, Plus, BarChart3, Users, Eye } from "lucide-react";
@@ -40,13 +39,13 @@ export default function Dashboards() {
     if (templateId === 'custom') {
       console.log('Creating custom dashboard...');
       toast.success("Dashboard personalizado criado!");
-      // Navigate to dashboard editor
-      navigate('/dashboard');
+      // Navigate to dashboard editor with new ID
+      navigate('/dashboard-editor/new');
     } else {
       console.log(`Creating dashboard from template: ${templateId}`);
       toast.success("Dashboard criado a partir do template!");
-      // Navigate to dashboard editor
-      navigate('/dashboard');
+      // Navigate to dashboard editor with new ID
+      navigate('/dashboard-editor/new');
     }
   };
 
@@ -54,14 +53,14 @@ export default function Dashboards() {
     console.log(`Viewing dashboard: ${dashboardId}`);
     toast.success(`Abrindo dashboard "${dashboardName}"`);
     // Navigate to dashboard view
-    navigate('/dashboard');
+    navigate(`/dashboard-view/${dashboardId}`);
   };
 
   const handleEditDashboard = (dashboardId: number, dashboardName: string) => {
     console.log(`Editing dashboard: ${dashboardId}`);
     toast.success(`Editando dashboard "${dashboardName}"`);
     // Navigate to dashboard editor in edit mode
-    navigate('/dashboard');
+    navigate(`/dashboard-editor/${dashboardId}`);
   };
 
   return (

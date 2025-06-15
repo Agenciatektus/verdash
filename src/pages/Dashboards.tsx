@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Brain, Plus, BarChart3, Users, Eye } from "lucide-react";
 import { DashboardTemplatesDialog } from "@/components/dashboard/DashboardTemplatesDialog";
 import { toast } from "sonner";
+import { useNavigate } from "react-router-dom";
 
 const mockDashboards = [
   {
@@ -33,14 +34,34 @@ const mockDashboards = [
 ];
 
 export default function Dashboards() {
+  const navigate = useNavigate();
+
   const handleCreateDashboard = (templateId: string) => {
     if (templateId === 'custom') {
       console.log('Creating custom dashboard...');
-      // Add custom dashboard creation logic here
+      toast.success("Dashboard personalizado criado!");
+      // Navigate to dashboard editor
+      navigate('/dashboard');
     } else {
       console.log(`Creating dashboard from template: ${templateId}`);
-      // Add template-based dashboard creation logic here
+      toast.success("Dashboard criado a partir do template!");
+      // Navigate to dashboard editor
+      navigate('/dashboard');
     }
+  };
+
+  const handleViewDashboard = (dashboardId: number, dashboardName: string) => {
+    console.log(`Viewing dashboard: ${dashboardId}`);
+    toast.success(`Abrindo dashboard "${dashboardName}"`);
+    // Navigate to dashboard view
+    navigate('/dashboard');
+  };
+
+  const handleEditDashboard = (dashboardId: number, dashboardName: string) => {
+    console.log(`Editing dashboard: ${dashboardId}`);
+    toast.success(`Editando dashboard "${dashboardName}"`);
+    // Navigate to dashboard editor in edit mode
+    navigate('/dashboard');
   };
 
   return (
@@ -130,11 +151,20 @@ export default function Dashboards() {
                   <span className="text-white">{dashboard.lastUpdate}</span>
                 </div>
                 <div className="flex gap-2 pt-2">
-                  <Button size="sm" className="flex-1 verdash-btn-primary">
+                  <Button 
+                    size="sm" 
+                    className="flex-1 verdash-btn-primary"
+                    onClick={() => handleViewDashboard(dashboard.id, dashboard.name)}
+                  >
                     <BarChart3 className="w-4 h-4 mr-2" />
                     Visualizar
                   </Button>
-                  <Button size="sm" variant="outline" className="verdash-btn-secondary">
+                  <Button 
+                    size="sm" 
+                    variant="outline" 
+                    className="verdash-btn-secondary"
+                    onClick={() => handleEditDashboard(dashboard.id, dashboard.name)}
+                  >
                     Editar
                   </Button>
                 </div>

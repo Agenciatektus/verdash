@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -22,6 +21,9 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { useNavigate } from "react-router-dom";
+import { toast } from "sonner";
+import { NewProjectDialog } from "@/components/projects/NewProjectDialog";
 
 const mockProjects = [
   {
@@ -73,6 +75,8 @@ const mockProjects = [
 const Projects = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [filter, setFilter] = useState("all");
+  const [isNewProjectDialogOpen, setIsNewProjectDialogOpen] = useState(false);
+  const navigate = useNavigate();
 
   const filteredProjects = mockProjects.filter(project => {
     const matchesSearch = project.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -80,6 +84,35 @@ const Projects = () => {
     const matchesFilter = filter === "all" || project.status === filter;
     return matchesSearch && matchesFilter;
   });
+
+  const handleOpenProject = (projectId: string, projectName: string) => {
+    console.log(`Opening project: ${projectId}`);
+    toast.success(`Abrindo projeto "${projectName}"`);
+    // Navigate to project dashboard
+    navigate(`/dashboard?project=${projectId}`);
+  };
+
+  const handleProjectSettings = (projectId: string, projectName: string) => {
+    console.log(`Opening settings for project: ${projectId}`);
+    toast.success(`Configurações do projeto "${projectName}"`);
+    // Navigate to project settings (could be a new page or modal)
+    navigate(`/projects/${projectId}/settings`);
+  };
+
+  const handleDeleteProject = (projectId: string, projectName: string) => {
+    console.log(`Deleting project: ${projectId}`);
+    toast.success(`Projeto "${projectName}" removido`);
+    // In a real app, this would call an API to delete the project
+  };
+
+  const handleCreateProject = (projectData: any) => {
+    console.log('Creating new project:', projectData);
+    toast.success(`Projeto "${projectData.name}" criado com sucesso!`);
+    setIsNewProjectDialogOpen(false);
+    // In a real app, this would call an API to create the project
+    // and then navigate to the new project
+    navigate('/dashboard');
+  };
 
   return (
     <div className="space-y-8 animate-verdash-fade-in font-jakarta">
@@ -89,7 +122,10 @@ const Projects = () => {
           <h1 className="text-4xl font-bold text-foreground mb-2">Projetos</h1>
           <p className="text-muted-foreground text-lg">Gerencie todos os seus projetos e dashboards</p>
         </div>
-        <Button className="verdash-btn-primary verdash-hover-scale">
+        <Button 
+          className="verdash-btn-primary verdash-hover-scale"
+          onClick={() => setIsNewProjectDialogOpen(true)}
+        >
           <Plus className="w-4 h-4 mr-2" />
           Novo Projeto
         </Button>
@@ -164,16 +200,25 @@ const Projects = () => {
                     </Button>
                   </DropdownMenuTrigger>
                   <DropdownMenuContent align="end" className="bg-card border border-border/50 rounded-xl">
-                    <DropdownMenuItem className="hover:bg-sidebar-accent/30 verdash-animate">
+                    <DropdownMenuItem 
+                      className="hover:bg-sidebar-accent/30 verdash-animate"
+                      onClick={() => handleOpenProject(project.id, project.name)}
+                    >
                       <Eye className="w-4 h-4 mr-2" />
                       Visualizar
                     </DropdownMenuItem>
-                    <DropdownMenuItem className="hover:bg-sidebar-accent/30 verdash-animate">
+                    <DropdownMenuItem 
+                      className="hover:bg-sidebar-accent/30 verdash-animate"
+                      onClick={() => handleProjectSettings(project.id, project.name)}
+                    >
                       <Settings className="w-4 h-4 mr-2" />
                       Configurações
                     </DropdownMenuItem>
                     <DropdownMenuSeparator className="bg-border/30" />
-                    <DropdownMenuItem className="text-verdash-error hover:bg-verdash-error/10 verdash-animate">
+                    <DropdownMenuItem 
+                      className="text-verdash-error hover:bg-verdash-error/10 verdash-animate"
+                      onClick={() => handleDeleteProject(project.id, project.name)}
+                    >
                       <Trash2 className="w-4 h-4 mr-2" />
                       Excluir
                     </DropdownMenuItem>
@@ -224,11 +269,20 @@ const Projects = () => {
 
               {/* Actions */}
               <div className="flex gap-3 pt-2">
-                <Button size="sm" className="flex-1 verdash-btn-primary">
+                <Button 
+                  size="sm" 
+                  className="flex-1 verdash-btn-primary"
+                  onClick={() => handleOpenProject(project.id, project.name)}
+                >
                   <Eye className="w-4 h-4 mr-2" />
                   Abrir
                 </Button>
-                <Button variant="outline" size="sm" className="border-border/50 hover:border-border verdash-animate">
+                <Button 
+                  variant="outline" 
+                  size="sm" 
+                  className="border-border/50 hover:border-border verdash-animate"
+                  onClick={() => handleProjectSettings(project.id, project.name)}
+                >
                   <Settings className="w-4 h-4" />
                 </Button>
               </div>
@@ -247,12 +301,22 @@ const Projects = () => {
           <p className="text-muted-foreground mb-6 text-lg">
             {searchTerm ? "Tente ajustar sua pesquisa" : "Comece criando seu primeiro projeto"}
           </p>
-          <Button className="verdash-btn-primary verdash-hover-scale">
+          <Button 
+            className="verdash-btn-primary verdash-hover-scale"
+            onClick={() => setIsNewProjectDialogOpen(true)}
+          >
             <Plus className="w-4 h-4 mr-2" />
             Criar Projeto
           </Button>
         </div>
       )}
+
+      {/* New Project Dialog */}
+      <NewProjectDialog
+        open={isNewProjectDialogOpen}
+        onOpenChange={setIsNewProjectDialogOpen}
+        onCreateProject={handleCreateProject}
+      />
     </div>
   );
 };

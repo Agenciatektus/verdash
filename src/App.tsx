@@ -1,4 +1,3 @@
-
 import { useEffect } from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
@@ -9,7 +8,11 @@ import { SidebarProvider } from "@/components/ui/sidebar";
 import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
 import Projects from "./pages/Projects";
+import Dashboards from "./pages/Dashboards";
 import Metrics from "./pages/Metrics";
+import Integrations from "./pages/Integrations";
+import Clients from "./pages/Clients";
+import Support from "./pages/Support";
 import Users from "./pages/Users";
 import Settings from "./pages/Settings";
 import NotFound from "./pages/NotFound";
@@ -40,7 +43,11 @@ const App = () => {
                       <Route index element={<Dashboard />} />
                       <Route path="/dashboard" element={<Dashboard />} />
                       <Route path="/projects" element={<Projects />} />
+                      <Route path="/dashboards" element={<Dashboards />} />
                       <Route path="/metrics" element={<Metrics />} />
+                      <Route path="/integrations" element={<Integrations />} />
+                      <Route path="/clients" element={<Clients />} />
+                      <Route path="/support" element={<Support />} />
                       <Route path="/users" element={<Users />} />
                       <Route path="/settings" element={<Settings />} />
                       <Route path="*" element={<NotFound />} />

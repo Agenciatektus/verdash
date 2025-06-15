@@ -21,10 +21,11 @@ import NotFound from "./pages/NotFound";
 import { AppLayout } from "./components/layout/AppLayout";
 import { AuthProvider } from "./contexts/AuthContext";
 import DataAdmin from "./pages/DataAdmin";
+import WidgetsDemo from "@/pages/WidgetsDemo";
 
 const queryClient = new QueryClient();
 
-const App = () => {
+function App() {
   useEffect(() => {
     // Set dark mode as default
     document.documentElement.classList.add('dark');
@@ -56,6 +57,7 @@ const App = () => {
                       <Route path="/users" element={<Users />} />
                       <Route path="/settings" element={<Settings />} />
                       <Route path="/billing" element={<Billing />} />
+                      <Route path="/widgets-demo" element={<WidgetsDemo />} />
                       <Route path="*" element={<NotFound />} />
                     </Routes>
                   </AppLayout>
@@ -67,6 +69,6 @@ const App = () => {
       </AuthProvider>
     </QueryClientProvider>
   );
-};
+}
 
 export default App;

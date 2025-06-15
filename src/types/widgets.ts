@@ -65,8 +65,11 @@ export interface TableColumn {
 }
 
 export interface FunnelStage {
-  name: string;
+  step: string;
   value: number;
+  percentage: number;
+  conversion: number;
+  icon: string;
   color: string;
 }
 

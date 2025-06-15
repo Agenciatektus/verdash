@@ -1,4 +1,3 @@
-
 import { Widget } from "@/types/widgets";
 
 export const createExecutiveDashboard = (): Widget[] => [
@@ -108,10 +107,10 @@ export const createExecutiveDashboard = (): Widget[] => [
     position: { x: 0, y: 3, width: 2, height: 2 },
     config: {
       stages: [
-        { name: 'Leads', value: 1000, color: '#1042F6' },
-        { name: 'Qualificados', value: 350, color: '#00FFB0' },
-        { name: 'Propostas', value: 120, color: '#FF6F1B' },
-        { name: 'Fechados', value: 45, color: '#FF4757' }
+        { step: 'Leads', value: 1000, percentage: 100, conversion: 0, icon: 'Users', color: '#1042F6' },
+        { step: 'Qualificados', value: 350, percentage: 35, conversion: 35, icon: 'UserCheck', color: '#00FFB0' },
+        { step: 'Propostas', value: 120, percentage: 12, conversion: 34, icon: 'FileText', color: '#FF6F1B' },
+        { step: 'Fechados', value: 45, percentage: 4.5, conversion: 37, icon: 'CheckCircle', color: '#FF4757' }
       ]
     },
     createdAt: new Date().toISOString(),
@@ -208,11 +207,11 @@ export const createSalesDashboard = (): Widget[] => [
     position: { x: 0, y: 1, width: 2, height: 2 },
     config: {
       stages: [
-        { name: 'Prospects', value: 500, color: '#1042F6' },
-        { name: 'Qualificados', value: 250, color: '#00FFB0' },
-        { name: 'Propostas', value: 100, color: '#FF6F1B' },
-        { name: 'Negociação', value: 45, color: '#FF4757' },
-        { name: 'Fechados', value: 18, color: '#9c88ff' }
+        { step: 'Prospects', value: 500, percentage: 100, conversion: 0, icon: 'Users', color: '#1042F6' },
+        { step: 'Qualificados', value: 250, percentage: 50, conversion: 50, icon: 'UserCheck', color: '#00FFB0' },
+        { step: 'Propostas', value: 100, percentage: 20, conversion: 40, icon: 'FileText', color: '#FF6F1B' },
+        { step: 'Negociação', value: 45, percentage: 9, conversion: 45, icon: 'MessageSquare', color: '#FF4757' },
+        { step: 'Fechados', value: 18, percentage: 3.6, conversion: 40, icon: 'CheckCircle', color: '#9c88ff' }
       ]
     },
     createdAt: new Date().toISOString(),

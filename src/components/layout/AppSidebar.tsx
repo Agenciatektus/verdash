@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { 
   LayoutDashboard, 
@@ -81,7 +82,7 @@ export function AppSidebar() {
           <div className="flex items-center gap-4">
             <div className="w-10 h-10 rounded-xl flex items-center justify-center shadow-lg shrink-0">
               <img 
-                src="/lovable-uploads/5dc3fb4f-2dce-43e7-bb1b-aaba85daf2b3.png" 
+                src="/lovable-uploads/10cfd476-2094-4d85-aaa8-884b089f6dc8.png" 
                 alt="Verdash Logo" 
                 className="w-8 h-8 object-contain"
               />
@@ -104,7 +105,7 @@ export function AppSidebar() {
                       to={item.url} 
                       className={({ isActive: navIsActive }) => {
                         const active = item.url === "/" ? (currentPath === "/" || currentPath === "/dashboard") : navIsActive;
-                        return getNavClass(active);
+                        return `${getNavClass(active)} hover:bg-verdash-input-bg/50 hover:border-verdash-cyan/30 transition-all duration-200`;
                       }}
                       end={item.url === "/"}
                     >
@@ -140,7 +141,7 @@ export function AppSidebar() {
                       <SidebarMenuButton asChild>
                         <NavLink 
                           to={`/projects/${project.id}`}
-                          className="flex items-center justify-between text-sm p-4 rounded-lg hover:bg-verdash-input-bg/50 verdash-animate text-white/80 hover:text-white"
+                          className="flex items-center justify-between text-sm p-4 rounded-lg hover:bg-verdash-input-bg/50 hover:border-verdash-cyan/20 border border-transparent verdash-animate text-white/80 hover:text-white transition-all duration-200"
                         >
                           <span className="truncate font-inter">{project.name}</span>
                           <span className="text-xs text-verdash-disabled bg-verdash-input-bg px-2 py-1 rounded-full border border-verdash-divider">
@@ -166,7 +167,7 @@ export function AppSidebar() {
                     <SidebarMenuButton asChild tooltip={isCollapsed ? item.title : undefined} size="lg">
                       <NavLink 
                         to={item.url} 
-                        className={({ isActive }) => getNavClass(isActive)}
+                        className={({ isActive }) => `${getNavClass(isActive)} hover:bg-verdash-input-bg/50 hover:border-verdash-cyan/30 transition-all duration-200`}
                       >
                         <item.icon className="w-5 h-5 shrink-0" />
                         <span className="font-medium font-grotesk uppercase text-sm tracking-wide group-data-[collapsible=icon]:hidden">{item.title}</span>
@@ -180,7 +181,7 @@ export function AppSidebar() {
                   <SidebarMenuButton asChild tooltip={isCollapsed ? "Sair" : undefined} size="lg">
                     <button 
                       onClick={logout}
-                      className="verdash-sidebar-item w-full text-left"
+                      className="verdash-sidebar-item w-full text-left hover:bg-verdash-input-bg/50 hover:border-verdash-cyan/30 transition-all duration-200"
                     >
                       <LogOut className="w-5 h-5 shrink-0" />
                       <span className="font-medium font-grotesk uppercase text-sm tracking-wide group-data-[collapsible=icon]:hidden">Sair</span>

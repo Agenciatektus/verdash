@@ -135,8 +135,17 @@ const Dashboard = () => {
             <ResponsiveContainer width="100%" height={300}>
               <LineChart data={mockData}>
                 <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
-                <XAxis dataKey="name" stroke="hsl(var(--muted-foreground))" />
-                <YAxis stroke="hsl(var(--muted-foreground))" />
+                <XAxis 
+                  dataKey="name" 
+                  stroke="hsl(var(--foreground))" 
+                  fontSize={12}
+                  tick={{ fill: 'hsl(var(--foreground))' }}
+                />
+                <YAxis 
+                  stroke="hsl(var(--foreground))" 
+                  fontSize={12}
+                  tick={{ fill: 'hsl(var(--foreground))' }}
+                />
                 <Tooltip 
                   contentStyle={{ 
                     backgroundColor: 'hsl(var(--card))', 
@@ -177,8 +186,17 @@ const Dashboard = () => {
             <ResponsiveContainer width="100%" height={300}>
               <BarChart data={mockData}>
                 <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
-                <XAxis dataKey="name" stroke="hsl(var(--muted-foreground))" />
-                <YAxis stroke="hsl(var(--muted-foreground))" />
+                <XAxis 
+                  dataKey="name" 
+                  stroke="hsl(var(--foreground))" 
+                  fontSize={12}
+                  tick={{ fill: 'hsl(var(--foreground))' }}
+                />
+                <YAxis 
+                  stroke="hsl(var(--foreground))" 
+                  fontSize={12}
+                  tick={{ fill: 'hsl(var(--foreground))' }}
+                />
                 <Tooltip 
                   contentStyle={{ 
                     backgroundColor: 'hsl(var(--card))', 

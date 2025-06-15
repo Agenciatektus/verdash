@@ -1,4 +1,3 @@
-
 import React, { useEffect } from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
@@ -7,6 +6,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { SidebarProvider } from "@/components/ui/sidebar";
 import Login from "./pages/Login";
+import LandingPage from "./pages/LandingPage";
 import Dashboard from "./pages/Dashboard";
 import DashboardView from "./pages/DashboardView";
 import DashboardEditor from "./pages/DashboardEditor";
@@ -43,8 +43,9 @@ function App() {
           <Sonner />
           <BrowserRouter>
             <Routes>
+              <Route path="/" element={<LandingPage />} />
               <Route path="/login" element={<Login />} />
-              <Route path="/*" element={
+              <Route path="/app/*" element={
                 <SidebarProvider>
                   <AppLayout>
                     <Routes>

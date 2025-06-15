@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Activity, ArrowRight, Check, ChevronDown, MessageSquare, BarChart3, Zap, Shield, Users, Settings, HelpCircle, Instagram, Linkedin, MessageCircle } from "lucide-react";
+import { ArrowRight, Check, ChevronDown, MessageSquare, BarChart3, Zap, Shield, Users, Settings, HelpCircle, Instagram, Linkedin, MessageCircle } from "lucide-react";
 import {
   Accordion,
   AccordionContent,
@@ -9,7 +9,7 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 
-const LandingPage = () => {
+const VerdashPrecos = () => {
   return (
     <div className="min-h-screen bg-[#0A0E1E] text-white">
       {/* Header */}
@@ -17,10 +17,7 @@ const LandingPage = () => {
         <div className="container mx-auto px-4 h-20 flex items-center justify-between">
           {/* Logo */}
           <Link to="/" className="flex items-center gap-2">
-            <div className="w-10 h-10 rounded-xl verdash-gradient flex items-center justify-center">
-              <Activity className="w-6 h-6 text-white" />
-            </div>
-            <span className="text-xl font-grotesk font-bold">VERDASH</span>
+            <img src="/lovable-uploads/Logo-Verdash-branca.svg" alt="Verdash" className="h-8" />
           </Link>
 
           {/* Navigation */}
@@ -367,10 +364,7 @@ const LandingPage = () => {
             {/* Logo e Redes Sociais */}
             <div className="space-y-4">
               <div className="flex items-center gap-2">
-                <div className="w-10 h-10 rounded-xl verdash-gradient flex items-center justify-center">
-                  <Activity className="w-6 h-6 text-white" />
-                </div>
-                <span className="text-xl font-grotesk font-bold">VERDASH</span>
+                <img src="/lovable-uploads/Logo-Verdash-branca.svg" alt="Verdash" className="h-8" />
               </div>
               <div className="flex gap-4">
                 <a href="#" className="text-[#D9D9D9] hover:text-white transition-colors">
@@ -424,4 +418,4 @@ const LandingPage = () => {
   );
 };
 
-export default LandingPage; 
+export default VerdashPrecos; 

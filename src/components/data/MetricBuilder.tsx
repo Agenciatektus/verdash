@@ -17,7 +17,9 @@ import {
   CheckCircle,
   AlertTriangle,
   Database,
-  X
+  X,
+  Code,
+  Info
 } from "lucide-react";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { FormulaBuilder } from "@/types/data";
@@ -42,12 +44,62 @@ const dataSources = [
 ];
 
 const formulaFunctions = [
-  { name: 'SUM', description: 'Soma valores', syntax: 'SUM(campo1, campo2, ...)', example: 'SUM(gasto_meta, gasto_google)' },
-  { name: 'AVG', description: 'Média', syntax: 'AVG(campo1, campo2, ...)', example: 'AVG(conversoes_janeiro, conversoes_fevereiro)' },
-  { name: 'MAX', description: 'Valor máximo', syntax: 'MAX(campo1, campo2, ...)', example: 'MAX(vendas_diarias)' },
-  { name: 'MIN', description: 'Valor mínimo', syntax: 'MIN(campo1, campo2, ...)', example: 'MIN(custo_leads)' },
-  { name: 'COUNT', description: 'Contar registros', syntax: 'COUNT(campo)', example: 'COUNT(leads_mes)' },
-  { name: 'IF', description: 'Condição', syntax: 'IF(condição, valor_se_verdadeiro, valor_se_falso)', example: 'IF(vendas > 1000, vendas * 0.1, 0)' }
+  { 
+    name: 'SUM', 
+    syntax: 'SUM(campo1, campo2, ...)', 
+    description: 'Soma todos os valores de um campo', 
+    example: 'SUM(gasto_meta, gasto_google)',
+    category: 'matemática'
+  },
+  { 
+    name: 'AVG', 
+    syntax: 'AVG(campo1, campo2, ...)', 
+    description: 'Calcula a média dos valores de um campo', 
+    example: 'AVG(conversoes_janeiro, conversoes_fevereiro)',
+    category: 'matemática'
+  },
+  { 
+    name: 'MAX', 
+    syntax: 'MAX(campo1, campo2, ...)', 
+    description: 'Retorna o maior valor de um campo', 
+    example: 'MAX(vendas_diarias)',
+    category: 'matemática'
+  },
+  { 
+    name: 'MIN', 
+    syntax: 'MIN(campo1, campo2, ...)', 
+    description: 'Retorna o menor valor de um campo', 
+    example: 'MIN(custo_leads)',
+    category: 'matemática'
+  },
+  { 
+    name: 'COUNT', 
+    syntax: 'COUNT(campo)', 
+    description: 'Conta o número de registros ou itens', 
+    example: 'COUNT(leads_mes)',
+    category: 'matemática'
+  },
+  { 
+    name: 'IF', 
+    syntax: 'IF(condição, valor_se_verdadeiro, valor_se_falso)', 
+    description: 'Retorna um valor com base na condição', 
+    example: 'IF(vendas > 1000, vendas * 0.1, 0)',
+    category: 'lógica'
+  }
+];
+
+const operators = [
+  { symbol: '+', name: 'Soma', description: 'Adição de valores' },
+  { symbol: '-', name: 'Subtração', description: 'Subtração de valores' },
+  { symbol: '*', name: 'Multiplicação', description: 'Multiplicação de valores' },
+  { symbol: '/', name: 'Divisão', description: 'Divisão de valores' },
+  { symbol: '()', name: 'Parênteses', description: 'Define a ordem dos cálculos' },
+  { symbol: '>', name: 'Maior que', description: 'Comparação maior que' },
+  { symbol: '<', name: 'Menor que', description: 'Comparação menor que' },
+  { symbol: '>=', name: 'Maior ou igual', description: 'Comparação maior ou igual' },
+  { symbol: '<=', name: 'Menor ou igual', description: 'Comparação menor ou igual' },
+  { symbol: '==', name: 'Igual', description: 'Comparação de igualdade' },
+  { symbol: '!=', name: 'Diferente', description: 'Comparação de diferença' }
 ];
 
 export const MetricBuilder = () => {
@@ -59,6 +111,7 @@ export const MetricBuilder = () => {
   const [type, setType] = useState("");
   const [selectedDataSources, setSelectedDataSources] = useState<string[]>([]);
   const [isValid, setIsValid] = useState(false);
+  const [showFunctionDetails, setShowFunctionDetails] = useState(false);
 
   const insertField = (fieldId: string) => {
     setFormula(prev => prev + fieldId);
@@ -66,6 +119,10 @@ export const MetricBuilder = () => {
 
   const insertFunction = (functionName: string) => {
     setFormula(prev => prev + `${functionName}()`);
+  };
+
+  const insertOperator = (operator: string) => {
+    setFormula(prev => prev + ` ${operator} `);
   };
 
   const validateFormula = () => {
@@ -256,7 +313,109 @@ export const MetricBuilder = () => {
 
             {/* Formula Builder */}
             <div className="space-y-4">
-              <Label className="text-white text-sm font-grotesk">Fórmula</Label>
+              <div className="flex items-center gap-2">
+                <Code className="w-5 h-5 text-verdash-cyan" />
+                <Label className="text-white text-sm font-grotesk">Construtor de Fórmula</Label>
+              </div>
+              
+              {/* Functions Section */}
+              <div className="space-y-3">
+                <div className="flex items-center justify-between">
+                  <p className="text-sm text-white/80 font-grotesk uppercase tracking-wide">Funções</p>
+                  <Button
+                    type="button"
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => setShowFunctionDetails(!showFunctionDetails)}
+                    className="text-xs text-verdash-cyan hover:bg-verdash-cyan/10"
+                  >
+                    <Info className="w-3 h-3 mr-1" />
+                    {showFunctionDetails ? 'Ocultar' : 'Ver'} Detalhes
+                  </Button>
+                </div>
+
+                {/* Mathematics Functions */}
+                <div className="space-y-2">
+                  <p className="text-xs text-white/60 uppercase font-grotesk">Funções Matemáticas</p>
+                  <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
+                    {formulaFunctions.filter(f => f.category === 'matemática').map((func) => (
+                      <Button
+                        key={func.name}
+                        type="button"
+                        variant="outline"
+                        size="sm"
+                        onClick={() => insertFunction(func.name)}
+                        className="justify-start text-xs border-verdash-divider/30 text-white hover:bg-verdash-cyan/20 hover:border-verdash-cyan"
+                        title={func.description}
+                      >
+                        <Plus className="w-3 h-3 mr-1" />
+                        {func.name}
+                      </Button>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Logic Functions */}
+                <div className="space-y-2">
+                  <p className="text-xs text-white/60 uppercase font-grotesk">Funções Lógicas</p>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+                    {formulaFunctions.filter(f => f.category === 'lógica').map((func) => (
+                      <Button
+                        key={func.name}
+                        type="button"
+                        variant="outline"
+                        size="sm"
+                        onClick={() => insertFunction(func.name)}
+                        className="justify-start text-xs border-verdash-divider/30 text-white hover:bg-verdash-coral/20 hover:border-verdash-coral"
+                        title={func.description}
+                      >
+                        <Plus className="w-3 h-3 mr-1" />
+                        {func.name}
+                      </Button>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Operators */}
+                <div className="space-y-2">
+                  <p className="text-xs text-white/60 uppercase font-grotesk">Operadores</p>
+                  <div className="flex flex-wrap gap-2">
+                    {operators.map((op) => (
+                      <Button
+                        key={op.symbol}
+                        type="button"
+                        variant="secondary"
+                        size="sm"
+                        onClick={() => insertOperator(op.symbol)}
+                        className="text-xs bg-verdash-input-bg/30 border-verdash-divider/30 text-white hover:bg-verdash-input-bg/50"
+                        title={op.description}
+                      >
+                        {op.symbol}
+                      </Button>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Function Details */}
+                {showFunctionDetails && (
+                  <div className="bg-verdash-input-bg/20 rounded-lg p-4 space-y-3">
+                    <h4 className="text-sm font-grotesk text-white">Detalhes das Funções</h4>
+                    <div className="space-y-3">
+                      {formulaFunctions.map((func) => (
+                        <div key={func.name} className="space-y-1">
+                          <div className="flex items-center gap-2">
+                            <code className="text-xs bg-verdash-cyan/20 text-verdash-cyan px-2 py-1 rounded font-mono">
+                              {func.syntax}
+                            </code>
+                          </div>
+                          <p className="text-xs text-white/70">{func.description}</p>
+                          <p className="text-xs text-white/50 font-mono">Exemplo: {func.example}</p>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
               
               {/* Available Fields - Only show if data sources are selected */}
               {selectedDataSources.length > 0 && (
@@ -278,25 +437,6 @@ export const MetricBuilder = () => {
                 </div>
               )}
 
-              {/* Functions */}
-              <div className="space-y-2">
-                <p className="text-xs text-white/60 uppercase font-grotesk">Funções</p>
-                <div className="flex flex-wrap gap-2">
-                  {formulaFunctions.map((func) => (
-                    <Badge
-                      key={func.name}
-                      variant="secondary"
-                      className="cursor-pointer hover:bg-verdash-coral/20 hover:border-verdash-coral transition-colors"
-                      onClick={() => insertFunction(func.name)}
-                      title={func.description}
-                    >
-                      <Plus className="w-3 h-3 mr-1" />
-                      {func.name}
-                    </Badge>
-                  ))}
-                </div>
-              </div>
-
               {/* Formula Input */}
               <div className="space-y-2">
                 <Textarea
@@ -306,6 +446,18 @@ export const MetricBuilder = () => {
                   rows={3}
                   className="font-mono text-sm bg-verdash-input-bg/50"
                 />
+                
+                {/* Formula Rules */}
+                <div className="bg-verdash-input-bg/10 rounded-lg p-3 space-y-2">
+                  <p className="text-xs text-white/80 font-grotesk">📜 Regras da Fórmula:</p>
+                  <ul className="text-xs text-white/60 space-y-1 list-disc list-inside">
+                    <li>Use parênteses para definir a ordem dos cálculos</li>
+                    <li>Nomes dos campos sem espaços, acentos ou caracteres especiais</li>
+                    <li>Use underline (_) se necessário nos nomes</li>
+                    <li>Evite divisão por zero - use IF() para tratar casos</li>
+                    <li>Funções podem ser aninhadas (uma dentro da outra)</li>
+                  </ul>
+                </div>
                 
                 {/* Validation */}
                 <div className="flex items-center gap-2">

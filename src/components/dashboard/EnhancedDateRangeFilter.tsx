@@ -96,7 +96,7 @@ export const EnhancedDateRangeFilter = ({ onRangeChange }: EnhancedDateRangeFilt
     <div className="space-y-2">
       <Popover open={showCustomCalendar} onOpenChange={setShowCustomCalendar}>
         <Select value={selectedRange} onValueChange={handleRangeSelection}>
-          <SelectTrigger className="w-[200px]">
+          <SelectTrigger className="w-[200px] border-0 bg-white/5 backdrop-blur-sm">
             <CalendarIcon className="mr-2 h-4 w-4" />
             <SelectValue>{getDisplayValue()}</SelectValue>
           </SelectTrigger>

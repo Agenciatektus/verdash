@@ -24,6 +24,7 @@ import {
 } from "lucide-react";
 import { toast } from "sonner";
 import { availableMetrics } from "@/constants/metricsData";
+import { MetricBuilder } from "@/components/data/MetricBuilder";
 
 const mockMetrics = [
   {
@@ -81,7 +82,7 @@ const Metrics = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [filter, setFilter] = useState("all");
   const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false);
-  const [activeTab, setActiveTab] = useState("list");
+  const [activeTab, setActiveTab] = useState("list"); // Default to "list" instead of "list"
 
   // Form states
   const [metricName, setMetricName] = useState("");
@@ -322,11 +323,21 @@ const Metrics = () => {
         </Dialog>
       </div>
 
-      {/* Tabs */}
+      {/* Main Tabs with improved styling */}
       <Tabs value={activeTab} onValueChange={setActiveTab}>
-        <TabsList className="grid w-full grid-cols-2 max-w-md">
-          <TabsTrigger value="list">Lista de Métricas</TabsTrigger>
-          <TabsTrigger value="builder">Construtor</TabsTrigger>
+        <TabsList className="grid w-full grid-cols-2 max-w-md bg-muted/50">
+          <TabsTrigger 
+            value="list" 
+            className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground"
+          >
+            Lista de Métricas
+          </TabsTrigger>
+          <TabsTrigger 
+            value="builder"
+            className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground"
+          >
+            Construtor
+          </TabsTrigger>
         </TabsList>
 
         <TabsContent value="list" className="space-y-6">
@@ -464,24 +475,7 @@ const Metrics = () => {
         </TabsContent>
 
         <TabsContent value="builder" className="space-y-6">
-          <Card className="verdash-card">
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <Zap className="w-5 h-5 text-primary" />
-                Construtor Avançado de Métricas
-              </CardTitle>
-              <CardDescription>
-                Use o construtor visual para criar métricas complexas com múltiplas fontes de dados
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="text-center py-12 text-muted-foreground">
-                <BarChart3 className="w-12 h-12 mx-auto mb-4" />
-                <p>O construtor visual estará disponível em breve.</p>
-                <p className="text-sm">Por enquanto, use o formulário de criação de métricas.</p>
-              </div>
-            </CardContent>
-          </Card>
+          <MetricBuilder />
         </TabsContent>
       </Tabs>
     </div>

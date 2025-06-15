@@ -284,7 +284,7 @@ const Dashboard = () => {
         {/* Filtros Globais */}
         <div className="space-y-4">
           <h2 className="text-lg font-semibold text-foreground font-grotesk">Filtros Globais</h2>
-          <div className="flex flex-wrap items-center gap-4 p-6 bg-card/20 rounded-xl border border-white/10">
+          <div className="flex flex-wrap items-center gap-4 p-6 bg-card/20 rounded-xl border border-white/5 backdrop-blur-md">
             <div className="flex flex-col gap-2">
               <label className="text-sm font-medium text-muted-foreground">Período</label>
               <EnhancedDateRangeFilter />

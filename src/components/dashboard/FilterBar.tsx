@@ -12,7 +12,7 @@ interface FilterBarProps {
 
 export const FilterBar = ({ onDashboardChange, onCampaignChange, onStoreChange }: FilterBarProps) => {
   return (
-    <div className="flex flex-wrap items-center gap-4 p-4 bg-card/20 border border-border/30 rounded-xl">
+    <div className="flex flex-wrap items-center gap-4 p-4 bg-card/20 border border-white/5 rounded-xl backdrop-blur-md">
       <DateRangeFilter />
       
       <Select onValueChange={onCampaignChange}>

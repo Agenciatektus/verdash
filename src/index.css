@@ -1,319 +1,278 @@
-@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700;800&display=swap');
 
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-@layer base {
-  :root {
-    /* Verdash Brand Colors - Paleta Exata */
-    --verdash-dark: 10 14 30; /* #0A0E1E */
-    --verdash-white: 255 255 255; /* #FFFFFF */
-    --verdash-blue: 16 66 246; /* #1042F6 */
-    --verdash-cyan: 0 255 176; /* #00FFB0 */
-    --verdash-coral: 255 111 27; /* #FF6F1B */
-    --verdash-red: 255 56 113; /* #FF3871 */
-    
-    /* Status Colors */
-    --verdash-error: 255 111 97; /* #FF6F61 */
-    --verdash-success: 0 255 133; /* #00FF85 */
-    --verdash-info: 0 174 239; /* #00AEEF */
-    
-    /* Auxiliary Colors */
-    --verdash-divider: 42 46 66; /* #2A2E42 */
-    --verdash-disabled: 122 122 122; /* #7A7A7A */
-    --verdash-input-bg: 22 26 48; /* #161A30 */
-    
-    /* Semantic Colors for Dark Theme - Alto Contraste */
-    --background: 10 14 30; /* #0A0E1E */
-    --foreground: 255 255 255; /* #FFFFFF */
+/* Global Dark Mode */
+* {
+  border-color: hsl(var(--border));
+}
 
-    --card: 22 26 48; /* #161A30 - Mais contraste */
-    --card-foreground: 255 255 255; /* #FFFFFF */
+html {
+  color-scheme: dark;
+}
 
-    --popover: 10 14 30; /* #0A0E1E */
-    --popover-foreground: 255 255 255; /* #FFFFFF */
+body {
+  background-color: #0A0E1E;
+  color: #FFFFFF;
+  font-family: 'Inter', sans-serif;
+  overflow-x: hidden;
+}
 
-    --primary: 16 66 246; /* #1042F6 */
-    --primary-foreground: 255 255 255; /* #FFFFFF */
+/* Typography Classes */
+.font-grotesk {
+  font-family: 'Space Grotesk', sans-serif;
+}
 
-    --secondary: 42 46 66; /* #2A2E42 */
-    --secondary-foreground: 255 255 255; /* #FFFFFF */
+.font-inter {
+  font-family: 'Inter', sans-serif;
+}
 
-    --muted: 42 46 66; /* #2A2E42 */
-    --muted-foreground: 180 185 200; /* Cinza claro para melhor legibilidade */
+/* Verdash Brand Classes */
+.verdash-gradient {
+  background: linear-gradient(135deg, #2DD4BF 0%, #06B6D4 25%, #F97316 75%, #EF4444 100%);
+}
 
-    --accent: 22 26 48; /* #161A30 */
-    --accent-foreground: 255 255 255; /* #FFFFFF */
+.verdash-glow-text {
+  text-shadow: 0 0 20px rgba(45, 212, 191, 0.5);
+}
 
-    --destructive: 255 111 97; /* #FF6F61 */
-    --destructive-foreground: 255 255 255; /* #FFFFFF */
+.verdash-glow {
+  box-shadow: 0 0 20px rgba(45, 212, 191, 0.3);
+}
 
-    --border: 42 46 66; /* #2A2E42 */
-    --input: 22 26 48; /* #161A30 */
-    --ring: 0 255 176; /* #00FFB0 */
+.verdash-shadow-glow {
+  box-shadow: 0 8px 32px rgba(45, 212, 191, 0.2);
+}
 
-    --radius: 0.75rem;
+/* Glass Components */
+.verdash-glass {
+  background: rgba(16, 24, 44, 0.8);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.25);
+}
 
-    /* Sidebar specific colors */
-    --sidebar-background: 10 14 30; /* #0A0E1E */
-    --sidebar-foreground: 255 255 255; /* #FFFFFF */
-    --sidebar-primary: 16 66 246; /* #1042F6 */
-    --sidebar-primary-foreground: 255 255 255; /* #FFFFFF */
-    --sidebar-accent: 22 26 48; /* #161A30 */
-    --sidebar-accent-foreground: 255 255 255; /* #FFFFFF */
-    --sidebar-border: 42 46 66; /* #2A2E42 */
-    --sidebar-ring: 0 255 176; /* #00FFB0 */
+.verdash-glass-hover {
+  transition: all 0.3s ease;
+}
+
+.verdash-glass-hover:hover {
+  background: rgba(16, 24, 44, 0.9);
+  border-color: rgba(45, 212, 191, 0.3);
+  box-shadow: 0 8px 32px rgba(45, 212, 191, 0.15);
+  transform: translateY(-2px);
+}
+
+/* KPI Cards */
+.verdash-kpi {
+  background: linear-gradient(135deg, rgba(16, 24, 44, 0.9) 0%, rgba(16, 24, 44, 0.7) 100%);
+  border: 1px solid rgba(45, 212, 191, 0.2);
+  border-radius: 16px;
+  backdrop-filter: blur(16px);
+  transition: all 0.3s ease;
+}
+
+.verdash-kpi:hover {
+  border-color: rgba(45, 212, 191, 0.4);
+  box-shadow: 0 8px 32px rgba(45, 212, 191, 0.1);
+}
+
+/* Button Styles */
+.verdash-btn-primary {
+  background: linear-gradient(135deg, #2DD4BF 0%, #06B6D4 50%, #F97316 100%);
+  color: white;
+  border: none;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 16px rgba(45, 212, 191, 0.3);
+}
+
+.verdash-btn-primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 24px rgba(45, 212, 191, 0.4);
+  filter: brightness(1.1);
+}
+
+.verdash-btn-secondary {
+  background: rgba(16, 24, 44, 0.8);
+  color: white;
+  border: 1px solid rgba(45, 212, 191, 0.3);
+  transition: all 0.3s ease;
+}
+
+.verdash-btn-secondary:hover {
+  background: rgba(45, 212, 191, 0.1);
+  border-color: rgba(45, 212, 191, 0.5);
+  color: white;
+}
+
+/* Input Styles */
+.verdash-input {
+  background: rgba(16, 24, 44, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: white;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.verdash-input:focus {
+  border-color: rgba(45, 212, 191, 0.5);
+  box-shadow: 0 0 0 3px rgba(45, 212, 191, 0.1);
+  background: rgba(16, 24, 44, 0.8);
+}
+
+/* Sidebar Styles */
+.verdash-sidebar-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  border-radius: 12px;
+  color: rgba(255, 255, 255, 0.8);
+  text-decoration: none;
+  transition: all 0.2s ease;
+  font-weight: 500;
+  position: relative;
+  overflow: hidden;
+}
+
+.verdash-sidebar-item::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 0;
+  height: 100%;
+  background: linear-gradient(90deg, #2DD4BF, #06B6D4);
+  transition: width 0.3s ease;
+  border-radius: 12px;
+  z-index: -1;
+}
+
+.verdash-sidebar-item:hover::before,
+.verdash-sidebar-item.active::before {
+  width: 100%;
+}
+
+.verdash-sidebar-item:hover {
+  color: white;
+  background: rgba(45, 212, 191, 0.1);
+}
+
+.verdash-sidebar-item.active {
+  color: white;
+  background: transparent;
+}
+
+/* Animation Classes */
+.verdash-animate {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.verdash-hover-scale {
+  transition: transform 0.2s ease;
+}
+
+.verdash-hover-scale:hover {
+  transform: scale(1.05);
+}
+
+.animate-verdash-scale-in {
+  animation: verdashScaleIn 0.3s ease-out;
+}
+
+@keyframes verdashScaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
   }
 }
 
-@layer base {
-  * {
-    @apply border-border;
-  }
+.animate-fade-in {
+  animation: fadeIn 0.5s ease-out;
+}
 
-  body {
-    @apply bg-background text-foreground;
-    font-family: 'Space Grotesk', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
-    font-feature-settings: "rlig" 1, "calt" 1;
-    line-height: 1.6;
-    background-color: #0A0E1E;
-    color: #FFFFFF;
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
   }
-
-  h1, h2, h3, h4, h5, h6 {
-    font-family: 'Space Grotesk', 'Inter', sans-serif;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.025em;
-    color: #FFFFFF;
-  }
-
-  h1 {
-    @apply text-4xl;
-  }
-
-  h2 {
-    @apply text-2xl;
-  }
-
-  h3 {
-    @apply text-xl;
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 
-@layer components {
-  /* Verdash Gradientes - Paleta Exata */
-  .verdash-gradient {
-    background: linear-gradient(135deg, #1042F6 0%, #00FFB0 25%, #FF6F1B 75%, #FF3871 100%);
-  }
-  
-  .verdash-gradient-hover {
-    background: linear-gradient(135deg, #1042F6 0%, #00FFB0 50%, #FF6F1B 100%);
-    filter: brightness(1.1);
-  }
-  
-  .verdash-gradient-glow {
-    background: linear-gradient(135deg, #1042F6 0%, #00FFB0 25%, #FF6F1B 75%, #FF3871 100%);
-    box-shadow: 0 0 20px rgba(16, 66, 246, 0.3), 0 0 40px rgba(0, 255, 176, 0.2);
-  }
-
-  /* Glassmorphism Cards - Contraste Melhorado */
-  .verdash-glass {
-    background: rgba(22, 26, 48, 0.8); /* Mais opaco para melhor contraste */
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    border-radius: 12px;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
-  }
-  
-  .verdash-glass-hover {
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  }
-  
-  .verdash-glass-hover:hover {
-    transform: scale(1.02);
-    box-shadow: 0 12px 60px rgba(0, 0, 0, 0.8), 0 0 40px rgba(16, 66, 246, 0.3);
-    border-color: rgba(0, 255, 176, 0.4);
-    background: rgba(22, 26, 48, 0.9);
-  }
-
-  /* Botões Melhorados */
-  .verdash-btn-primary {
-    @apply verdash-gradient text-white font-semibold px-6 py-3 rounded-xl shadow-lg;
-    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    border: none;
-  }
-
-  .verdash-btn-primary:hover {
-    transform: scale(1.03);
-    filter: brightness(1.2);
-    box-shadow: 0 0 30px rgba(16, 66, 246, 0.5), 0 0 60px rgba(0, 255, 176, 0.4);
-  }
-
-  .verdash-btn-primary:active {
-    transform: scale(0.98);
-  }
-
-  .verdash-btn-secondary {
-    @apply bg-transparent border-2 text-white font-semibold px-6 py-3 rounded-xl;
-    border-image: linear-gradient(135deg, #1042F6 0%, #00FFB0 25%, #FF6F1B 75%, #FF3871 100%) 1;
-    background: linear-gradient(135deg, #1042F6 0%, #00FFB0 25%, #FF6F1B 75%, #FF3871 100%);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-  }
-
-  .verdash-btn-secondary:hover {
-    background: rgba(22, 26, 48, 0.9);
-    -webkit-text-fill-color: white;
-    transform: scale(1.03);
-    box-shadow: 0 0 20px rgba(0, 255, 176, 0.3);
-  }
-
-  /* Input Fields - Alto Contraste */
-  .verdash-input {
-    @apply bg-[#161A30] border border-[#2A2E42] text-white placeholder-[#7A7A7A] rounded-xl px-4 py-3;
-    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-    background-color: #161A30;
-    border-color: #2A2E42;
-    color: #FFFFFF;
-  }
-
-  .verdash-input:focus {
-    outline: none;
-    border-color: #00FFB0;
-    box-shadow: 0 0 0 3px rgba(0, 255, 176, 0.25), 0 0 20px rgba(0, 255, 176, 0.4);
-    background-color: #1A1E36;
-  }
-
-  .verdash-input::placeholder {
-    color: #7A7A7A;
-  }
-
-  /* Sidebar Completa e Melhorada */
-  .verdash-sidebar-item {
-    @apply flex items-center gap-3 px-4 py-3 rounded-xl text-white/90 hover:text-white transition-all duration-200;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .verdash-sidebar-item:hover {
-    background: rgba(22, 26, 48, 0.8);
-    box-shadow: 0 0 20px rgba(0, 255, 176, 0.15);
-    color: #FFFFFF;
-    transform: translateX(2px);
-  }
-
-  .verdash-sidebar-item.active {
-    background: linear-gradient(90deg, rgba(16, 66, 246, 0.25) 0%, rgba(0, 255, 176, 0.25) 100%);
-    border-left: 3px solid #00FFB0;
-    color: #FFFFFF;
-    font-weight: 600;
-    box-shadow: 0 0 15px rgba(0, 255, 176, 0.2);
-    transform: translateX(2px);
-  }
-
-  .verdash-sidebar-item.active::before {
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 0;
-    bottom: 0;
-    width: 3px;
-    background: linear-gradient(180deg, #1042F6 0%, #00FFB0 50%, #FF6F1B 100%);
-    border-radius: 0 2px 2px 0;
-  }
-
-  /* KPI Cards - Alto Contraste */
-  .verdash-kpi {
-    @apply verdash-glass p-6;
-    position: relative;
-    overflow: hidden;
-    background: rgba(22, 26, 48, 0.85);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-  }
-
-  .verdash-kpi::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 3px;
-    background: linear-gradient(90deg, #1042F6 0%, #00FFB0 50%, #FF6F1B 100%);
-  }
-
-  /* Chart Tooltips - Melhor Contraste */
-  .verdash-tooltip {
-    background: rgba(22, 26, 48, 0.98) !important;
-    border: 1px solid rgba(0, 255, 176, 0.4) !important;
-    border-radius: 8px !important;
-    box-shadow: 0 0 25px rgba(0, 255, 176, 0.3) !important;
-    color: #FFFFFF !important;
-    backdrop-filter: blur(12px);
-  }
-
-  /* Outros Utilitários */
-  .verdash-animate {
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  }
-
-  .verdash-hover-scale {
-    transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-  }
-
-  .verdash-hover-scale:hover {
-    transform: scale(1.02);
-  }
-
-  .verdash-glow-text {
-    text-shadow: 0 0 15px rgba(0, 255, 176, 0.6);
-    color: #FFFFFF;
-  }
-
-  .verdash-glow {
-    box-shadow: 0 0 20px rgba(16, 66, 246, 0.3), 0 0 40px rgba(0, 255, 176, 0.2);
-  }
+/* Progress Bar Styles */
+.progress-success .bg-gradient-to-r {
+  background: linear-gradient(90deg, #2DD4BF, #06B6D4) !important;
 }
 
-/* Scrollbar Personalizada */
+.progress-warning .bg-gradient-to-r {
+  background: linear-gradient(90deg, #F97316, #EAB308) !important;
+}
+
+.progress-error .bg-gradient-to-r {
+  background: linear-gradient(90deg, #EF4444, #DC2626) !important;
+}
+
+/* Custom scrollbar */
 ::-webkit-scrollbar {
   width: 8px;
-  height: 8px;
 }
 
 ::-webkit-scrollbar-track {
-  background: rgba(42, 46, 66, 0.4);
-  border-radius: 4px;
+  background: rgba(16, 24, 44, 0.3);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(45deg, rgba(16, 66, 246, 0.8), rgba(0, 255, 176, 0.8));
+  background: rgba(45, 212, 191, 0.3);
   border-radius: 4px;
-  transition: all 0.2s;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(45deg, rgba(0, 255, 176, 0.9), rgba(255, 111, 27, 0.9));
-  box-shadow: 0 0 15px rgba(0, 255, 176, 0.4);
+  background: rgba(45, 212, 191, 0.5);
 }
 
-/* Seleção de Texto */
-::selection {
-  background: rgba(0, 255, 176, 0.4);
-  color: #FFFFFF;
+/* Mobile Responsive */
+@media (max-width: 768px) {
+  .verdash-glass {
+    margin: 0 8px;
+    border-radius: 12px;
+  }
+  
+  .verdash-sidebar-item {
+    padding: 10px 12px;
+    font-size: 14px;
+  }
 }
 
-/* Focus Estados */
-*:focus-visible {
-  outline: 2px solid rgba(0, 255, 176, 0.8);
+/* Focus States */
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid #2DD4BF;
   outline-offset: 2px;
-  border-radius: 4px;
+}
+
+/* Card Hover Effects */
+.verdash-card {
+  background: rgba(16, 24, 44, 0.8);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  transition: all 0.3s ease;
+}
+
+.verdash-card:hover {
+  border-color: rgba(45, 212, 191, 0.3);
+  box-shadow: 0 8px 32px rgba(45, 212, 191, 0.1);
 }

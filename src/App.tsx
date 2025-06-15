@@ -1,3 +1,4 @@
+
 import { useEffect } from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
@@ -15,6 +16,7 @@ import Clients from "./pages/Clients";
 import Support from "./pages/Support";
 import Users from "./pages/Users";
 import Settings from "./pages/Settings";
+import Billing from "./pages/Billing";
 import NotFound from "./pages/NotFound";
 import { AppLayout } from "./components/layout/AppLayout";
 import { AuthProvider } from "./contexts/AuthContext";
@@ -50,6 +52,7 @@ const App = () => {
                       <Route path="/support" element={<Support />} />
                       <Route path="/users" element={<Users />} />
                       <Route path="/settings" element={<Settings />} />
+                      <Route path="/billing" element={<Billing />} />
                       <Route path="*" element={<NotFound />} />
                     </Routes>
                   </AppLayout>

@@ -14,7 +14,7 @@ import {
   Plug,
   MessageCircle,
   LogOut,
-  HelpCircle
+  CreditCard
 } from "lucide-react";
 import { NavLink, useLocation } from "react-router-dom";
 import {
@@ -43,6 +43,7 @@ const mainNavigation = [
 ];
 
 const bottomNavigation = [
+  { title: "Planos & Billing", url: "/billing", icon: CreditCard },
   { title: "Suporte", url: "/support", icon: MessageCircle },
   { title: "Configurações", url: "/settings", icon: Settings },
 ];

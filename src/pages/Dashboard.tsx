@@ -245,7 +245,8 @@ const Dashboard = () => {
       <div 
         className="fixed inset-0 pointer-events-none z-0"
         style={{
-          background: `radial-gradient(circle at -100px -100px, rgba(0, 255, 176, 0.5) 0%, rgba(10, 14, 30, 0) 50%)`
+          background: `radial-gradient(circle at -100px -100px, rgba(0, 255, 176, 0.5) 0%, rgba(10, 14, 30, 0) 50%)`,
+          filter: 'blur(100px)'
         }}
       />
       

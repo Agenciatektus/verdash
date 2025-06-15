@@ -4,6 +4,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from "@/components/ui/button";
 import { CheckCircle, AlertCircle, ExternalLink, Plug } from "lucide-react";
 import { NewIntegrationDialog } from "@/components/integrations/NewIntegrationDialog";
+import { useToast } from "@/hooks/use-toast";
 
 const initialIntegrations = [
   {
@@ -42,9 +43,49 @@ const initialIntegrations = [
 
 export default function Integrations() {
   const [integrations, setIntegrations] = useState(initialIntegrations);
+  const { toast } = useToast();
 
   const handleIntegrationAdded = (newIntegration: any) => {
     setIntegrations(prev => [...prev, newIntegration]);
+  };
+
+  const handleConnect = (integrationId: number, integrationName: string) => {
+    setIntegrations(prev => 
+      prev.map(integration => 
+        integration.id === integrationId 
+          ? { 
+              ...integration, 
+              status: "connected", 
+              lastSync: "Agora mesmo" 
+            }
+          : integration
+      )
+    );
+
+    toast({
+      title: "Sucesso",
+      description: `${integrationName} conectado com sucesso!`,
+    });
+  };
+
+  const handleDisconnect = (integrationId: number, integrationName: string) => {
+    setIntegrations(prev => 
+      prev.map(integration => 
+        integration.id === integrationId 
+          ? { 
+              ...integration, 
+              status: "disconnected", 
+              lastSync: "Desconectado" 
+            }
+          : integration
+      )
+    );
+
+    toast({
+      title: "Desconectado",
+      description: `${integrationName} foi desconectado.`,
+      variant: "destructive",
+    });
   };
 
   return (
@@ -150,12 +191,21 @@ export default function Integrations() {
                       <Button size="sm" className="flex-1 verdash-btn-secondary">
                         Configurar
                       </Button>
-                      <Button size="sm" variant="outline" className="verdash-btn-secondary">
+                      <Button 
+                        size="sm" 
+                        variant="outline" 
+                        className="verdash-btn-secondary"
+                        onClick={() => handleDisconnect(integration.id, integration.name)}
+                      >
                         <ExternalLink className="w-4 h-4" />
                       </Button>
                     </>
                   ) : (
-                    <Button size="sm" className="flex-1 verdash-btn-primary">
+                    <Button 
+                      size="sm" 
+                      className="flex-1 verdash-btn-primary"
+                      onClick={() => handleConnect(integration.id, integration.name)}
+                    >
                       <Plug className="w-4 h-4 mr-2" />
                       Conectar
                     </Button>

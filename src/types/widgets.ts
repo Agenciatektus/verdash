@@ -1,4 +1,3 @@
-
 export interface Widget {
   id: string;
   type: 'kpi' | 'line-chart' | 'bar-chart' | 'pie-chart' | 'table' | 'funnel' | 'area-chart' | 'stacked-area-chart' | 'horizontal-bar-chart' | 'stacked-bar-chart' | 'grouped-bar-chart' | 'donut-chart' | 'waterfall-chart' | 'gauge-chart' | 'progress-bar' | 'scatter-chart' | 'bubble-chart' | 'heatmap' | 'radar-chart';
@@ -71,6 +70,7 @@ export interface FunnelStage {
   conversion: number;
   icon: string;
   color: string;
+  metric?: string;
 }
 
 export interface WidgetData {

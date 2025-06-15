@@ -48,7 +48,7 @@ export const WidgetContainer = ({
       case 'radar-chart':
         return <RadarChartWidget widget={widget} data={data} isEditing={isEditing} />;
       case 'funnel':
-        return <FunnelWidget widget={widget} isEditing={isEditing} />;
+        return <FunnelWidget widget={widget} isEditing={isEditing} onUpdate={onEdit} />;
       case 'table':
         return <TableWidget widget={widget} data={data} isEditing={isEditing} />;
       case 'stacked-area-chart':

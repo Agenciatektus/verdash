@@ -43,14 +43,28 @@ export function ReportsConfigDialog() {
     }
   });
 
-  const addRecipient = () => {
-    if (newRecipient && !recipients.includes(newRecipient)) {
+  const addRecipients = () => {
+    if (newRecipient.trim()) {
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      if (emailRegex.test(newRecipient)) {
-        setRecipients([...recipients, newRecipient]);
+      const emails = newRecipient.split(',').map(email => email.trim()).filter(email => email);
+      const validEmails: string[] = [];
+      const invalidEmails: string[] = [];
+
+      emails.forEach(email => {
+        if (emailRegex.test(email) && !recipients.includes(email)) {
+          validEmails.push(email);
+        } else if (!emailRegex.test(email)) {
+          invalidEmails.push(email);
+        }
+      });
+
+      if (validEmails.length > 0) {
+        setRecipients([...recipients, ...validEmails]);
         setNewRecipient("");
-      } else {
-        toast.error("Por favor, insira um e-mail válido");
+      }
+
+      if (invalidEmails.length > 0) {
+        toast.error(`E-mails inválidos: ${invalidEmails.join(', ')}`);
       }
     }
   };
@@ -189,16 +203,20 @@ export function ReportsConfigDialog() {
               
               <div className="flex gap-2">
                 <Input
-                  placeholder="email@exemplo.com"
+                  placeholder="email@exemplo.com, outro@exemplo.com"
                   value={newRecipient}
                   onChange={(e) => setNewRecipient(e.target.value)}
                   className="verdash-input flex-1"
-                  onKeyPress={(e) => e.key === 'Enter' && (e.preventDefault(), addRecipient())}
+                  onKeyPress={(e) => e.key === 'Enter' && (e.preventDefault(), addRecipients())}
                 />
-                <Button type="button" onClick={addRecipient} size="sm" className="verdash-btn-secondary">
+                <Button type="button" onClick={addRecipients} size="sm" className="verdash-btn-secondary">
                   <Plus className="w-4 h-4" />
                 </Button>
               </div>
+
+              <p className="text-xs text-white/50">
+                Separe múltiplos e-mails por vírgula
+              </p>
 
               {recipients.length > 0 && (
                 <div className="flex flex-wrap gap-2">
@@ -234,7 +252,6 @@ export function ReportsConfigDialog() {
               )}
             />
 
-            {/* Submit Button */}
             <div className="flex gap-3 pt-4">
               <Button type="submit" className="verdash-btn-primary flex-1">
                 Configurar Automação

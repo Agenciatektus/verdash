@@ -23,7 +23,7 @@ export function SidebarProjects() {
   const [projectsOpen, setProjectsOpen] = useState(true);
 
   return (
-    <SidebarGroup className="px-4 group-data-[collapsible=icon]:hidden">
+    <SidebarGroup className="px-6 group-data-[collapsible=icon]:hidden">
       <Collapsible open={projectsOpen} onOpenChange={setProjectsOpen}>
         <SidebarGroupLabel asChild>
           <CollapsibleTrigger className="flex items-center justify-between w-full p-3 hover:bg-verdash-input-bg/50 rounded-xl verdash-animate">

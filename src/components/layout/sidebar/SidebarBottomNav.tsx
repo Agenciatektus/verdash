@@ -34,7 +34,7 @@ export function SidebarBottomNav() {
 
   return (
     <div className="mt-auto">
-      <SidebarGroup className="px-4 py-4">
+      <SidebarGroup className="px-6 py-4">
         <SidebarGroupContent>
           <SidebarMenu className="space-y-3">
             {bottomNavigation.map((item) => (
@@ -68,8 +68,8 @@ export function SidebarBottomNav() {
       </SidebarGroup>
 
       {/* User Info */}
-      <div className="px-4 py-4 border-t border-verdash-divider/30">
-        <div className="flex items-center gap-3 px-2">
+      <div className="px-6 py-4 border-t border-verdash-divider/30">
+        <div className="flex items-center gap-3">
           <div className="w-12 h-12 rounded-full flex items-center justify-center text-white font-bold shadow-lg shrink-0 bg-gradient-to-r from-verdash-primary to-verdash-cyan">
             {user?.name?.charAt(0) || 'U'}
           </div>

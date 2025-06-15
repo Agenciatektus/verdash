@@ -1,3 +1,4 @@
+
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -11,61 +12,143 @@ import {
   Plus,
   Activity,
   Target,
-  Eye
+  Eye,
+  Zap,
+  MessageCircle,
+  Award
 } from "lucide-react";
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, BarChart, Bar } from "recharts";
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, BarChart, Bar, PieChart, Pie, Cell, AreaChart, Area } from "recharts";
 import { DashboardTemplatesDialog } from "@/components/dashboard/DashboardTemplatesDialog";
 import { DateRangeFilter } from "@/components/dashboard/DateRangeFilter";
 
-const mockData = [
-  { name: 'Jan', value: 400, revenue: 2400 },
-  { name: 'Fev', value: 300, revenue: 1398 },
-  { name: 'Mar', value: 200, revenue: 9800 },
-  { name: 'Abr', value: 278, revenue: 3908 },
-  { name: 'Mai', value: 189, revenue: 4800 },
-  { name: 'Jun', value: 239, revenue: 3800 },
+// Dados mockados para os gráficos
+const revenueData = [
+  { month: 'Jan', receita: 125000, investimento: 45000, leads: 1250 },
+  { month: 'Fev', receita: 148000, investimento: 52000, leads: 1380 },
+  { month: 'Mar', receita: 167000, investimento: 48000, leads: 1520 },
+  { month: 'Abr', receita: 195000, investimento: 55000, leads: 1680 },
+  { month: 'Mai', receita: 234000, investimento: 62000, leads: 1850 },
+  { month: 'Jun', receita: 267000, investimento: 68000, leads: 2100 }
 ];
 
+const investmentByChannel = [
+  { month: 'Jan', meta: 18000, google: 15000, whatsapp: 8000, organico: 2000, offline: 2000 },
+  { month: 'Fev', meta: 22000, google: 18000, whatsapp: 7000, organico: 3000, offline: 2000 },
+  { month: 'Mar', meta: 20000, google: 16000, whatsapp: 7000, organico: 3000, offline: 2000 },
+  { month: 'Abr', meta: 25000, google: 18000, whatsapp: 7000, organico: 3000, offline: 2000 },
+  { month: 'Mai', meta: 28000, google: 22000, whatsapp: 7000, organico: 3000, offline: 2000 },
+  { month: 'Jun', meta: 32000, google: 24000, whatsapp: 7000, organico: 3000, offline: 2000 }
+];
+
+const channelRevenue = [
+  { name: 'Meta Ads', value: 85000, color: '#1877F2' },
+  { name: 'Google Ads', value: 72000, color: '#4285F4' },
+  { name: 'WhatsApp', value: 35000, color: '#25D366' },
+  { name: 'Orgânico', value: 45000, color: '#00FFB0' },
+  { name: 'Offline', value: 30000, color: '#FF6F1B' }
+];
+
+const funnelData = [
+  { stage: 'Leads Gerados', value: 2100, conversion: 100 },
+  { stage: 'Qualificados', value: 1470, conversion: 70 },
+  { stage: 'Propostas', value: 735, conversion: 50 },
+  { stage: 'Negociação', value: 367, conversion: 50 },
+  { stage: 'Fechamento', value: 147, conversion: 40 }
+];
+
+const conversionByChannel = [
+  { channel: 'Meta Ads', leads: 850, vendas: 68, taxa: 8.0 },
+  { channel: 'Google Ads', leads: 720, vendas: 50, taxa: 6.9 },
+  { channel: 'WhatsApp', vendas: 15, leads: 350, taxa: 4.3 },
+  { channel: 'Orgânico', leads: 130, vendas: 10, taxa: 7.7 },
+  { channel: 'Offline', leads: 50, vendas: 4, taxa: 8.0 }
+];
+
+// KPIs principais
 const kpis = [
   {
     title: "Receita Total",
-    value: "R$ 234.567",
-    change: "+12.5%",
+    value: "R$ 267.000",
+    previousValue: "R$ 234.000",
+    target: "R$ 280.000",
+    change: "+14.1%",
     trend: "up",
     icon: DollarSign,
     gradient: "from-verdash-blue to-verdash-cyan"
   },
   {
-    title: "Usuários Ativos",
-    value: "12.543",
-    change: "+8.2%",
-    trend: "up", 
+    title: "Investimento Total",
+    value: "R$ 68.000",
+    previousValue: "R$ 62.000",
+    change: "+9.7%",
+    trend: "up",
+    icon: BarChart3,
+    gradient: "from-verdash-coral to-verdash-red"
+  },
+  {
+    title: "ROI Médio",
+    value: "292%",
+    previousValue: "277%",
+    target: "300%",
+    change: "+5.4%",
+    trend: "up",
+    icon: TrendingUp,
+    gradient: "from-verdash-blue to-verdash-cyan"
+  },
+  {
+    title: "Leads Gerados",
+    value: "2.100",
+    previousValue: "1.850",
+    target: "2.200",
+    change: "+13.5%",
+    trend: "up",
     icon: Users,
     gradient: "from-verdash-blue to-verdash-cyan"
   },
   {
-    title: "Taxa de Conversão",
-    value: "3.4%",
-    change: "-2.1%",
-    trend: "down",
+    title: "Conversões (Vendas)",
+    value: "147",
+    previousValue: "128",
+    target: "160",
+    change: "+14.8%",
+    trend: "up",
     icon: Target,
-    gradient: "from-verdash-red to-verdash-coral"
+    gradient: "from-verdash-blue to-verdash-cyan"
   },
   {
-    title: "Sessões",
-    value: "89.123",
-    change: "+15.3%",
+    title: "Meta vs Realizado",
+    value: "95.4%",
+    previousValue: "89.2%",
+    target: "100%",
+    change: "+6.9%",
     trend: "up",
-    icon: Activity,
-    gradient: "from-verdash-blue to-verdash-cyan"
+    icon: Award,
+    gradient: "from-verdash-coral to-verdash-red"
   }
 ];
 
-const recentMetrics = [
-  { id: 1, name: "CAC - Custo de Aquisição", project: "E-commerce Principal", value: "R$ 45,30", status: "active" },
-  { id: 2, name: "LTV - Lifetime Value", project: "Marketing Digital", value: "R$ 230,45", status: "active" },
-  { id: 3, name: "ROI - Retorno do Investimento", project: "Vendas B2B", value: "15.4%", status: "warning" },
-  { id: 4, name: "Churn Rate", project: "E-commerce Principal", value: "2.3%", status: "active" },
+const additionalKpis = [
+  {
+    title: "SLA Atendimento",
+    value: "2h 15m",
+    target: "2h",
+    status: "warning",
+    icon: Activity
+  },
+  {
+    title: "Volume WhatsApp",
+    value: "3.247",
+    change: "+8.2%",
+    status: "success",
+    icon: MessageCircle
+  },
+  {
+    title: "NPS Clientes",
+    value: "8.7",
+    target: "9.0",
+    status: "success",
+    icon: Award
+  }
 ];
 
 const Dashboard = () => {
@@ -78,8 +161,8 @@ const Dashboard = () => {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-4xl font-bold text-foreground mb-2">Dashboard</h1>
-          <p className="text-muted-foreground text-lg">Visão geral dos seus dados e métricas</p>
+          <h1 className="text-4xl font-bold text-foreground mb-2 font-grotesk">Dashboard Principal</h1>
+          <p className="text-muted-foreground text-lg font-inter">Visão executiva completa do seu negócio</p>
         </div>
         <div className="flex gap-3">
           <Button variant="outline" className="verdash-animate">
@@ -90,228 +173,353 @@ const Dashboard = () => {
         </div>
       </div>
 
-      {/* Filtros Hierárquicos */}
+      {/* Filtros Globais */}
       <div className="space-y-4">
-        <h2 className="text-lg font-semibold text-foreground">Filtros</h2>
-        <div className="flex flex-wrap items-center gap-4 p-4 bg-card/20 rounded-xl">
-          {/* Cliente/Projeto */}
-          <div className="flex flex-col gap-2">
-            <label className="text-sm font-medium text-muted-foreground">Cliente/Projeto</label>
-            <Select>
-              <SelectTrigger className="w-[200px]">
-                <SelectValue placeholder="Selecione o cliente" />
-              </SelectTrigger>
-              <SelectContent style={{ backgroundColor: '#0A0E1E', border: '1px solid rgba(255,255,255,0.1)' }}>
-                <SelectItem value="cliente1" style={{ backgroundColor: '#0A0E1E' }}>E-commerce Principal</SelectItem>
-                <SelectItem value="cliente2" style={{ backgroundColor: '#0A0E1E' }}>Marketing Digital</SelectItem>
-                <SelectItem value="cliente3" style={{ backgroundColor: '#0A0E1E' }}>Vendas B2B</SelectItem>
-                <SelectItem value="cliente4" style={{ backgroundColor: '#0A0E1E' }}>SaaS Platform</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
-
-          {/* Dashboard */}
-          <div className="flex flex-col gap-2">
-            <label className="text-sm font-medium text-muted-foreground">Dashboard</label>
-            <Select>
-              <SelectTrigger className="w-[200px]">
-                <SelectValue placeholder="Selecione o dashboard" />
-              </SelectTrigger>
-              <SelectContent style={{ backgroundColor: '#0A0E1E', border: '1px solid rgba(255,255,255,0.1)' }}>
-                <SelectItem value="executivo" style={{ backgroundColor: '#0A0E1E' }}>Visão Executiva</SelectItem>
-                <SelectItem value="comercial" style={{ backgroundColor: '#0A0E1E' }}>Dashboard Comercial</SelectItem>
-                <SelectItem value="marketing" style={{ backgroundColor: '#0A0E1E' }}>Dashboard Marketing</SelectItem>
-                <SelectItem value="produto" style={{ backgroundColor: '#0A0E1E' }}>Dashboard Produto</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
-
-          {/* Período */}
+        <h2 className="text-lg font-semibold text-foreground font-grotesk">Filtros Globais</h2>
+        <div className="flex flex-wrap items-center gap-4 p-6 bg-card/20 rounded-xl border border-border/30">
           <div className="flex flex-col gap-2">
             <label className="text-sm font-medium text-muted-foreground">Período</label>
             <DateRangeFilter />
           </div>
 
+          <div className="flex flex-col gap-2">
+            <label className="text-sm font-medium text-muted-foreground">Canal</label>
+            <Select>
+              <SelectTrigger className="w-[160px]">
+                <SelectValue placeholder="Todos os canais" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">Todos os canais</SelectItem>
+                <SelectItem value="meta">Meta Ads</SelectItem>
+                <SelectItem value="google">Google Ads</SelectItem>
+                <SelectItem value="whatsapp">WhatsApp</SelectItem>
+                <SelectItem value="organico">Orgânico</SelectItem>
+                <SelectItem value="offline">Offline</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+
+          <div className="flex flex-col gap-2">
+            <label className="text-sm font-medium text-muted-foreground">Time</label>
+            <Select>
+              <SelectTrigger className="w-[160px]">
+                <SelectValue placeholder="Todos os times" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">Todos os times</SelectItem>
+                <SelectItem value="trafego">Tráfego</SelectItem>
+                <SelectItem value="vendas">Vendas</SelectItem>
+                <SelectItem value="cs">Customer Success</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+
+          <div className="flex flex-col gap-2">
+            <label className="text-sm font-medium text-muted-foreground">Região</label>
+            <Select>
+              <SelectTrigger className="w-[160px]">
+                <SelectValue placeholder="Todas as regiões" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">Todas as regiões</SelectItem>
+                <SelectItem value="sudeste">Sudeste</SelectItem>
+                <SelectItem value="sul">Sul</SelectItem>
+                <SelectItem value="nordeste">Nordeste</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+
           <Button className="verdash-btn-primary mt-6">
+            <Zap className="w-4 h-4 mr-2" />
             Aplicar Filtros
           </Button>
         </div>
       </div>
 
-      {/* KPIs Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        {kpis.map((kpi, index) => (
-          <Card key={index} className="verdash-card verdash-card-hover verdash-hover-scale">
-            <CardContent className="p-6">
-              <div className="flex items-center justify-between mb-4">
-                <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${kpi.gradient} flex items-center justify-center`}>
-                  <kpi.icon className="w-6 h-6 text-white" />
+      {/* 🏆 LINHA SUPERIOR - KPIs de Impacto */}
+      <div className="space-y-4">
+        <h2 className="text-2xl font-bold text-foreground font-grotesk flex items-center gap-3">
+          <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-verdash-blue to-verdash-cyan flex items-center justify-center">
+            <Award className="w-5 h-5 text-white" />
+          </div>
+          KPIs de Impacto
+        </h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {kpis.map((kpi, index) => (
+            <Card key={index} className="verdash-glass verdash-glass-hover verdash-hover-scale">
+              <CardContent className="p-6">
+                <div className="flex items-center justify-between mb-4">
+                  <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${kpi.gradient} flex items-center justify-center`}>
+                    <kpi.icon className="w-6 h-6 text-white" />
+                  </div>
+                  {kpi.trend === "up" ? (
+                    <TrendingUp className="w-5 h-5 text-verdash-cyan" />
+                  ) : (
+                    <TrendingDown className="w-5 h-5 text-verdash-red" />
+                  )}
                 </div>
-                {kpi.trend === "up" ? (
-                  <TrendingUp className="w-5 h-5 text-verdash-cyan" />
-                ) : (
-                  <TrendingDown className="w-5 h-5 text-verdash-red" />
-                )}
-              </div>
-              <div>
-                <p className="text-sm font-medium text-muted-foreground mb-1">{kpi.title}</p>
-                <p className="text-3xl font-bold text-foreground mb-2">{kpi.value}</p>
-                <div className="flex items-center">
-                  <span className={`text-sm font-semibold ${
-                    kpi.trend === "up" ? "text-verdash-cyan" : "text-verdash-red"
-                  }`}>
-                    {kpi.change}
-                  </span>
-                  <span className="text-sm text-muted-foreground ml-2">vs. mês anterior</span>
+                <div>
+                  <p className="text-sm font-medium text-muted-foreground mb-1 font-inter">{kpi.title}</p>
+                  <p className="text-3xl font-bold text-foreground mb-2 font-grotesk">{kpi.value}</p>
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center">
+                      <span className={`text-sm font-semibold ${
+                        kpi.trend === "up" ? "text-verdash-cyan" : "text-verdash-red"
+                      }`}>
+                        {kpi.change}
+                      </span>
+                      <span className="text-sm text-muted-foreground ml-2">vs. período anterior</span>
+                    </div>
+                    {kpi.target && (
+                      <div className="text-xs text-muted-foreground">
+                        Meta: {kpi.target}
+                      </div>
+                    )}
+                  </div>
                 </div>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+      </div>
+
+      {/* 📈 LINHA INTERMEDIÁRIA - Visão de Performance */}
+      <div className="space-y-6">
+        <h2 className="text-2xl font-bold text-foreground font-grotesk flex items-center gap-3">
+          <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-verdash-coral to-verdash-red flex items-center justify-center">
+            <BarChart3 className="w-5 h-5 text-white" />
+          </div>
+          Performance ao Longo do Tempo
+        </h2>
+        
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          {/* Gráfico de Linha - Receita, Investimento e Leads */}
+          <Card className="verdash-glass lg:col-span-2">
+            <CardHeader>
+              <CardTitle className="text-white text-xl font-grotesk flex items-center gap-3">
+                <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-verdash-blue to-verdash-cyan flex items-center justify-center">
+                  <TrendingUp className="w-4 h-4 text-white" />
+                </div>
+                Evolução de Receita, Investimento e Leads
+              </CardTitle>
+              <CardDescription className="text-white/70 font-inter">Últimos 6 meses - Visão comparativa</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <ResponsiveContainer width="100%" height={350}>
+                <LineChart data={revenueData}>
+                  <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.1)" />
+                  <XAxis dataKey="month" stroke="white" fontSize={12} />
+                  <YAxis stroke="white" fontSize={12} />
+                  <Tooltip 
+                    contentStyle={{ 
+                      backgroundColor: 'rgba(16, 24, 44, 0.95)', 
+                      border: '1px solid rgba(255,255,255,0.1)',
+                      borderRadius: '12px',
+                      color: 'white'
+                    }} 
+                  />
+                  <Line 
+                    type="monotone" 
+                    dataKey="receita" 
+                    stroke="#00FFB0" 
+                    strokeWidth={3}
+                    name="Receita"
+                    dot={{ fill: '#00FFB0', strokeWidth: 2, r: 5 }}
+                  />
+                  <Line 
+                    type="monotone" 
+                    dataKey="investimento" 
+                    stroke="#FF6F1B" 
+                    strokeWidth={3}
+                    name="Investimento"
+                    dot={{ fill: '#FF6F1B', strokeWidth: 2, r: 5 }}
+                  />
+                  <Line 
+                    type="monotone" 
+                    dataKey="leads" 
+                    stroke="#1042F6" 
+                    strokeWidth={3}
+                    name="Leads"
+                    dot={{ fill: '#1042F6', strokeWidth: 2, r: 5 }}
+                  />
+                </LineChart>
+              </ResponsiveContainer>
+            </CardContent>
+          </Card>
+
+          {/* Gráfico de Barras Empilhadas - Investimento por Canal */}
+          <Card className="verdash-glass">
+            <CardHeader>
+              <CardTitle className="text-white text-lg font-grotesk">Investimento por Canal</CardTitle>
+              <CardDescription className="text-white/70 font-inter">Distribuição mensal</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <ResponsiveContainer width="100%" height={300}>
+                <BarChart data={investmentByChannel}>
+                  <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.1)" />
+                  <XAxis dataKey="month" stroke="white" fontSize={11} />
+                  <YAxis stroke="white" fontSize={11} />
+                  <Tooltip 
+                    contentStyle={{ 
+                      backgroundColor: 'rgba(16, 24, 44, 0.95)', 
+                      border: '1px solid rgba(255,255,255,0.1)',
+                      borderRadius: '8px',
+                      color: 'white'
+                    }} 
+                  />
+                  <Bar dataKey="meta" stackId="a" fill="#1877F2" name="Meta Ads" />
+                  <Bar dataKey="google" stackId="a" fill="#4285F4" name="Google Ads" />
+                  <Bar dataKey="whatsapp" stackId="a" fill="#25D366" name="WhatsApp" />
+                  <Bar dataKey="organico" stackId="a" fill="#00FFB0" name="Orgânico" />
+                  <Bar dataKey="offline" stackId="a" fill="#FF6F1B" name="Offline" />
+                </BarChart>
+              </ResponsiveContainer>
+            </CardContent>
+          </Card>
+
+          {/* Gráfico de Donut - Participação na Receita */}
+          <Card className="verdash-glass">
+            <CardHeader>
+              <CardTitle className="text-white text-lg font-grotesk">Participação na Receita</CardTitle>
+              <CardDescription className="text-white/70 font-inter">Por canal de aquisição</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <ResponsiveContainer width="100%" height={300}>
+                <PieChart>
+                  <Pie
+                    data={channelRevenue}
+                    cx="50%"
+                    cy="50%"
+                    innerRadius={50}
+                    outerRadius={100}
+                    paddingAngle={5}
+                    dataKey="value"
+                  >
+                    {channelRevenue.map((entry, index) => (
+                      <Cell key={`cell-${index}`} fill={entry.color} />
+                    ))}
+                  </Pie>
+                  <Tooltip 
+                    contentStyle={{ 
+                      backgroundColor: 'rgba(16, 24, 44, 0.95)', 
+                      border: '1px solid rgba(255,255,255,0.1)',
+                      borderRadius: '8px',
+                      color: 'white'
+                    }} 
+                    formatter={(value: any) => [`R$ ${Number(value).toLocaleString('pt-BR')}`, 'Receita']}
+                  />
+                </PieChart>
+              </ResponsiveContainer>
+            </CardContent>
+          </Card>
+        </div>
+      </div>
+
+      {/* 🔍 LINHA INFERIOR - Operações e Funil de Vendas */}
+      <div className="space-y-6">
+        <h2 className="text-2xl font-bold text-foreground font-grotesk flex items-center gap-3">
+          <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-verdash-red to-verdash-coral flex items-center justify-center">
+            <Target className="w-5 h-5 text-white" />
+          </div>
+          Operações e Funil de Vendas
+        </h2>
+
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          {/* Funil de Vendas */}
+          <Card className="verdash-glass">
+            <CardHeader>
+              <CardTitle className="text-white text-lg font-grotesk">Pipeline de Vendas</CardTitle>
+              <CardDescription className="text-white/70 font-inter">Funil completo do processo comercial</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-4">
+                {funnelData.map((stage, index) => (
+                  <div key={index} className="space-y-2">
+                    <div className="flex justify-between items-center">
+                      <span className="text-sm font-medium text-white/80">{stage.stage}</span>
+                      <div className="text-right">
+                        <span className="text-lg font-bold text-white">{stage.value.toLocaleString()}</span>
+                        <span className="text-xs text-white/60 ml-2">({stage.conversion}%)</span>
+                      </div>
+                    </div>
+                    <div className="w-full bg-white/10 rounded-full h-3">
+                      <div 
+                        className="bg-gradient-to-r from-verdash-blue to-verdash-cyan h-3 rounded-full transition-all duration-300"
+                        style={{ width: `${(stage.value / funnelData[0].value) * 100}%` }}
+                      />
+                    </div>
+                  </div>
+                ))}
               </div>
             </CardContent>
           </Card>
-        ))}
-      </div>
 
-      {/* Charts */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <Card className="verdash-card">
-          <CardHeader>
-            <CardTitle className="flex items-center gap-3 text-xl font-semibold">
-              <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-verdash-blue to-verdash-cyan flex items-center justify-center">
-                <BarChart3 className="w-4 h-4 text-white" />
-              </div>
-              Tendência de Receita
-            </CardTitle>
-            <CardDescription className="text-muted-foreground">Evolução mensal da receita</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <ResponsiveContainer width="100%" height={300}>
-              <LineChart data={mockData}>
-                <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.1)" />
-                <XAxis 
-                  dataKey="name" 
-                  stroke="white"
-                  fontSize={12}
-                  tick={{ fill: 'white' }}
-                />
-                <YAxis 
-                  stroke="white"
-                  fontSize={12}
-                  tick={{ fill: 'white' }}
-                />
-                <Tooltip 
-                  contentStyle={{ 
-                    backgroundColor: 'rgba(16, 24, 44, 0.95)', 
-                    border: '1px solid rgba(255,255,255,0.1)',
-                    borderRadius: '12px',
-                    color: 'white'
-                  }} 
-                />
-                <Line 
-                  type="monotone" 
-                  dataKey="revenue" 
-                  stroke="url(#verdashGradient)" 
-                  strokeWidth={3}
-                  dot={{ fill: '#1042F6', strokeWidth: 2, r: 6 }}
-                />
-                <defs>
-                  <linearGradient id="verdashGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                    <stop offset="0%" stopColor="#1042F6" />
-                    <stop offset="100%" stopColor="#00FFB0" />
-                  </linearGradient>
-                </defs>
-              </LineChart>
-            </ResponsiveContainer>
-          </CardContent>
-        </Card>
+          {/* Conversão por Canal */}
+          <Card className="verdash-glass">
+            <CardHeader>
+              <CardTitle className="text-white text-lg font-grotesk">Taxa de Conversão por Canal</CardTitle>
+              <CardDescription className="text-white/70 font-inter">Performance de cada fonte</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <ResponsiveContainer width="100%" height={300}>
+                <BarChart data={conversionByChannel} layout="horizontal">
+                  <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.1)" />
+                  <XAxis type="number" domain={[0, 10]} stroke="white" fontSize={11} />
+                  <YAxis dataKey="channel" type="category" stroke="white" fontSize={11} width={80} />
+                  <Tooltip 
+                    contentStyle={{ 
+                      backgroundColor: 'rgba(16, 24, 44, 0.95)', 
+                      border: '1px solid rgba(255,255,255,0.1)',
+                      borderRadius: '8px',
+                      color: 'white'
+                    }} 
+                    formatter={(value: any) => [`${value}%`, 'Taxa de Conversão']}
+                  />
+                  <Bar dataKey="taxa" fill="#00FFB0" radius={[0, 4, 4, 0]} />
+                </BarChart>
+              </ResponsiveContainer>
+            </CardContent>
+          </Card>
+        </div>
 
-        <Card className="verdash-card">
-          <CardHeader>
-            <CardTitle className="flex items-center gap-3 text-xl font-semibold">
-              <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-verdash-blue to-verdash-cyan flex items-center justify-center">
-                <Users className="w-4 h-4 text-white" />
-              </div>
-              Usuários por Mês
-            </CardTitle>
-            <CardDescription className="text-muted-foreground">Crescimento da base de usuários</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <ResponsiveContainer width="100%" height={300}>
-              <BarChart data={mockData}>
-                <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.1)" />
-                <XAxis 
-                  dataKey="name" 
-                  stroke="white"
-                  fontSize={12}
-                  tick={{ fill: 'white' }}
-                />
-                <YAxis 
-                  stroke="white"
-                  fontSize={12}
-                  tick={{ fill: 'white' }}
-                />
-                <Tooltip 
-                  contentStyle={{ 
-                    backgroundColor: 'rgba(16, 24, 44, 0.95)', 
-                    border: '1px solid rgba(255,255,255,0.1)',
-                    borderRadius: '12px',
-                    color: 'white'
-                  }} 
-                />
-                <Bar dataKey="value" fill="url(#barGradient)" radius={[6, 6, 0, 0]} />
-                <defs>
-                  <linearGradient id="barGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-                    <stop offset="0%" stopColor="#00FFB0" />
-                    <stop offset="100%" stopColor="#1042F6" />
-                  </linearGradient>
-                </defs>
-              </BarChart>
-            </ResponsiveContainer>
-          </CardContent>
-        </Card>
-      </div>
-
-      {/* Recent Metrics */}
-      <Card className="verdash-card">
-        <CardHeader>
-          <div className="flex items-center justify-between">
-            <div>
-              <CardTitle className="text-2xl font-semibold mb-2">Métricas Recentes</CardTitle>
-              <CardDescription className="text-muted-foreground">Suas métricas personalizadas mais utilizadas</CardDescription>
-            </div>
-            <Button variant="outline" size="sm" className="border-border/50 hover:border-border verdash-animate">
-              Ver Todas
-            </Button>
-          </div>
-        </CardHeader>
-        <CardContent>
-          <div className="space-y-4">
-            {recentMetrics.map((metric) => (
-              <div key={metric.id} className="flex items-center justify-between p-5 rounded-xl border border-border/30 hover:border-border/50 bg-card/20 hover:bg-card/40 verdash-animate">
-                <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-verdash-blue to-verdash-cyan flex items-center justify-center">
-                    <BarChart3 className="w-6 h-6 text-white" />
+        {/* KPIs Adicionais */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {additionalKpis.map((kpi, index) => (
+            <Card key={index} className="verdash-glass verdash-glass-hover">
+              <CardContent className="p-6">
+                <div className="flex items-center justify-between mb-4">
+                  <div className={`w-10 h-10 rounded-lg bg-gradient-to-br ${
+                    kpi.status === 'success' ? 'from-verdash-blue to-verdash-cyan' : 
+                    kpi.status === 'warning' ? 'from-verdash-coral to-verdash-red' : 
+                    'from-gray-600 to-gray-700'
+                  } flex items-center justify-center`}>
+                    <kpi.icon className="w-5 h-5 text-white" />
                   </div>
-                  <div>
-                    <p className="font-semibold text-foreground">{metric.name}</p>
-                    <p className="text-sm text-muted-foreground">{metric.project}</p>
-                  </div>
-                </div>
-                <div className="flex items-center gap-4">
-                  <span className="text-xl font-bold text-foreground">{metric.value}</span>
                   <Badge 
-                    variant={metric.status === 'active' ? 'default' : 'secondary'}
-                    className={metric.status === 'active' 
-                      ? 'bg-gradient-to-r from-verdash-cyan/20 to-verdash-blue/20 text-verdash-cyan border-verdash-cyan/30' 
-                      : 'bg-gradient-to-r from-verdash-red/20 to-verdash-coral/20 text-verdash-red border-verdash-red/30'
+                    variant={kpi.status === 'success' ? 'default' : 'secondary'}
+                    className={kpi.status === 'success' 
+                      ? 'bg-verdash-cyan/20 text-verdash-cyan border-verdash-cyan/30' 
+                      : 'bg-verdash-coral/20 text-verdash-coral border-verdash-coral/30'
                     }
                   >
-                    {metric.status === 'active' ? 'Ativo' : 'Atenção'}
+                    {kpi.status === 'success' ? 'Bom' : 'Atenção'}
                   </Badge>
                 </div>
-              </div>
-            ))}
-          </div>
-        </CardContent>
-      </Card>
+                <div>
+                  <p className="text-sm font-medium text-muted-foreground mb-1 font-inter">{kpi.title}</p>
+                  <p className="text-2xl font-bold text-foreground mb-2 font-grotesk">{kpi.value}</p>
+                  {kpi.change && (
+                    <p className="text-sm text-verdash-cyan font-inter">{kpi.change} vs. período anterior</p>
+                  )}
+                  {kpi.target && (
+                    <p className="text-xs text-muted-foreground font-inter">Meta: {kpi.target}</p>
+                  )}
+                </div>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+      </div>
     </div>
   );
 };

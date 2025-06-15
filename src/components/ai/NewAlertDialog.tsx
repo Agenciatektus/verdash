@@ -3,7 +3,9 @@ import { useState } from "react";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Plus, Trash2, AlertTriangle } from "lucide-react";
+import { availableMetrics, customMetrics } from "@/constants/metricsData";
 
 interface NewAlertDialogProps {
   open: boolean;
@@ -36,14 +38,12 @@ export const NewAlertDialog = ({ open, onOpenChange, onCreateAlert, clients }: N
     { id: '1', metric: '', operator: '>', value: '' }
   ]);
 
-  const metrics = [
-    'Custo por Click (CPC)',
-    'Taxa de Conversão',
-    'Custo por Aquisição (CPA)',
-    'ROAS',
-    'Impressões',
-    'Cliques',
-    'CTR'
+  // Combine all metrics from different categories and custom metrics
+  const allMetrics = [
+    ...Object.values(availableMetrics).flatMap(category => 
+      category.metrics.map(metric => ({ name: metric, category: category.title }))
+    ),
+    ...customMetrics.map(metric => ({ name: metric.name, category: 'Métricas Personalizadas' }))
   ];
 
   const operators = [
@@ -137,28 +137,37 @@ export const NewAlertDialog = ({ open, onOpenChange, onCreateAlert, clients }: N
 
             <div className="space-y-2">
               <Label className="text-white/80">Cliente/Projeto</Label>
-              <select
+              <Select
                 value={formData.client}
-                onChange={(e) => setFormData(prev => ({ ...prev, client: e.target.value }))}
-                className="w-full bg-verdash-input-bg border border-verdash-divider/30 rounded-lg px-3 py-2 text-white text-sm focus:border-verdash-cyan focus:outline-none"
+                onValueChange={(value) => setFormData(prev => ({ ...prev, client: value }))}
               >
-                <option value="">Selecione um cliente</option>
-                {clients.map(client => (
-                  <option key={client} value={client}>{client}</option>
-                ))}
-              </select>
+                <SelectTrigger className="w-full bg-verdash-input-bg border border-verdash-divider/30 text-white focus:border-verdash-cyan">
+                  <SelectValue placeholder="Selecione um cliente" />
+                </SelectTrigger>
+                <SelectContent className="bg-verdash-input-bg border border-verdash-divider/30 text-white z-50">
+                  {clients.map(client => (
+                    <SelectItem key={client} value={client} className="text-white hover:bg-verdash-divider/30">
+                      {client}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
             </div>
 
             <div className="space-y-2">
               <Label className="text-white/80">Status Inicial</Label>
-              <select
+              <Select
                 value={formData.status}
-                onChange={(e) => setFormData(prev => ({ ...prev, status: e.target.value as any }))}
-                className="w-full bg-verdash-input-bg border border-verdash-divider/30 rounded-lg px-3 py-2 text-white text-sm focus:border-verdash-cyan focus:outline-none"
+                onValueChange={(value) => setFormData(prev => ({ ...prev, status: value as any }))}
               >
-                <option value="active">Ativo</option>
-                <option value="inactive">Inativo</option>
-              </select>
+                <SelectTrigger className="w-full bg-verdash-input-bg border border-verdash-divider/30 text-white focus:border-verdash-cyan">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent className="bg-verdash-input-bg border border-verdash-divider/30 text-white z-50">
+                  <SelectItem value="active" className="text-white hover:bg-verdash-divider/30">Ativo</SelectItem>
+                  <SelectItem value="inactive" className="text-white hover:bg-verdash-divider/30">Inativo</SelectItem>
+                </SelectContent>
+              </Select>
             </div>
           </div>
 
@@ -197,29 +206,63 @@ export const NewAlertDialog = ({ open, onOpenChange, onCreateAlert, clients }: N
                   <div className="grid grid-cols-3 gap-2">
                     <div className="space-y-1">
                       <Label className="text-white/60 text-xs">Métrica</Label>
-                      <select
+                      <Select
                         value={condition.metric}
-                        onChange={(e) => handleConditionChange(condition.id, 'metric', e.target.value)}
-                        className="w-full bg-verdash-input-bg border border-verdash-divider/30 rounded px-2 py-1 text-white text-xs focus:border-verdash-cyan focus:outline-none"
+                        onValueChange={(value) => handleConditionChange(condition.id, 'metric', value)}
                       >
-                        <option value="">Selecione</option>
-                        {metrics.map(metric => (
-                          <option key={metric} value={metric}>{metric}</option>
-                        ))}
-                      </select>
+                        <SelectTrigger className="w-full bg-verdash-input-bg border border-verdash-divider/30 text-white text-xs focus:border-verdash-cyan">
+                          <SelectValue placeholder="Selecione" />
+                        </SelectTrigger>
+                        <SelectContent className="bg-verdash-input-bg border border-verdash-divider/30 text-white z-50 max-h-60">
+                          {Object.entries(
+                            allMetrics.reduce((acc, metric) => {
+                              if (!acc[metric.category]) {
+                                acc[metric.category] = [];
+                              }
+                              acc[metric.category].push(metric);
+                              return acc;
+                            }, {} as Record<string, typeof allMetrics>)
+                          ).map(([category, metrics]) => (
+                            <div key={category}>
+                              <div className="px-2 py-1 text-xs font-medium text-verdash-cyan border-b border-verdash-divider/30">
+                                {category}
+                              </div>
+                              {metrics.map(metric => (
+                                <SelectItem 
+                                  key={metric.name} 
+                                  value={metric.name}
+                                  className="text-white hover:bg-verdash-divider/30 text-xs pl-4"
+                                >
+                                  {metric.name}
+                                </SelectItem>
+                              ))}
+                            </div>
+                          ))}
+                        </SelectContent>
+                      </Select>
                     </div>
 
                     <div className="space-y-1">
                       <Label className="text-white/60 text-xs">Operador</Label>
-                      <select
+                      <Select
                         value={condition.operator}
-                        onChange={(e) => handleConditionChange(condition.id, 'operator', e.target.value)}
-                        className="w-full bg-verdash-input-bg border border-verdash-divider/30 rounded px-2 py-1 text-white text-xs focus:border-verdash-cyan focus:outline-none"
+                        onValueChange={(value) => handleConditionChange(condition.id, 'operator', value)}
                       >
-                        {operators.map(op => (
-                          <option key={op.value} value={op.value}>{op.label}</option>
-                        ))}
-                      </select>
+                        <SelectTrigger className="w-full bg-verdash-input-bg border border-verdash-divider/30 text-white text-xs focus:border-verdash-cyan">
+                          <SelectValue />
+                        </SelectTrigger>
+                        <SelectContent className="bg-verdash-input-bg border border-verdash-divider/30 text-white z-50">
+                          {operators.map(op => (
+                            <SelectItem 
+                              key={op.value} 
+                              value={op.value}
+                              className="text-white hover:bg-verdash-divider/30 text-xs"
+                            >
+                              {op.label}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
                     </div>
 
                     <div className="space-y-1">

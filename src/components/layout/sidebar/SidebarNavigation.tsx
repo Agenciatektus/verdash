@@ -1,5 +1,3 @@
-
-
 import { 
   LayoutDashboard, 
   FolderOpen, 
@@ -20,14 +18,14 @@ import {
 } from "@/components/ui/sidebar";
 
 const mainNavigation = [
-  { title: "Dashboard", url: "/", icon: LayoutDashboard },
-  { title: "Projetos", url: "/projects", icon: FolderOpen },
-  { title: "Dashboards", url: "/dashboards", icon: Brain },
-  { title: "Métricas & KPIs", url: "/metrics", icon: Ruler },
-  { title: "Admin de Dados", url: "/data-admin", icon: Database },
-  { title: "Verdash IA", url: "/verdash-ai", icon: Brain },
-  { title: "Integrações", url: "/integrations", icon: Plug },
-  { title: "Clientes", url: "/clients", icon: Users },
+  { title: "Dashboard", url: "/app/dashboard", icon: LayoutDashboard },
+  { title: "Projetos", url: "/app/projects", icon: FolderOpen },
+  { title: "Dashboards", url: "/app/dashboards", icon: Brain },
+  { title: "Métricas & KPIs", url: "/app/metrics", icon: Ruler },
+  { title: "Admin de Dados", url: "/app/data-admin", icon: Database },
+  { title: "Verdash IA", url: "/app/verdash-ai", icon: Brain },
+  { title: "Integrações", url: "/app/integrations", icon: Plug },
+  { title: "Clientes", url: "/app/clients", icon: Users },
 ];
 
 export function SidebarNavigation() {
@@ -52,10 +50,10 @@ export function SidebarNavigation() {
                 <NavLink 
                   to={item.url} 
                   className={({ isActive: navIsActive }) => {
-                    const active = item.url === "/" ? (currentPath === "/" || currentPath === "/dashboard") : navIsActive;
+                    const active = item.url === "/app/dashboard" ? (currentPath === "/app" || currentPath === "/app/dashboard") : navIsActive;
                     return `${getNavClass(active)} hover:bg-verdash-input-bg/50 hover:border-verdash-cyan/30 transition-all duration-200`;
                   }}
-                  end={item.url === "/"}
+                  end={item.url === "/app/dashboard"}
                 >
                   <item.icon className="w-5 h-5 shrink-0" />
                   <span className="font-medium font-grotesk uppercase text-sm tracking-wide group-data-[collapsible=icon]:hidden">{item.title}</span>

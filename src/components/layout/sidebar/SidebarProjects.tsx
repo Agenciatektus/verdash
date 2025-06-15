@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { ChevronDown, Plus } from "lucide-react";
 import { NavLink } from "react-router-dom";
@@ -47,7 +46,7 @@ export function SidebarProjects() {
                 <SidebarMenuItem key={project.id}>
                   <SidebarMenuButton asChild>
                     <NavLink 
-                      to={`/projects/${project.id}`}
+                      to={`/app/projects/${project.id}`}
                       className="flex items-center justify-between text-sm p-3 rounded-lg hover:bg-verdash-input-bg/50 hover:border-verdash-cyan/20 border border-transparent verdash-animate text-white/80 hover:text-white transition-all duration-200"
                     >
                       <span className="truncate font-inter">{project.name}</span>

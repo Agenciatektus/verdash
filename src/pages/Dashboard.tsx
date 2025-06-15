@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -241,7 +240,7 @@ const Dashboard = () => {
   };
 
   return (
-    <div className="relative space-y-8 animate-verdash-fade-in font-jakarta">
+    <div className="relative space-y-8 animate-verdash-fade-in font-jakarta w-full flex flex-col">
       {/* Aero Radial Gradient Background */}
       <div 
         className="fixed inset-0 pointer-events-none z-0"
@@ -261,7 +260,7 @@ const Dashboard = () => {
       />
       
       {/* Content Container with higher z-index */}
-      <div className="relative z-10">
+      <div className="relative z-10 w-full">
         {/* Header */}
         <div className="flex items-center justify-between">
           <div>

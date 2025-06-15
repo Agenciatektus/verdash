@@ -1,5 +1,3 @@
-
-
 import { 
   Settings, 
   MessageCircle,
@@ -18,9 +16,9 @@ import {
 import { useAuth } from "@/contexts/AuthContext";
 
 const bottomNavigation = [
-  { title: "Planos & Billing", url: "/billing", icon: CreditCard },
-  { title: "Suporte", url: "/support", icon: MessageCircle },
-  { title: "Configurações", url: "/settings", icon: Settings },
+  { title: "Planos & Billing", url: "/app/billing", icon: CreditCard },
+  { title: "Suporte", url: "/app/support", icon: MessageCircle },
+  { title: "Configurações", url: "/app/settings", icon: Settings },
 ];
 
 export function SidebarBottomNav() {
@@ -69,15 +67,13 @@ export function SidebarBottomNav() {
       </SidebarGroup>
 
       {/* User Info */}
-      <div className="px-7 py-4 border-t border-verdash-divider/30">
-        <div className="flex items-center gap-3">
-          <div className="w-12 h-12 rounded-full flex items-center justify-center text-white font-bold shadow-lg shrink-0 bg-gradient-to-r from-verdash-primary to-verdash-cyan">
-            {user?.name?.charAt(0) || 'U'}
-          </div>
-          <div className="flex-1 min-w-0 group-data-[collapsible=icon]:hidden">
-            <p className="text-sm font-semibold text-white truncate font-grotesk">{user?.name}</p>
-            <p className="text-xs text-verdash-disabled capitalize font-inter">{user?.role}</p>
-          </div>
+      <div className="flex items-center gap-3 px-7 pb-6">
+        <div className="w-12 h-12 rounded-full flex items-center justify-center text-white font-bold shadow-lg shrink-0 bg-gradient-to-r from-verdash-primary to-verdash-cyan">
+          {user?.name?.charAt(0) || 'U'}
+        </div>
+        <div className="flex-1 min-w-0 group-data-[collapsible=icon]:hidden">
+          <p className="text-sm font-semibold text-white truncate font-grotesk">{user?.name}</p>
+          <p className="text-xs text-verdash-disabled capitalize font-inter">{user?.role}</p>
         </div>
       </div>
     </div>

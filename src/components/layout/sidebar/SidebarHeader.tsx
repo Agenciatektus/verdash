@@ -1,4 +1,3 @@
-
 export function SidebarHeader() {
   return (
     <div className="px-7 py-4 border-b border-verdash-divider/30">

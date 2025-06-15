@@ -1,9 +1,11 @@
 
+import { useState } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Plug, Plus, CheckCircle, AlertCircle, ExternalLink } from "lucide-react";
+import { CheckCircle, AlertCircle, ExternalLink, Plug } from "lucide-react";
+import { NewIntegrationDialog } from "@/components/integrations/NewIntegrationDialog";
 
-const integrations = [
+const initialIntegrations = [
   {
     id: 1,
     name: "Google Analytics",
@@ -39,21 +41,24 @@ const integrations = [
 ];
 
 export default function Integrations() {
+  const [integrations, setIntegrations] = useState(initialIntegrations);
+
+  const handleIntegrationAdded = (newIntegration: any) => {
+    setIntegrations(prev => [...prev, newIntegration]);
+  };
+
   return (
     <div className="space-y-8">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-4xl font-bold text-white font-grotesk uppercase tracking-wide verdash-glow-text">
+          <h1 className="text-4xl font-bold text-white font-grotesk uppercase tracking-wide">
             Integrações
           </h1>
           <p className="text-white/70 mt-2 font-inter">
             Conecte suas fontes de dados e automatize a coleta de informações
           </p>
         </div>
-        <Button className="verdash-btn-primary verdash-hover-scale">
-          <Plus className="w-5 h-5 mr-2" />
-          Nova Integração
-        </Button>
+        <NewIntegrationDialog onIntegrationAdded={handleIntegrationAdded} />
       </div>
 
       {/* Stats Cards */}

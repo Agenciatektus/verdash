@@ -30,7 +30,8 @@ export function NewIntegrationDialog({ onIntegrationAdded }: NewIntegrationDialo
     { value: "spreadsheet", label: "Planilhas", icon: "📋" },
     { value: "webhook", label: "Webhook", icon: "🔗" },
     { value: "ecommerce", label: "E-commerce", icon: "🛒" },
-    { value: "email", label: "Email Marketing", icon: "📧" }
+    { value: "email", label: "Email Marketing", icon: "📧" },
+    { value: "api", label: "API", icon: "🔌" }
   ];
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -147,7 +148,7 @@ export function NewIntegrationDialog({ onIntegrationAdded }: NewIntegrationDialo
             </div>
           )}
 
-          {(formData.type === "analytics" || formData.type === "social" || formData.type === "ecommerce") && (
+          {(formData.type === "analytics" || formData.type === "social" || formData.type === "ecommerce" || formData.type === "api") && (
             <div className="space-y-2">
               <Label htmlFor="apiKey" className="text-white/80">API Key</Label>
               <Input

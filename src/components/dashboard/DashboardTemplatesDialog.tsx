@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
@@ -120,7 +119,7 @@ export const DashboardTemplatesDialog = ({ onCreateDashboard }: DashboardTemplat
         </Button>
       </DialogTrigger>
       <DialogContent 
-        className="max-w-6xl max-h-[90vh] overflow-hidden border-border/50" 
+        className="max-w-6xl max-h-[90vh] overflow-hidden" 
         style={{ backgroundColor: '#0A0E1E' }}
       >
         <DialogHeader>

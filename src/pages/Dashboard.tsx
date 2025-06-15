@@ -1,4 +1,3 @@
-
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -83,7 +82,7 @@ const Dashboard = () => {
           <p className="text-muted-foreground text-lg">Visão geral dos seus dados e métricas</p>
         </div>
         <div className="flex gap-3">
-          <Button variant="outline" className="border-border/50 hover:border-border verdash-animate">
+          <Button variant="outline" className="verdash-animate">
             <Eye className="w-4 h-4 mr-2" />
             Visualizar
           </Button>
@@ -94,7 +93,7 @@ const Dashboard = () => {
       {/* Filtros Hierárquicos */}
       <div className="space-y-4">
         <h2 className="text-lg font-semibold text-foreground">Filtros</h2>
-        <div className="flex flex-wrap items-center gap-4 p-4 bg-card/20 border border-border/30 rounded-xl">
+        <div className="flex flex-wrap items-center gap-4 p-4 bg-card/20 rounded-xl">
           {/* Cliente/Projeto */}
           <div className="flex flex-col gap-2">
             <label className="text-sm font-medium text-muted-foreground">Cliente/Projeto</label>

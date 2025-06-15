@@ -66,7 +66,7 @@ export const MetricDialog = ({ onNewMetric }: MetricDialogProps) => {
         </Button>
       </DialogTrigger>
       <DialogContent 
-        className="max-w-4xl max-h-[90vh] overflow-hidden border-border/50" 
+        className="max-w-4xl max-h-[90vh] overflow-hidden" 
         style={{ backgroundColor: '#0A0E1E' }}
       >
         <DialogHeader>
@@ -96,7 +96,7 @@ export const MetricDialog = ({ onNewMetric }: MetricDialogProps) => {
                         <button
                           key={index}
                           onClick={() => selectPredefinedMetric(metric)}
-                          className="text-left p-3 rounded-lg border border-border/30 hover:border-border/50 bg-card/20 hover:bg-card/40 transition-all duration-200 group"
+                          className="text-left p-3 rounded-lg bg-card/20 hover:bg-card/40 transition-all duration-200 group"
                         >
                           <div className="flex items-center justify-between">
                             <span className="text-sm text-foreground group-hover:text-primary transition-colors">
@@ -125,7 +125,7 @@ export const MetricDialog = ({ onNewMetric }: MetricDialogProps) => {
                       value={metricName}
                       onChange={(e) => setMetricName(e.target.value)}
                       placeholder="Ex: CAC - Custo de Aquisição"
-                      className="mt-1 bg-background/50 border-border"
+                      className="mt-1 bg-background/50"
                     />
                   </div>
                   
@@ -136,14 +136,14 @@ export const MetricDialog = ({ onNewMetric }: MetricDialogProps) => {
                       value={description}
                       onChange={(e) => setDescription(e.target.value)}
                       placeholder="Descreva o que esta métrica representa..."
-                      className="mt-1 bg-background/50 border-border"
+                      className="mt-1 bg-background/50"
                     />
                   </div>
 
                   <div>
                     <Label htmlFor="metric-project" className="text-foreground">Projeto</Label>
                     <Select value={selectedProject} onValueChange={setSelectedProject}>
-                      <SelectTrigger className="mt-1 bg-background/50 border-border">
+                      <SelectTrigger className="mt-1 bg-background/50">
                         <SelectValue placeholder="Selecione um projeto" />
                       </SelectTrigger>
                       <SelectContent style={{ backgroundColor: '#0A0E1E', border: '1px solid rgba(255,255,255,0.1)' }}>
@@ -163,10 +163,10 @@ export const MetricDialog = ({ onNewMetric }: MetricDialogProps) => {
                     {dataSources.map((source) => (
                       <div
                         key={source.id}
-                        className={`p-3 rounded-lg border cursor-pointer transition-colors ${
+                        className={`p-3 rounded-lg cursor-pointer transition-colors ${
                           selectedDataSources.includes(source.id)
-                            ? 'border-primary bg-primary/10'
-                            : 'border-border hover:bg-muted/50'
+                            ? 'bg-primary/10'
+                            : 'hover:bg-muted/50'
                         }`}
                         onClick={() => {
                           setSelectedDataSources(prev =>
@@ -211,7 +211,7 @@ export const MetricDialog = ({ onNewMetric }: MetricDialogProps) => {
                       value={formula}
                       onChange={(e) => setFormula(e.target.value)}
                       placeholder="Ex: SUM(marketing_spend) / COUNT(new_customers)"
-                      className="font-mono text-sm bg-background/50 border-border"
+                      className="font-mono text-sm bg-background/50"
                       rows={4}
                     />
                     

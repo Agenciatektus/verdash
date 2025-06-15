@@ -1,10 +1,8 @@
-
-
 export function SidebarHeader() {
   return (
     <div className="px-7 py-4 border-b border-verdash-divider/30">
       <div className="flex items-center gap-3">
-        <div className="w-10 h-10 rounded-xl bg-gradient-to-r from-verdash-primary to-verdash-cyan flex items-center justify-start pl-2 shadow-lg shrink-0">
+        <div className="w-10 h-10 rounded-xl bg-gradient-to-r from-verdash-primary to-verdash-cyan flex items-center justify-start shadow-lg shrink-0">
           <img 
             src="/lovable-uploads/10cfd476-2094-4d85-aaa8-884b089f6dc8.png" 
             alt="Verdash Logo" 
@@ -19,4 +17,3 @@ export function SidebarHeader() {
     </div>
   );
 }
-

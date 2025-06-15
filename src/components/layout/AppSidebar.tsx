@@ -94,12 +94,12 @@ export function AppSidebar() {
         </div>
 
         {/* Main Navigation */}
-        <SidebarGroup className="px-4 py-6">
+        <SidebarGroup className="px-6 py-6">
           <SidebarGroupContent>
-            <SidebarMenu className="space-y-2">
+            <SidebarMenu className="space-y-3">
               {mainNavigation.map((item) => (
                 <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton asChild tooltip={isCollapsed ? item.title : undefined}>
+                  <SidebarMenuButton asChild tooltip={isCollapsed ? item.title : undefined} size="lg">
                     <NavLink 
                       to={item.url} 
                       className={({ isActive: navIsActive }) => {
@@ -119,7 +119,7 @@ export function AppSidebar() {
         </SidebarGroup>
 
         {/* Projects Section */}
-        <SidebarGroup className="px-4 group-data-[collapsible=icon]:hidden">
+        <SidebarGroup className="px-6 group-data-[collapsible=icon]:hidden">
           <Collapsible open={projectsOpen} onOpenChange={setProjectsOpen}>
             <SidebarGroupLabel asChild>
               <CollapsibleTrigger className="flex items-center justify-between w-full p-3 hover:bg-verdash-input-bg/50 rounded-xl verdash-animate">
@@ -134,13 +134,13 @@ export function AppSidebar() {
             </SidebarGroupLabel>
             <CollapsibleContent>
               <SidebarGroupContent className="mt-2">
-                <SidebarMenu className="space-y-1">
+                <SidebarMenu className="space-y-2">
                   {mockProjects.map((project) => (
                     <SidebarMenuItem key={project.id}>
                       <SidebarMenuButton asChild>
                         <NavLink 
                           to={`/projects/${project.id}`}
-                          className="flex items-center justify-between text-sm p-3 rounded-lg hover:bg-verdash-input-bg/50 verdash-animate text-white/80 hover:text-white"
+                          className="flex items-center justify-between text-sm p-4 rounded-lg hover:bg-verdash-input-bg/50 verdash-animate text-white/80 hover:text-white"
                         >
                           <span className="truncate font-inter">{project.name}</span>
                           <span className="text-xs text-verdash-disabled bg-verdash-input-bg px-2 py-1 rounded-full border border-verdash-divider">
@@ -158,12 +158,12 @@ export function AppSidebar() {
 
         {/* Bottom Navigation */}
         <div className="mt-auto">
-          <SidebarGroup className="px-4 py-4">
+          <SidebarGroup className="px-6 py-4">
             <SidebarGroupContent>
-              <SidebarMenu className="space-y-2">
+              <SidebarMenu className="space-y-3">
                 {bottomNavigation.map((item) => (
                   <SidebarMenuItem key={item.title}>
-                    <SidebarMenuButton asChild tooltip={isCollapsed ? item.title : undefined}>
+                    <SidebarMenuButton asChild tooltip={isCollapsed ? item.title : undefined} size="lg">
                       <NavLink 
                         to={item.url} 
                         className={({ isActive }) => getNavClass(isActive)}
@@ -177,7 +177,7 @@ export function AppSidebar() {
                 
                 {/* Logout Button */}
                 <SidebarMenuItem>
-                  <SidebarMenuButton asChild tooltip={isCollapsed ? "Sair" : undefined}>
+                  <SidebarMenuButton asChild tooltip={isCollapsed ? "Sair" : undefined} size="lg">
                     <button 
                       onClick={logout}
                       className="verdash-sidebar-item w-full text-left"
@@ -194,7 +194,7 @@ export function AppSidebar() {
           {/* User Info */}
           <div className="p-6 border-t border-verdash-divider/30">
             <div className="flex items-center gap-4">
-              <div className="w-10 h-10 rounded-full flex items-center justify-center text-white font-bold shadow-lg shrink-0">
+              <div className="w-12 h-12 rounded-full flex items-center justify-center text-white font-bold shadow-lg shrink-0 bg-gradient-to-r from-verdash-primary to-verdash-cyan">
                 {user?.name?.charAt(0) || 'U'}
               </div>
               <div className="flex-1 min-w-0 group-data-[collapsible=icon]:hidden">

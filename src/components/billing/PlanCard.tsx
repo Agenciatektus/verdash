@@ -87,17 +87,17 @@ export const PlanCard = ({ plan, currentPlan, onSelectPlan, loading }: PlanCardP
             </span>
           </div>
 
+          {plan.features.customMetrics && (
+            <div className="flex items-center gap-3">
+              <Check className="w-5 h-5 text-verdash-cyan" />
+              <span className="text-white/90">KPIs e Métricas personalizadas</span>
+            </div>
+          )}
+
           {plan.features.aiFeatures && (
             <div className="flex items-center gap-3">
               <Check className="w-5 h-5 text-verdash-cyan" />
               <span className="text-white/90">Verdash IA</span>
-            </div>
-          )}
-
-          {plan.features.whiteLabel && (
-            <div className="flex items-center gap-3">
-              <Check className="w-5 h-5 text-verdash-cyan" />
-              <span className="text-white/90">White Label</span>
             </div>
           )}
 
@@ -108,12 +108,29 @@ export const PlanCard = ({ plan, currentPlan, onSelectPlan, loading }: PlanCardP
             </div>
           )}
 
-          {plan.features.prioritySupport && (
+          {plan.features.whiteLabel && (
             <div className="flex items-center gap-3">
               <Check className="w-5 h-5 text-verdash-cyan" />
-              <span className="text-white/90">Suporte Prioritário</span>
+              <span className="text-white/90">White Label</span>
             </div>
           )}
+
+          {plan.features.reportAutomation && (
+            <div className="flex items-center gap-3">
+              <Check className="w-5 h-5 text-verdash-cyan" />
+              <span className="text-white/90">Automação de relatórios</span>
+            </div>
+          )}
+
+          <div className="flex items-center gap-3">
+            <Check className="w-5 h-5 text-verdash-info" />
+            <span className="text-white/90 text-sm">{plan.features.onboarding}</span>
+          </div>
+
+          <div className="flex items-center gap-3">
+            <Check className="w-5 h-5 text-verdash-info" />
+            <span className="text-white/90 text-sm">{plan.features.support}</span>
+          </div>
         </div>
 
         <Button 

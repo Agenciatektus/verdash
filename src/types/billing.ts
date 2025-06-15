@@ -14,6 +14,11 @@ export interface Plan {
     whiteLabel: boolean;
     interactiveLinks: boolean;
     prioritySupport: boolean;
+    customMetrics: boolean;
+    reportAutomation: boolean;
+    onboarding: string;
+    apiConfiguration: string;
+    support: string;
   };
   popular?: boolean;
 }

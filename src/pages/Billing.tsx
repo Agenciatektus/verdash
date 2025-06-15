@@ -22,36 +22,46 @@ import {
 const mockPlans: Plan[] = [
   {
     id: 'starter',
-    name: 'Starter',
-    price: 0,
+    name: 'Started',
+    price: 97,
     currency: 'BRL',
     interval: 'monthly',
     features: {
       dashboards: 3,
-      dataSources: 5,
-      teamUsers: 2,
-      clients: 3,
+      dataSources: 4,
+      teamUsers: 3,
+      clients: 2,
       aiFeatures: false,
       whiteLabel: false,
       interactiveLinks: false,
-      prioritySupport: false
+      prioritySupport: false,
+      customMetrics: true,
+      reportAutomation: true,
+      onboarding: 'Reunião + suporte guiado',
+      apiConfiguration: 'Self-service',
+      support: 'Chat + Help Center'
     }
   },
   {
     id: 'engage',
     name: 'Engage',
-    price: 197,
+    price: 247,
     currency: 'BRL',
     interval: 'monthly',
     features: {
-      dashboards: 15,
-      dataSources: 20,
-      teamUsers: 10,
-      clients: 15,
+      dashboards: 10,
+      dataSources: 8,
+      teamUsers: 5,
+      clients: 10,
       aiFeatures: true,
-      whiteLabel: true,
+      whiteLabel: false,
       interactiveLinks: true,
-      prioritySupport: false
+      prioritySupport: false,
+      customMetrics: true,
+      reportAutomation: true,
+      onboarding: 'Onboarding + ajuda na configuração',
+      apiConfiguration: 'Suporte na configuração',
+      support: 'Chat + Help + Suporte estendido'
     },
     popular: true
   },
@@ -69,7 +79,12 @@ const mockPlans: Plan[] = [
       aiFeatures: true,
       whiteLabel: true,
       interactiveLinks: true,
-      prioritySupport: true
+      prioritySupport: true,
+      customMetrics: true,
+      reportAutomation: true,
+      onboarding: 'Implementação completa feita pela Verdash',
+      apiConfiguration: 'Verdash faz toda a integração',
+      support: 'Suporte Premium + WhatsApp + Gerente de Contas'
     }
   }
 ];
@@ -85,15 +100,15 @@ const mockSubscription: UserSubscription = {
 
 const mockUsage: Usage = {
   dashboards: 8,
-  dataSources: 12,
-  teamUsers: 6,
-  clients: 10
+  dataSources: 6,
+  teamUsers: 4,
+  clients: 8
 };
 
 const mockHistory: BillingHistoryType[] = [
   {
     id: '1',
-    amount: 197,
+    amount: 247,
     currency: 'BRL',
     status: 'paid',
     date: '2024-01-01T00:00:00Z',
@@ -102,7 +117,7 @@ const mockHistory: BillingHistoryType[] = [
   },
   {
     id: '2',
-    amount: 197,
+    amount: 247,
     currency: 'BRL',
     status: 'paid',
     date: '2023-12-01T00:00:00Z',
@@ -203,7 +218,7 @@ const Billing = () => {
             <div className="space-y-2">
               <div className="text-sm text-white/60 uppercase tracking-wide">Valor Mensal</div>
               <div className="text-2xl font-bold text-white">
-                {currentPlan?.price === 0 ? 'Grátis' : `R$ ${currentPlan?.price}`}
+                {currentPlan?.price === 0 ? 'Sob consulta' : `R$ ${currentPlan?.price}`}
               </div>
             </div>
             
@@ -303,7 +318,7 @@ const Billing = () => {
               )}
             </div>
           </CardContent>
-        </Card>
+        </div>
       )}
     </div>
   );

@@ -15,19 +15,30 @@ import {
   ChevronUp,
   Play,
   CheckCircle,
-  AlertTriangle
+  AlertTriangle,
+  Database,
+  X
 } from "lucide-react";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { FormulaBuilder } from "@/types/data";
 
 const availableFields = [
-  { id: 'gasto_meta', name: 'Gasto Meta Ads', type: 'currency' },
-  { id: 'gasto_google', name: 'Gasto Google Ads', type: 'currency' },
-  { id: 'total_leads', name: 'Total de Leads', type: 'number' },
-  { id: 'vendas_realizadas', name: 'Vendas Realizadas', type: 'number' },
-  { id: 'receita_vendas', name: 'Receita de Vendas', type: 'currency' },
-  { id: 'visitantes_site', name: 'Visitantes do Site', type: 'number' },
-  { id: 'conversoes_landing', name: 'Conversões Landing Page', type: 'number' }
+  { id: 'gasto_meta', name: 'Gasto Meta Ads', type: 'currency', source: 'meta_ads' },
+  { id: 'gasto_google', name: 'Gasto Google Ads', type: 'currency', source: 'google_ads' },
+  { id: 'total_leads', name: 'Total de Leads', type: 'number', source: 'crm' },
+  { id: 'vendas_realizadas', name: 'Vendas Realizadas', type: 'number', source: 'crm' },
+  { id: 'receita_vendas', name: 'Receita de Vendas', type: 'currency', source: 'ecommerce' },
+  { id: 'visitantes_site', name: 'Visitantes do Site', type: 'number', source: 'analytics' },
+  { id: 'conversoes_landing', name: 'Conversões Landing Page', type: 'number', source: 'analytics' }
+];
+
+const dataSources = [
+  { id: 'meta_ads', name: 'Meta Ads', icon: '📱', description: 'Dados de campanhas do Facebook/Instagram' },
+  { id: 'google_ads', name: 'Google Ads', icon: '🔍', description: 'Dados de campanhas do Google' },
+  { id: 'crm', name: 'CRM', icon: '👥', description: 'Dados de leads e vendas' },
+  { id: 'ecommerce', name: 'E-commerce', icon: '🛒', description: 'Dados de vendas online' },
+  { id: 'analytics', name: 'Google Analytics', icon: '📊', description: 'Dados de tráfego e conversões' },
+  { id: 'spreadsheet', name: 'Planilha', icon: '📋', description: 'Dados de planilhas Google Sheets' }
 ];
 
 const formulaFunctions = [
@@ -40,12 +51,13 @@ const formulaFunctions = [
 ];
 
 export const MetricBuilder = () => {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(true);
   const [metricName, setMetricName] = useState("");
   const [description, setDescription] = useState("");
   const [formula, setFormula] = useState("");
   const [category, setCategory] = useState("");
   const [type, setType] = useState("");
+  const [selectedDataSources, setSelectedDataSources] = useState<string[]>([]);
   const [isValid, setIsValid] = useState(false);
 
   const insertField = (fieldId: string) => {
@@ -69,6 +81,23 @@ export const MetricBuilder = () => {
       console.log("Testing formula:", formula);
     }
   };
+
+  const toggleDataSource = (sourceId: string) => {
+    setSelectedDataSources(prev => 
+      prev.includes(sourceId) 
+        ? prev.filter(id => id !== sourceId)
+        : [...prev, sourceId]
+    );
+  };
+
+  const removeDataSource = (sourceId: string) => {
+    setSelectedDataSources(prev => prev.filter(id => id !== sourceId));
+  };
+
+  // Filtrar campos disponíveis baseado nas fontes selecionadas
+  const availableFieldsFiltered = selectedDataSources.length > 0 
+    ? availableFields.filter(field => selectedDataSources.includes(field.source))
+    : availableFields;
 
   return (
     <Card className="verdash-glass">
@@ -160,27 +189,94 @@ export const MetricBuilder = () => {
               </Select>
             </div>
 
+            {/* Data Sources Selection */}
+            <div className="space-y-4">
+              <div className="flex items-center gap-2">
+                <Database className="w-5 h-5 text-verdash-cyan" />
+                <Label className="text-white text-sm font-grotesk">Fontes de Dados</Label>
+              </div>
+              
+              {/* Selected Data Sources */}
+              {selectedDataSources.length > 0 && (
+                <div className="space-y-2">
+                  <p className="text-xs text-white/60 uppercase font-grotesk">Fontes Selecionadas</p>
+                  <div className="flex flex-wrap gap-2">
+                    {selectedDataSources.map((sourceId) => {
+                      const source = dataSources.find(s => s.id === sourceId);
+                      return source ? (
+                        <Badge
+                          key={sourceId}
+                          variant="default"
+                          className="bg-verdash-cyan/20 text-verdash-cyan border-verdash-cyan/30 flex items-center gap-1"
+                        >
+                          <span>{source.icon}</span>
+                          {source.name}
+                          <button
+                            onClick={() => removeDataSource(sourceId)}
+                            className="ml-1 hover:bg-verdash-cyan/30 rounded-full"
+                          >
+                            <X className="w-3 h-3" />
+                          </button>
+                        </Badge>
+                      ) : null;
+                    })}
+                  </div>
+                </div>
+              )}
+
+              {/* Available Data Sources */}
+              <div className="space-y-2">
+                <p className="text-xs text-white/60 uppercase font-grotesk">Fontes Disponíveis</p>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                  {dataSources.map((source) => (
+                    <div
+                      key={source.id}
+                      className={`p-3 rounded-lg border cursor-pointer transition-all duration-200 ${
+                        selectedDataSources.includes(source.id)
+                          ? 'border-verdash-cyan bg-verdash-cyan/10'
+                          : 'border-verdash-divider/30 hover:border-verdash-divider/50 bg-verdash-input-bg/20 hover:bg-verdash-input-bg/40'
+                      }`}
+                      onClick={() => toggleDataSource(source.id)}
+                    >
+                      <div className="flex items-center gap-3">
+                        <span className="text-lg">{source.icon}</span>
+                        <div className="flex-1">
+                          <p className="text-sm font-medium text-white">{source.name}</p>
+                          <p className="text-xs text-white/60">{source.description}</p>
+                        </div>
+                        {selectedDataSources.includes(source.id) && (
+                          <CheckCircle className="w-4 h-4 text-verdash-cyan" />
+                        )}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+
             {/* Formula Builder */}
             <div className="space-y-4">
               <Label className="text-white text-sm font-grotesk">Fórmula</Label>
               
-              {/* Available Fields */}
-              <div className="space-y-2">
-                <p className="text-xs text-white/60 uppercase font-grotesk">Campos Disponíveis</p>
-                <div className="flex flex-wrap gap-2">
-                  {availableFields.map((field) => (
-                    <Badge
-                      key={field.id}
-                      variant="outline"
-                      className="cursor-pointer hover:bg-verdash-cyan/20 hover:border-verdash-cyan transition-colors"
-                      onClick={() => insertField(field.id)}
-                    >
-                      <Plus className="w-3 h-3 mr-1" />
-                      {field.name}
-                    </Badge>
-                  ))}
+              {/* Available Fields - Only show if data sources are selected */}
+              {selectedDataSources.length > 0 && (
+                <div className="space-y-2">
+                  <p className="text-xs text-white/60 uppercase font-grotesk">Campos Disponíveis</p>
+                  <div className="flex flex-wrap gap-2">
+                    {availableFieldsFiltered.map((field) => (
+                      <Badge
+                        key={field.id}
+                        variant="outline"
+                        className="cursor-pointer hover:bg-verdash-cyan/20 hover:border-verdash-cyan transition-colors"
+                        onClick={() => insertField(field.id)}
+                      >
+                        <Plus className="w-3 h-3 mr-1" />
+                        {field.name}
+                      </Badge>
+                    ))}
+                  </div>
                 </div>
-              </div>
+              )}
 
               {/* Functions */}
               <div className="space-y-2">

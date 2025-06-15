@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -9,6 +8,7 @@ import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { ScrollArea } from "@/components/ui/scroll-area";
 import { 
   Plus, 
   Search, 
@@ -23,6 +23,7 @@ import {
   Zap
 } from "lucide-react";
 import { toast } from "sonner";
+import { availableMetrics } from "@/constants/metricsData";
 
 const mockMetrics = [
   {
@@ -120,6 +121,12 @@ const Metrics = () => {
     setFormula(prev => prev + `${func}()`);
   };
 
+  const selectPredefinedMetric = (metricName: string) => {
+    setMetricName(metricName);
+    setActiveTab("create");
+    toast.success(`Métrica "${metricName}" selecionada!`);
+  };
+
   return (
     <div className="space-y-6 animate-fade-in">
       {/* Header */}
@@ -135,131 +142,182 @@ const Metrics = () => {
               Nova Métrica
             </Button>
           </DialogTrigger>
-          <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
+          <DialogContent className="max-w-4xl max-h-[90vh] overflow-hidden">
             <DialogHeader>
               <DialogTitle>Criar Nova Métrica</DialogTitle>
               <DialogDescription>
-                Configure sua métrica personalizada com fórmulas e fontes de dados
+                Escolha uma métrica pré-definida ou configure uma métrica personalizada
               </DialogDescription>
             </DialogHeader>
             
-            <div className="space-y-6">
-              {/* Basic Info */}
-              <div className="space-y-4">
-                <div>
-                  <Label htmlFor="metric-name">Nome da Métrica *</Label>
-                  <Input
-                    id="metric-name"
-                    value={metricName}
-                    onChange={(e) => setMetricName(e.target.value)}
-                    placeholder="Ex: CAC - Custo de Aquisição"
-                    className="mt-1"
-                  />
-                </div>
-                
-                <div>
-                  <Label htmlFor="metric-description">Descrição</Label>
-                  <Textarea
-                    id="metric-description"
-                    value={metricDescription}
-                    onChange={(e) => setMetricDescription(e.target.value)}
-                    placeholder="Descreva o que esta métrica representa..."
-                    className="mt-1"
-                  />
-                </div>
+            <Tabs value={activeTab} onValueChange={setActiveTab} className="h-full">
+              <TabsList className="grid w-full grid-cols-3">
+                <TabsTrigger value="available">Métricas Disponíveis</TabsTrigger>
+                <TabsTrigger value="create">Criar Personalizada</TabsTrigger>
+                <TabsTrigger value="templates">Templates</TabsTrigger>
+              </TabsList>
 
-                <div>
-                  <Label htmlFor="metric-project">Projeto</Label>
-                  <Select value={selectedProject} onValueChange={setSelectedProject}>
-                    <SelectTrigger className="mt-1">
-                      <SelectValue placeholder="Selecione um projeto" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="ecommerce">E-commerce Principal</SelectItem>
-                      <SelectItem value="marketing">Marketing Digital</SelectItem>
-                      <SelectItem value="b2b">Vendas B2B</SelectItem>
-                      <SelectItem value="global">Global (Todos os projetos)</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-              </div>
-
-              {/* Data Sources */}
-              <div>
-                <Label>Fontes de Dados</Label>
-                <div className="grid grid-cols-2 gap-3 mt-2">
-                  {dataSources.map((source) => (
-                    <div
-                      key={source.id}
-                      className={`p-3 rounded-lg border cursor-pointer transition-colors ${
-                        selectedDataSources.includes(source.id)
-                          ? 'border-primary bg-primary/10'
-                          : 'border-border hover:bg-muted/50'
-                      }`}
-                      onClick={() => {
-                        setSelectedDataSources(prev =>
-                          prev.includes(source.id)
-                            ? prev.filter(id => id !== source.id)
-                            : [...prev, source.id]
-                        );
-                      }}
-                    >
-                      <div className="flex items-center gap-2">
-                        <span className="text-lg">{source.icon}</span>
-                        <span className="text-sm font-medium">{source.name}</span>
+              <TabsContent value="available" className="mt-6">
+                <ScrollArea className="h-[500px] pr-4">
+                  <div className="space-y-6">
+                    {Object.entries(availableMetrics).map(([key, category]) => (
+                      <div key={key} className="space-y-3">
+                        <div className="flex items-center gap-2 mb-3">
+                          <category.icon className="w-5 h-5 text-primary" />
+                          <h3 className="text-lg font-semibold text-foreground">{category.title}</h3>
+                        </div>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+                          {category.metrics.map((metric, index) => (
+                            <button
+                              key={index}
+                              onClick={() => selectPredefinedMetric(metric)}
+                              className="text-left p-3 rounded-lg border border-border/30 hover:border-border/50 bg-card/20 hover:bg-card/40 transition-all duration-200 group"
+                            >
+                              <div className="flex items-center justify-between">
+                                <span className="text-sm text-foreground group-hover:text-primary transition-colors">
+                                  {metric}
+                                </span>
+                                <Plus className="w-4 h-4 text-muted-foreground group-hover:text-primary transition-colors" />
+                              </div>
+                            </button>
+                          ))}
+                        </div>
                       </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              {/* Formula Builder */}
-              <div>
-                <Label htmlFor="formula">Fórmula *</Label>
-                <div className="space-y-3 mt-2">
-                  {/* Function Buttons */}
-                  <div className="flex flex-wrap gap-2">
-                    {formulaFunctions.map((func) => (
-                      <Button
-                        key={func}
-                        type="button"
-                        variant="outline"
-                        size="sm"
-                        onClick={() => insertFormulaFunction(func)}
-                        className="text-xs"
-                      >
-                        {func}
-                      </Button>
                     ))}
                   </div>
+                </ScrollArea>
+              </TabsContent>
 
-                  {/* Formula Input */}
-                  <Textarea
-                    id="formula"
-                    value={formula}
-                    onChange={(e) => setFormula(e.target.value)}
-                    placeholder="Ex: SUM(marketing_spend) / COUNT(new_customers)"
-                    className="font-mono text-sm"
-                    rows={4}
-                  />
-                  
-                  <p className="text-xs text-muted-foreground">
-                    Use as funções acima ou digite sua própria fórmula. Você pode referenciar campos das fontes de dados selecionadas.
-                  </p>
+              <TabsContent value="create" className="mt-6">
+                <div className="space-y-6">
+                  {/* Basic Info */}
+                  <div className="space-y-4">
+                    <div>
+                      <Label htmlFor="metric-name">Nome da Métrica *</Label>
+                      <Input
+                        id="metric-name"
+                        value={metricName}
+                        onChange={(e) => setMetricName(e.target.value)}
+                        placeholder="Ex: CAC - Custo de Aquisição"
+                        className="mt-1"
+                      />
+                    </div>
+                    
+                    <div>
+                      <Label htmlFor="metric-description">Descrição</Label>
+                      <Textarea
+                        id="metric-description"
+                        value={metricDescription}
+                        onChange={(e) => setMetricDescription(e.target.value)}
+                        placeholder="Descreva o que esta métrica representa..."
+                        className="mt-1"
+                      />
+                    </div>
+
+                    <div>
+                      <Label htmlFor="metric-project">Projeto</Label>
+                      <Select value={selectedProject} onValueChange={setSelectedProject}>
+                        <SelectTrigger className="mt-1">
+                          <SelectValue placeholder="Selecione um projeto" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="ecommerce">E-commerce Principal</SelectItem>
+                          <SelectItem value="marketing">Marketing Digital</SelectItem>
+                          <SelectItem value="b2b">Vendas B2B</SelectItem>
+                          <SelectItem value="global">Global (Todos os projetos)</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                  </div>
+
+                  {/* Data Sources */}
+                  <div>
+                    <Label>Fontes de Dados</Label>
+                    <div className="grid grid-cols-2 gap-3 mt-2">
+                      {dataSources.map((source) => (
+                        <div
+                          key={source.id}
+                          className={`p-3 rounded-lg border cursor-pointer transition-colors ${
+                            selectedDataSources.includes(source.id)
+                              ? 'border-primary bg-primary/10'
+                              : 'border-border hover:bg-muted/50'
+                          }`}
+                          onClick={() => {
+                            setSelectedDataSources(prev =>
+                              prev.includes(source.id)
+                                ? prev.filter(id => id !== source.id)
+                                : [...prev, source.id]
+                            );
+                          }}
+                        >
+                          <div className="flex items-center gap-2">
+                            <span className="text-lg">{source.icon}</span>
+                            <span className="text-sm font-medium">{source.name}</span>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Formula Builder */}
+                  <div>
+                    <Label htmlFor="formula">Fórmula *</Label>
+                    <div className="space-y-3 mt-2">
+                      {/* Function Buttons */}
+                      <div className="flex flex-wrap gap-2">
+                        {formulaFunctions.map((func) => (
+                          <Button
+                            key={func}
+                            type="button"
+                            variant="outline"
+                            size="sm"
+                            onClick={() => insertFormulaFunction(func)}
+                            className="text-xs"
+                          >
+                            {func}
+                          </Button>
+                        ))}
+                      </div>
+
+                      {/* Formula Input */}
+                      <Textarea
+                        id="formula"
+                        value={formula}
+                        onChange={(e) => setFormula(e.target.value)}
+                        placeholder="Ex: SUM(marketing_spend) / COUNT(new_customers)"
+                        className="font-mono text-sm"
+                        rows={4}
+                      />
+                      
+                      <p className="text-xs text-muted-foreground">
+                        Use as funções acima ou digite sua própria fórmula. Você pode referenciar campos das fontes de dados selecionadas.
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Actions */}
+                  <div className="flex gap-3 pt-4">
+                    <Button onClick={handleCreateMetric} className="flex-1 verdash-gradient">
+                      <Calculator className="w-4 h-4 mr-2" />
+                      Criar Métrica
+                    </Button>
+                    <Button variant="outline" onClick={() => setIsCreateDialogOpen(false)}>
+                      Cancelar
+                    </Button>
+                  </div>
                 </div>
-              </div>
+              </TabsContent>
 
-              {/* Actions */}
-              <div className="flex gap-3 pt-4">
-                <Button onClick={handleCreateMetric} className="flex-1 verdash-gradient">
-                  <Calculator className="w-4 h-4 mr-2" />
-                  Criar Métrica
-                </Button>
-                <Button variant="outline" onClick={() => setIsCreateDialogOpen(false)}>
-                  Cancelar
-                </Button>
-              </div>
-            </div>
+              <TabsContent value="templates" className="mt-6">
+                <ScrollArea className="h-[500px] pr-4">
+                  <div className="text-center py-12 text-muted-foreground">
+                    <BarChart3 className="w-12 h-12 mx-auto mb-4" />
+                    <p>Templates de métricas estão em desenvolvimento.</p>
+                    <p className="text-sm">Por enquanto, use as métricas disponíveis ou crie personalizadas.</p>
+                  </div>
+                </ScrollArea>
+              </TabsContent>
+            </Tabs>
           </DialogContent>
         </Dialog>
       </div>

@@ -1,7 +1,8 @@
-
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Brain, Plus, BarChart3, Users, Eye } from "lucide-react";
+import { DashboardTemplatesDialog } from "@/components/dashboard/DashboardTemplatesDialog";
+import { toast } from "sonner";
 
 const mockDashboards = [
   {
@@ -31,6 +32,16 @@ const mockDashboards = [
 ];
 
 export default function Dashboards() {
+  const handleCreateDashboard = (templateId: string) => {
+    if (templateId === 'custom') {
+      console.log('Creating custom dashboard...');
+      // Add custom dashboard creation logic here
+    } else {
+      console.log(`Creating dashboard from template: ${templateId}`);
+      // Add template-based dashboard creation logic here
+    }
+  };
+
   return (
     <div className="space-y-8">
       <div className="flex items-center justify-between">
@@ -42,10 +53,7 @@ export default function Dashboards() {
             Gerencie e visualize todos os seus dashboards criados
           </p>
         </div>
-        <Button className="verdash-btn-primary verdash-hover-scale">
-          <Plus className="w-5 h-5 mr-2" />
-          Novo Dashboard
-        </Button>
+        <DashboardTemplatesDialog onCreateDashboard={handleCreateDashboard} />
       </div>
 
       {/* Stats Cards */}

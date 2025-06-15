@@ -2,6 +2,7 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { 
   TrendingUp, 
   TrendingDown, 
@@ -14,6 +15,8 @@ import {
   Eye
 } from "lucide-react";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, BarChart, Bar } from "recharts";
+import { DashboardTemplatesDialog } from "@/components/dashboard/DashboardTemplatesDialog";
+import { DateRangeFilter } from "@/components/dashboard/DateRangeFilter";
 
 const mockData = [
   { name: 'Jan', value: 400, revenue: 2400 },
@@ -67,6 +70,10 @@ const recentMetrics = [
 ];
 
 const Dashboard = () => {
+  const handleCreateDashboard = (templateId: string) => {
+    console.log('Creating dashboard with template:', templateId);
+  };
+
   return (
     <div className="space-y-8 animate-verdash-fade-in font-jakarta">
       {/* Header */}
@@ -80,9 +87,54 @@ const Dashboard = () => {
             <Eye className="w-4 h-4 mr-2" />
             Visualizar
           </Button>
-          <Button className="verdash-btn-primary verdash-hover-scale">
-            <Plus className="w-4 h-4 mr-2" />
-            Novo Dashboard
+          <DashboardTemplatesDialog onCreateDashboard={handleCreateDashboard} />
+        </div>
+      </div>
+
+      {/* Filtros Hierárquicos */}
+      <div className="space-y-4">
+        <h2 className="text-lg font-semibold text-foreground">Filtros</h2>
+        <div className="flex flex-wrap items-center gap-4 p-4 bg-card/20 border border-border/30 rounded-xl">
+          {/* Cliente/Projeto */}
+          <div className="flex flex-col gap-2">
+            <label className="text-sm font-medium text-muted-foreground">Cliente/Projeto</label>
+            <Select>
+              <SelectTrigger className="w-[200px]">
+                <SelectValue placeholder="Selecione o cliente" />
+              </SelectTrigger>
+              <SelectContent style={{ backgroundColor: '#0A0E1E', border: '1px solid rgba(255,255,255,0.1)' }}>
+                <SelectItem value="cliente1" style={{ backgroundColor: '#0A0E1E' }}>E-commerce Principal</SelectItem>
+                <SelectItem value="cliente2" style={{ backgroundColor: '#0A0E1E' }}>Marketing Digital</SelectItem>
+                <SelectItem value="cliente3" style={{ backgroundColor: '#0A0E1E' }}>Vendas B2B</SelectItem>
+                <SelectItem value="cliente4" style={{ backgroundColor: '#0A0E1E' }}>SaaS Platform</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+
+          {/* Dashboard */}
+          <div className="flex flex-col gap-2">
+            <label className="text-sm font-medium text-muted-foreground">Dashboard</label>
+            <Select>
+              <SelectTrigger className="w-[200px]">
+                <SelectValue placeholder="Selecione o dashboard" />
+              </SelectTrigger>
+              <SelectContent style={{ backgroundColor: '#0A0E1E', border: '1px solid rgba(255,255,255,0.1)' }}>
+                <SelectItem value="executivo" style={{ backgroundColor: '#0A0E1E' }}>Visão Executiva</SelectItem>
+                <SelectItem value="comercial" style={{ backgroundColor: '#0A0E1E' }}>Dashboard Comercial</SelectItem>
+                <SelectItem value="marketing" style={{ backgroundColor: '#0A0E1E' }}>Dashboard Marketing</SelectItem>
+                <SelectItem value="produto" style={{ backgroundColor: '#0A0E1E' }}>Dashboard Produto</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+
+          {/* Período */}
+          <div className="flex flex-col gap-2">
+            <label className="text-sm font-medium text-muted-foreground">Período</label>
+            <DateRangeFilter />
+          </div>
+
+          <Button className="verdash-btn-primary mt-6">
+            Aplicar Filtros
           </Button>
         </div>
       </div>

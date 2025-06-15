@@ -65,7 +65,10 @@ export const MetricDialog = ({ onNewMetric }: MetricDialogProps) => {
           Nova Métrica
         </Button>
       </DialogTrigger>
-      <DialogContent className="max-w-4xl max-h-[90vh] overflow-hidden border-border" style={{ backgroundColor: '#0A0E1E' }}>
+      <DialogContent 
+        className="max-w-4xl max-h-[90vh] overflow-hidden border-border/50" 
+        style={{ backgroundColor: '#0A0E1E' }}
+      >
         <DialogHeader>
           <DialogTitle className="text-foreground">Criar Nova Métrica</DialogTitle>
           <DialogDescription className="text-muted-foreground">
@@ -74,7 +77,7 @@ export const MetricDialog = ({ onNewMetric }: MetricDialogProps) => {
         </DialogHeader>
         
         <Tabs value={activeTab} onValueChange={setActiveTab} className="h-full">
-          <TabsList className="grid w-full grid-cols-2">
+          <TabsList className="grid w-full grid-cols-2" style={{ backgroundColor: '#0A0E1E' }}>
             <TabsTrigger value="available">Métricas Disponíveis</TabsTrigger>
             <TabsTrigger value="create">Criar Personalizada</TabsTrigger>
           </TabsList>
@@ -143,11 +146,11 @@ export const MetricDialog = ({ onNewMetric }: MetricDialogProps) => {
                       <SelectTrigger className="mt-1 bg-background/50 border-border">
                         <SelectValue placeholder="Selecione um projeto" />
                       </SelectTrigger>
-                      <SelectContent className="border-border" style={{ backgroundColor: '#0A0E1E' }}>
-                        <SelectItem value="ecommerce">E-commerce Principal</SelectItem>
-                        <SelectItem value="marketing">Marketing Digital</SelectItem>
-                        <SelectItem value="b2b">Vendas B2B</SelectItem>
-                        <SelectItem value="global">Global (Todos os projetos)</SelectItem>
+                      <SelectContent style={{ backgroundColor: '#0A0E1E', border: '1px solid rgba(255,255,255,0.1)' }}>
+                        <SelectItem value="ecommerce" style={{ backgroundColor: '#0A0E1E' }}>E-commerce Principal</SelectItem>
+                        <SelectItem value="marketing" style={{ backgroundColor: '#0A0E1E' }}>Marketing Digital</SelectItem>
+                        <SelectItem value="b2b" style={{ backgroundColor: '#0A0E1E' }}>Vendas B2B</SelectItem>
+                        <SelectItem value="global" style={{ backgroundColor: '#0A0E1E' }}>Global (Todos os projetos)</SelectItem>
                       </SelectContent>
                     </Select>
                   </div>

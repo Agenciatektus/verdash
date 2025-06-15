@@ -152,18 +152,19 @@ export const WidgetPalette = ({ onWidgetAdd, isVisible }: WidgetPaletteProps) =>
     },
     {
       type: 'funnel' as const,
-      title: 'Funil',
-      description: 'Processo de conversão',
+      title: 'Funil Comercial',
+      description: 'Processo de conversão de vendas',
       icon: TrendingDown,
       config: {
         stages: [
-          { name: 'Visitantes', value: 1000, color: '#1042F6' },
-          { name: 'Leads', value: 300, color: '#00FFB0' },
-          { name: 'Prospects', value: 100, color: '#FF6F1B' },
-          { name: 'Clientes', value: 30, color: '#FF4757' }
+          { step: "Novos Leads", value: 1000, percentage: 100, conversion: 0, icon: "Users", color: '#1042F6' },
+          { step: "Visita Agendada", value: 350, percentage: 35, conversion: 35, icon: "Calendar", color: '#00FFB0' },
+          { step: "Em Orçamento", value: 210, percentage: 21, conversion: 60, icon: "Calculator", color: '#FF6F1B' },
+          { step: "Aguardando Pagamento", value: 105, percentage: 10.5, conversion: 50, icon: "Clock", color: '#9c88ff' },
+          { step: "Vendas", value: 84, percentage: 8.4, conversion: 80, icon: "DollarSign", color: '#FF4757' }
         ]
       },
-      position: { x: 0, y: 0, width: 1, height: 2 }
+      position: { x: 0, y: 0, width: 1, height: 3 }
     }
   ];
 

@@ -10,6 +10,7 @@ import { DonutChartWidget } from "./DonutChartWidget";
 import { GaugeWidget } from "./GaugeWidget";
 import { ProgressBarWidget } from "./ProgressBarWidget";
 import { RadarChartWidget } from "./RadarChartWidget";
+import { FunnelWidget } from "./FunnelWidget";
 
 interface WidgetContainerProps {
   widget: Widget;
@@ -46,9 +47,10 @@ export const WidgetContainer = ({
         return <ProgressBarWidget widget={widget} isEditing={isEditing} />;
       case 'radar-chart':
         return <RadarChartWidget widget={widget} data={data} isEditing={isEditing} />;
+      case 'funnel':
+        return <FunnelWidget widget={widget} isEditing={isEditing} />;
       case 'table':
         return <TableWidget widget={widget} data={data} isEditing={isEditing} />;
-      case 'funnel':
       case 'stacked-area-chart':
       case 'horizontal-bar-chart':
       case 'stacked-bar-chart':

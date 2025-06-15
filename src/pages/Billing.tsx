@@ -170,7 +170,7 @@ const Billing = () => {
     }
     switch (subscription.status) {
       case 'active':
-        return <Badge className="bg-[#0A0E1E] text-white">Ativo</Badge>;
+        return <Badge className="bg-white text-[#0A0E1E]">Ativo</Badge>;
       case 'past_due':
         return <Badge variant="destructive">Vencido</Badge>;
       case 'trialing':

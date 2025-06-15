@@ -42,13 +42,14 @@ const mockProjects = [
 ];
 
 export function AppSidebar() {
-  const { collapsed } = useSidebar();
+  const { state } = useSidebar();
   const location = useLocation();
   const { user } = useAuth();
   const [projectsOpen, setProjectsOpen] = useState(true);
   
   const currentPath = location.pathname;
   const isActive = (path: string) => currentPath === path;
+  const isCollapsed = state === "collapsed";
 
   const getNavClass = (active: boolean) => 
     active 
@@ -56,7 +57,7 @@ export function AppSidebar() {
       : "hover:bg-muted/50 text-muted-foreground hover:text-foreground";
 
   return (
-    <Sidebar className={collapsed ? "w-16" : "w-64"} collapsible>
+    <Sidebar className={isCollapsed ? "w-16" : "w-64"} collapsible="icon">
       <SidebarContent className="bg-sidebar border-r border-sidebar-border">
         {/* Header */}
         <div className="p-4 border-b border-sidebar-border">
@@ -64,7 +65,7 @@ export function AppSidebar() {
             <div className="w-8 h-8 rounded-lg verdash-gradient flex items-center justify-center">
               <Activity className="w-4 h-4 text-white" />
             </div>
-            {!collapsed && (
+            {!isCollapsed && (
               <div>
                 <h1 className="font-bold text-lg text-foreground">Verdash</h1>
                 <p className="text-xs text-muted-foreground">Analytics Hub</p>
@@ -85,7 +86,7 @@ export function AppSidebar() {
                       className={({ isActive }) => getNavClass(isActive)}
                     >
                       <item.icon className="w-4 h-4" />
-                      {!collapsed && <span>{item.title}</span>}
+                      {!isCollapsed && <span>{item.title}</span>}
                     </NavLink>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
@@ -95,7 +96,7 @@ export function AppSidebar() {
         </SidebarGroup>
 
         {/* Projects Section */}
-        {!collapsed && (
+        {!isCollapsed && (
           <SidebarGroup>
             <Collapsible open={projectsOpen} onOpenChange={setProjectsOpen}>
               <SidebarGroupLabel asChild>
@@ -142,7 +143,7 @@ export function AppSidebar() {
               alt={user?.name}
               className="w-8 h-8 rounded-full"
             />
-            {!collapsed && (
+            {!isCollapsed && (
               <div className="flex-1 min-w-0">
                 <p className="text-sm font-medium text-foreground truncate">{user?.name}</p>
                 <p className="text-xs text-muted-foreground capitalize">{user?.role}</p>

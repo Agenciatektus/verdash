@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -88,15 +89,15 @@ const Projects = () => {
   const handleOpenProject = (projectId: string, projectName: string) => {
     console.log(`Opening project: ${projectId}`);
     toast.success(`Abrindo projeto "${projectName}"`);
-    // Navigate to project dashboard
-    navigate(`/dashboard?project=${projectId}`);
+    // Navigate to individual project page
+    navigate(`/projects/${projectId}`);
   };
 
   const handleProjectSettings = (projectId: string, projectName: string) => {
     console.log(`Opening settings for project: ${projectId}`);
     toast.success(`Configurações do projeto "${projectName}"`);
-    // Navigate to project settings (could be a new page or modal)
-    navigate(`/projects/${projectId}/settings`);
+    // Navigate to individual project page (for now, could be a settings tab later)
+    navigate(`/projects/${projectId}`);
   };
 
   const handleDeleteProject = (projectId: string, projectName: string) => {

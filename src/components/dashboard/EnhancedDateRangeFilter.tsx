@@ -83,53 +83,41 @@ export const EnhancedDateRangeFilter = ({ onRangeChange }: EnhancedDateRangeFilt
     onRangeChange?.(range);
   };
 
-  const getCurrentDateText = () => {
-    if (selectedRange === "custom" && customRange?.from) {
-      if (customRange.to) {
-        return `${format(customRange.from, "dd/MM/yyyy", { locale: ptBR })} - ${format(customRange.to, "dd/MM/yyyy", { locale: ptBR })}`;
-      }
-      return format(customRange.from, "dd/MM/yyyy", { locale: ptBR });
+  const getDisplayValue = () => {
+    if (selectedRange === "custom" && customRange?.from && customRange?.to) {
+      return `${format(customRange.from, "dd/MM/yyyy", { locale: ptBR })} - ${format(customRange.to, "dd/MM/yyyy", { locale: ptBR })}`;
     }
     
     const predefined = predefinedRanges.find(r => r.value === selectedRange);
-    if (predefined && predefined.getRange) {
-      const range = predefined.getRange();
-      return `${format(range.from, "dd/MM/yyyy", { locale: ptBR })} - ${format(range.to, "dd/MM/yyyy", { locale: ptBR })}`;
-    }
-    
     return predefined?.label || "Selecionar período";
   };
 
   return (
     <div className="space-y-2">
-      <Select value={selectedRange} onValueChange={handleRangeSelection}>
-        <SelectTrigger className="w-[200px]">
-          <CalendarIcon className="mr-2 h-4 w-4" />
-          <SelectValue />
-        </SelectTrigger>
-        <SelectContent>
-          {predefinedRanges.map((range) => (
-            <SelectItem key={range.value} value={range.value}>
-              {range.label}
-            </SelectItem>
-          ))}
-        </SelectContent>
-      </Select>
-      
-      {selectedRange === "custom" && (
-        <Popover open={showCustomCalendar} onOpenChange={setShowCustomCalendar}>
-          <PopoverTrigger asChild>
-            <Button
-              variant="outline"
-              className={cn(
-                "w-[280px] justify-start text-left font-normal",
-                !customRange && "text-muted-foreground"
-              )}
-            >
-              <CalendarIcon className="mr-2 h-4 w-4" />
-              {getCurrentDateText()}
-            </Button>
-          </PopoverTrigger>
+      <Popover open={showCustomCalendar} onOpenChange={setShowCustomCalendar}>
+        <Select value={selectedRange} onValueChange={handleRangeSelection}>
+          <SelectTrigger className="w-[200px]">
+            <CalendarIcon className="mr-2 h-4 w-4" />
+            <SelectValue>{getDisplayValue()}</SelectValue>
+          </SelectTrigger>
+          <SelectContent>
+            {predefinedRanges.map((range) => (
+              <SelectItem key={range.value} value={range.value}>
+                {range.label}
+              </SelectItem>
+            ))}
+            {selectedRange === "custom" && customRange?.from && customRange?.to && (
+              <div className="px-2 py-2 border-t">
+                <div className="text-xs text-muted-foreground mb-2">Período selecionado:</div>
+                <div className="text-sm">
+                  {format(customRange.from, "dd/MM/yyyy", { locale: ptBR })} - {format(customRange.to, "dd/MM/yyyy", { locale: ptBR })}
+                </div>
+              </div>
+            )}
+          </SelectContent>
+        </Select>
+        
+        {selectedRange === "custom" && (
           <PopoverContent className="w-auto p-0" align="start">
             <Calendar
               initialFocus
@@ -141,14 +129,8 @@ export const EnhancedDateRangeFilter = ({ onRangeChange }: EnhancedDateRangeFilt
               className={cn("p-3 pointer-events-auto")}
             />
           </PopoverContent>
-        </Popover>
-      )}
-      
-      {selectedRange !== "custom" && (
-        <div className="text-sm text-muted-foreground">
-          {getCurrentDateText()}
-        </div>
-      )}
+        )}
+      </Popover>
     </div>
   );
 };

@@ -1,4 +1,3 @@
-
 import { useParams, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
@@ -21,7 +20,8 @@ const DashboardEditor = () => {
     3: { name: "Funil de Conversão", project: "Vendas B2B" },
   };
 
-  const dashboard = dashboardData[id as keyof typeof dashboardData] || dashboardData[1];
+  const dashboardId = id ? parseInt(id) : 1;
+  const dashboard = dashboardData[dashboardId as keyof typeof dashboardData] || dashboardData[1];
 
   const handleSaveWidgets = (updatedWidgets: Widget[]) => {
     setWidgets(updatedWidgets);

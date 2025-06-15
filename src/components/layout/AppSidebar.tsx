@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { 
   LayoutDashboard, 
@@ -12,7 +13,8 @@ import {
   MessageCircle,
   LogOut,
   CreditCard,
-  Database
+  Database,
+  Brain
 } from "lucide-react";
 import { NavLink, useLocation } from "react-router-dom";
 import {

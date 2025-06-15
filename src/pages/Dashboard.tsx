@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -245,7 +246,7 @@ const Dashboard = () => {
       <div 
         className="fixed inset-0 pointer-events-none z-0"
         style={{
-          background: `radial-gradient(circle at -200px -200px, rgba(0, 255, 176, 0.5) 0%, rgba(10, 14, 30, 0) 50%)`,
+          background: `radial-gradient(circle at -200px -200px, rgba(0, 255, 176, 0.3) 0%, rgba(10, 14, 30, 0) 50%)`,
           filter: 'blur(100px)'
         }}
       />

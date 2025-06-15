@@ -11,6 +11,7 @@ import Dashboard from "./pages/Dashboard";
 import DashboardView from "./pages/DashboardView";
 import DashboardEditor from "./pages/DashboardEditor";
 import Projects from "./pages/Projects";
+import ProjectView from "./pages/ProjectView";
 import Dashboards from "./pages/Dashboards";
 import Metrics from "./pages/Metrics";
 import VerdashAI from "./pages/VerdashAI";
@@ -52,6 +53,7 @@ function App() {
                       <Route path="/dashboard-view/:id" element={<DashboardView />} />
                       <Route path="/dashboard-editor/:id" element={<DashboardEditor />} />
                       <Route path="/projects" element={<Projects />} />
+                      <Route path="/projects/:id" element={<ProjectView />} />
                       <Route path="/dashboards" element={<Dashboards />} />
                       <Route path="/metrics" element={<Metrics />} />
                       <Route path="/data-admin" element={<DataAdmin />} />

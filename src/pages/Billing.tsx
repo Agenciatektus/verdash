@@ -135,16 +135,13 @@ const Billing = () => {
 
   const handleSelectPlan = async (planId: string) => {
     if (planId === 'enterprise') {
-      // Para Enterprise, abrir formulário de contato
       toast.info('Redirecionando para contato comercial...');
       return;
     }
 
     setLoading(true);
     try {
-      // Simular API call para mudança de plano
       await new Promise(resolve => setTimeout(resolve, 2000));
-      
       setSubscription(prev => ({ ...prev, planId }));
       toast.success('Plano alterado com sucesso!');
     } catch (error) {
@@ -318,7 +315,7 @@ const Billing = () => {
               )}
             </div>
           </CardContent>
-        </div>
+        </Card>
       )}
     </div>
   );

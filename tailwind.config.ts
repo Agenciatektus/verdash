@@ -19,6 +19,10 @@ export default {
 			}
 		},
 		extend: {
+			fontFamily: {
+				'sans': ['Plus Jakarta Sans', 'ui-sans-serif', 'system-ui'],
+				'jakarta': ['Plus Jakarta Sans', 'sans-serif'],
+			},
 			colors: {
 				border: 'hsl(var(--border))',
 				input: 'hsl(var(--input))',
@@ -64,17 +68,15 @@ export default {
 					ring: 'hsl(var(--sidebar-ring))'
 				},
 				verdash: {
-					50: '#f8fafc',
-					100: '#f1f5f9',
-					200: '#e2e8f0',
-					300: '#cbd5e1',
-					400: '#94a3b8',
-					500: '#64748b',
-					600: '#475569',
-					700: '#334155',
-					800: '#1e293b',
-					900: '#0f172a',
-					950: '#020617'
+					dark: '#0A0E1E',
+					white: '#FFFFFF',
+					blue: '#1042F6',
+					cyan: '#00FFB0',
+					coral: '#FF6F1B',
+					red: '#FF3871',
+					error: '#FF6F61',
+					success: '#00FF85',
+					info: '#00AEEF',
 				}
 			},
 			borderRadius: {
@@ -99,7 +101,7 @@ export default {
 						height: '0'
 					}
 				},
-				'slide-up': {
+				'verdash-slide-up': {
 					from: {
 						transform: 'translateY(10px)',
 						opacity: '0'
@@ -109,25 +111,36 @@ export default {
 						opacity: '1'
 					}
 				},
-				'fade-in': {
+				'verdash-fade-in': {
 					from: {
 						opacity: '0'
 					},
 					to: {
 						opacity: '1'
 					}
+				},
+				'verdash-gradient': {
+					'0%': {
+						'background-position': '0% 50%'
+					},
+					'50%': {
+						'background-position': '100% 50%'
+					},
+					'100%': {
+						'background-position': '0% 50%'
+					}
 				}
 			},
 			animation: {
 				'accordion-down': 'accordion-down 0.2s ease-out',
 				'accordion-up': 'accordion-up 0.2s ease-out',
-				'slide-up': 'slide-up 0.3s ease-out',
-				'fade-in': 'fade-in 0.2s ease-out'
+				'verdash-slide-up': 'verdash-slide-up 0.3s ease-out',
+				'verdash-fade-in': 'verdash-fade-in 0.2s ease-out',
+				'verdash-gradient': 'verdash-gradient 3s ease infinite',
 			},
 			backgroundImage: {
-				'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
-				'gradient-conic': 'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
-				'verdash-gradient': 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)'
+				'verdash-gradient': 'linear-gradient(135deg, #1042F6 0%, #00FFB0 25%, #FF6F1B 75%, #FF3871 100%)',
+				'verdash-gradient-hover': 'linear-gradient(135deg, #1042F6 0%, #00FFB0 50%, #FF6F1B 100%)',
 			}
 		}
 	},

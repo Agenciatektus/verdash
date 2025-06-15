@@ -53,21 +53,21 @@ export function AppSidebar() {
 
   const getNavClass = (active: boolean) => 
     active 
-      ? "bg-primary/20 text-primary font-medium border-r-2 border-primary" 
-      : "hover:bg-muted/50 text-muted-foreground hover:text-foreground";
+      ? "bg-gradient-to-r from-verdash-blue/20 to-verdash-cyan/20 text-white font-semibold border-r-2 border-verdash-cyan shadow-lg" 
+      : "hover:bg-sidebar-accent/50 text-sidebar-foreground/80 hover:text-white verdash-animate";
 
   return (
-    <Sidebar className={isCollapsed ? "w-16" : "w-64"} collapsible="icon">
-      <SidebarContent className="bg-sidebar border-r border-sidebar-border">
+    <Sidebar className={isCollapsed ? "w-16" : "w-72"} collapsible="icon">
+      <SidebarContent className="bg-verdash-dark border-r border-sidebar-border/30">
         {/* Header */}
-        <div className="p-4 border-b border-sidebar-border">
-          <div className="flex items-center gap-3">
-            <div className="w-8 h-8 rounded-lg verdash-gradient flex items-center justify-center">
-              <Activity className="w-4 h-4 text-white" />
+        <div className="p-6 border-b border-sidebar-border/30">
+          <div className="flex items-center gap-4">
+            <div className="w-10 h-10 rounded-xl verdash-gradient flex items-center justify-center shadow-lg">
+              <Activity className="w-5 h-5 text-white" />
             </div>
             {!isCollapsed && (
               <div>
-                <h1 className="font-bold text-lg text-foreground">Verdash</h1>
+                <h1 className="font-bold text-2xl text-white font-jakarta">Verdash</h1>
                 <p className="text-xs text-muted-foreground">Analytics Hub</p>
               </div>
             )}
@@ -75,18 +75,18 @@ export function AppSidebar() {
         </div>
 
         {/* Main Navigation */}
-        <SidebarGroup>
+        <SidebarGroup className="px-4 py-6">
           <SidebarGroupContent>
-            <SidebarMenu>
+            <SidebarMenu className="space-y-2">
               {mainNavigation.map((item) => (
                 <SidebarMenuItem key={item.title}>
                   <SidebarMenuButton asChild>
                     <NavLink 
                       to={item.url} 
-                      className={({ isActive }) => getNavClass(isActive)}
+                      className={({ isActive }) => `${getNavClass(isActive)} flex items-center gap-3 px-4 py-3 rounded-xl`}
                     >
-                      <item.icon className="w-4 h-4" />
-                      {!isCollapsed && <span>{item.title}</span>}
+                      <item.icon className="w-5 h-5" />
+                      {!isCollapsed && <span className="font-medium">{item.title}</span>}
                     </NavLink>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
@@ -97,31 +97,31 @@ export function AppSidebar() {
 
         {/* Projects Section */}
         {!isCollapsed && (
-          <SidebarGroup>
+          <SidebarGroup className="px-4">
             <Collapsible open={projectsOpen} onOpenChange={setProjectsOpen}>
               <SidebarGroupLabel asChild>
-                <CollapsibleTrigger className="flex items-center justify-between w-full p-2 hover:bg-muted/50 rounded-md">
-                  <span className="text-sm font-medium">Projetos</span>
-                  <div className="flex items-center gap-1">
-                    <Button variant="ghost" size="sm" className="w-6 h-6 p-0">
-                      <Plus className="w-3 h-3" />
+                <CollapsibleTrigger className="flex items-center justify-between w-full p-3 hover:bg-sidebar-accent/30 rounded-xl verdash-animate">
+                  <span className="text-sm font-semibold text-white">Projetos</span>
+                  <div className="flex items-center gap-2">
+                    <Button variant="ghost" size="sm" className="w-7 h-7 p-0 hover:bg-verdash-cyan/20">
+                      <Plus className="w-4 h-4 text-verdash-cyan" />
                     </Button>
-                    <ChevronDown className={`w-3 h-3 transition-transform ${projectsOpen ? 'rotate-180' : ''}`} />
+                    <ChevronDown className={`w-4 h-4 text-muted-foreground transition-transform ${projectsOpen ? 'rotate-180' : ''}`} />
                   </div>
                 </CollapsibleTrigger>
               </SidebarGroupLabel>
               <CollapsibleContent>
-                <SidebarGroupContent>
-                  <SidebarMenu>
+                <SidebarGroupContent className="mt-2">
+                  <SidebarMenu className="space-y-1">
                     {mockProjects.map((project) => (
                       <SidebarMenuItem key={project.id}>
                         <SidebarMenuButton asChild>
                           <NavLink 
                             to={`/projects/${project.id}`}
-                            className="flex items-center justify-between text-sm"
+                            className="flex items-center justify-between text-sm p-3 rounded-lg hover:bg-sidebar-accent/30 verdash-animate"
                           >
-                            <span className="truncate">{project.name}</span>
-                            <span className="text-xs text-muted-foreground bg-muted px-1.5 py-0.5 rounded">
+                            <span className="truncate text-sidebar-foreground/80">{project.name}</span>
+                            <span className="text-xs text-muted-foreground bg-gradient-to-r from-verdash-blue/20 to-verdash-cyan/20 px-2 py-1 rounded-full border border-verdash-blue/30">
                               {project.dashboards}
                             </span>
                           </NavLink>
@@ -136,16 +136,14 @@ export function AppSidebar() {
         )}
 
         {/* User Info */}
-        <div className="mt-auto p-4 border-t border-sidebar-border">
-          <div className="flex items-center gap-3">
-            <img 
-              src={user?.avatar} 
-              alt={user?.name}
-              className="w-8 h-8 rounded-full"
-            />
+        <div className="mt-auto p-6 border-t border-sidebar-border/30">
+          <div className="flex items-center gap-4">
+            <div className="w-10 h-10 rounded-full bg-gradient-to-br from-verdash-blue to-verdash-cyan flex items-center justify-center text-white font-bold">
+              {user?.name?.charAt(0) || 'U'}
+            </div>
             {!isCollapsed && (
               <div className="flex-1 min-w-0">
-                <p className="text-sm font-medium text-foreground truncate">{user?.name}</p>
+                <p className="text-sm font-semibold text-white truncate">{user?.name}</p>
                 <p className="text-xs text-muted-foreground capitalize">{user?.role}</p>
               </div>
             )}

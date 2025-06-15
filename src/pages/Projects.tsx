@@ -33,7 +33,7 @@ const mockProjects = [
     status: 'active',
     lastUpdate: '2024-01-15',
     metrics: ['Receita', 'Conversão', 'CAC', 'LTV'],
-    color: 'bg-blue-500'
+    gradient: 'from-verdash-blue to-verdash-cyan'
   },
   {
     id: '2', 
@@ -44,7 +44,7 @@ const mockProjects = [
     status: 'active',
     lastUpdate: '2024-01-14',
     metrics: ['ROAS', 'CPC', 'CTR', 'Impressões'],
-    color: 'bg-green-500'
+    gradient: 'from-verdash-cyan to-verdash-coral'
   },
   {
     id: '3',
@@ -55,7 +55,7 @@ const mockProjects = [
     status: 'inactive',
     lastUpdate: '2024-01-10',
     metrics: ['Pipeline', 'Oportunidades', 'Fechamento'],
-    color: 'bg-purple-500'
+    gradient: 'from-verdash-coral to-verdash-red'
   },
   {
     id: '4',
@@ -66,7 +66,7 @@ const mockProjects = [
     status: 'active',
     lastUpdate: '2024-01-13',
     metrics: ['Tickets', 'SLA', 'CSAT', 'NPS'],
-    color: 'bg-orange-500'
+    gradient: 'from-verdash-red to-verdash-blue'
   }
 ];
 
@@ -82,35 +82,36 @@ const Projects = () => {
   });
 
   return (
-    <div className="space-y-6 animate-fade-in">
+    <div className="space-y-8 animate-verdash-fade-in font-jakarta">
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold text-foreground">Projetos</h1>
-          <p className="text-muted-foreground">Gerencie todos os seus projetos e dashboards</p>
+          <h1 className="text-4xl font-bold text-foreground mb-2">Projetos</h1>
+          <p className="text-muted-foreground text-lg">Gerencie todos os seus projetos e dashboards</p>
         </div>
-        <Button className="verdash-gradient">
+        <Button className="verdash-btn-primary verdash-hover-scale">
           <Plus className="w-4 h-4 mr-2" />
           Novo Projeto
         </Button>
       </div>
 
       {/* Filters */}
-      <div className="flex items-center gap-4">
+      <div className="flex items-center gap-6">
         <div className="relative flex-1 max-w-md">
-          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-4 h-4" />
+          <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-muted-foreground w-5 h-5" />
           <Input
             placeholder="Pesquisar projetos..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="pl-10 bg-background/50"
+            className="pl-12 bg-card/50 border-border/50 rounded-xl h-12 text-foreground placeholder:text-muted-foreground focus:border-verdash-cyan verdash-animate"
           />
         </div>
-        <div className="flex gap-2">
+        <div className="flex gap-3">
           <Button 
             variant={filter === "all" ? "default" : "outline"} 
             size="sm"
             onClick={() => setFilter("all")}
+            className={filter === "all" ? "verdash-btn-primary" : "border-border/50 hover:border-border verdash-animate"}
           >
             Todos
           </Button>
@@ -118,6 +119,7 @@ const Projects = () => {
             variant={filter === "active" ? "default" : "outline"} 
             size="sm"
             onClick={() => setFilter("active")}
+            className={filter === "active" ? "verdash-btn-primary" : "border-border/50 hover:border-border verdash-animate"}
           >
             Ativos
           </Button>
@@ -125,6 +127,7 @@ const Projects = () => {
             variant={filter === "inactive" ? "default" : "outline"} 
             size="sm"
             onClick={() => setFilter("inactive")}
+            className={filter === "inactive" ? "verdash-btn-primary" : "border-border/50 hover:border-border verdash-animate"}
           >
             Inativos
           </Button>
@@ -134,18 +137,21 @@ const Projects = () => {
       {/* Projects Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {filteredProjects.map((project) => (
-          <Card key={project.id} className="verdash-card hover:shadow-lg transition-all duration-200 group">
+          <Card key={project.id} className="verdash-card verdash-card-hover verdash-hover-scale group">
             <CardHeader>
               <div className="flex items-start justify-between">
-                <div className="flex items-center gap-3">
-                  <div className={`w-12 h-12 ${project.color} rounded-lg flex items-center justify-center`}>
-                    <BarChart3 className="w-6 h-6 text-white" />
+                <div className="flex items-center gap-4">
+                  <div className={`w-14 h-14 bg-gradient-to-br ${project.gradient} rounded-xl flex items-center justify-center shadow-lg`}>
+                    <BarChart3 className="w-7 h-7 text-white" />
                   </div>
                   <div>
-                    <CardTitle className="text-lg">{project.name}</CardTitle>
+                    <CardTitle className="text-xl font-semibold">{project.name}</CardTitle>
                     <Badge 
                       variant={project.status === 'active' ? 'default' : 'secondary'}
-                      className={project.status === 'active' ? 'bg-green-500/10 text-green-500' : ''}
+                      className={project.status === 'active' 
+                        ? 'bg-gradient-to-r from-verdash-success/20 to-verdash-cyan/20 text-verdash-success border-verdash-success/30 mt-2' 
+                        : 'bg-gradient-to-r from-verdash-error/20 to-verdash-coral/20 text-verdash-error border-verdash-error/30 mt-2'
+                      }
                     >
                       {project.status === 'active' ? 'Ativo' : 'Inativo'}
                     </Badge>
@@ -153,57 +159,57 @@ const Projects = () => {
                 </div>
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
-                    <Button variant="ghost" size="icon" className="opacity-0 group-hover:opacity-100 transition-opacity">
-                      <MoreHorizontal className="w-4 h-4" />
+                    <Button variant="ghost" size="icon" className="opacity-0 group-hover:opacity-100 verdash-animate hover:bg-sidebar-accent/30">
+                      <MoreHorizontal className="w-5 h-5" />
                     </Button>
                   </DropdownMenuTrigger>
-                  <DropdownMenuContent align="end" className="bg-popover border border-border">
-                    <DropdownMenuItem>
+                  <DropdownMenuContent align="end" className="bg-card border border-border/50 rounded-xl">
+                    <DropdownMenuItem className="hover:bg-sidebar-accent/30 verdash-animate">
                       <Eye className="w-4 h-4 mr-2" />
                       Visualizar
                     </DropdownMenuItem>
-                    <DropdownMenuItem>
+                    <DropdownMenuItem className="hover:bg-sidebar-accent/30 verdash-animate">
                       <Settings className="w-4 h-4 mr-2" />
                       Configurações
                     </DropdownMenuItem>
-                    <DropdownMenuSeparator />
-                    <DropdownMenuItem className="text-red-500">
+                    <DropdownMenuSeparator className="bg-border/30" />
+                    <DropdownMenuItem className="text-verdash-error hover:bg-verdash-error/10 verdash-animate">
                       <Trash2 className="w-4 h-4 mr-2" />
                       Excluir
                     </DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>
               </div>
-              <CardDescription className="mt-2">
+              <CardDescription className="mt-3 text-muted-foreground">
                 {project.description}
               </CardDescription>
             </CardHeader>
             
-            <CardContent className="space-y-4">
+            <CardContent className="space-y-6">
               {/* Stats */}
               <div className="grid grid-cols-2 gap-4">
-                <div className="text-center p-3 bg-muted/20 rounded-lg">
-                  <div className="flex items-center justify-center gap-2 mb-1">
-                    <BarChart3 className="w-4 h-4 text-primary" />
+                <div className="text-center p-4 bg-gradient-to-br from-card/30 to-card/10 rounded-xl border border-border/20">
+                  <div className="flex items-center justify-center gap-2 mb-2">
+                    <BarChart3 className="w-5 h-5 text-verdash-cyan" />
                     <span className="text-2xl font-bold text-foreground">{project.dashboards}</span>
                   </div>
-                  <p className="text-xs text-muted-foreground">Dashboards</p>
+                  <p className="text-xs text-muted-foreground font-medium">Dashboards</p>
                 </div>
-                <div className="text-center p-3 bg-muted/20 rounded-lg">
-                  <div className="flex items-center justify-center gap-2 mb-1">
-                    <Users className="w-4 h-4 text-primary" />
+                <div className="text-center p-4 bg-gradient-to-br from-card/30 to-card/10 rounded-xl border border-border/20">
+                  <div className="flex items-center justify-center gap-2 mb-2">
+                    <Users className="w-5 h-5 text-verdash-coral" />
                     <span className="text-2xl font-bold text-foreground">{project.users}</span>
                   </div>
-                  <p className="text-xs text-muted-foreground">Usuários</p>
+                  <p className="text-xs text-muted-foreground font-medium">Usuários</p>
                 </div>
               </div>
 
               {/* Metrics */}
               <div>
-                <p className="text-sm font-medium text-foreground mb-2">Métricas principais:</p>
-                <div className="flex flex-wrap gap-1">
+                <p className="text-sm font-semibold text-foreground mb-3">Métricas principais:</p>
+                <div className="flex flex-wrap gap-2">
                   {project.metrics.map((metric, index) => (
-                    <Badge key={index} variant="outline" className="text-xs">
+                    <Badge key={index} variant="outline" className="text-xs border-border/30 hover:border-verdash-cyan/50 verdash-animate">
                       {metric}
                     </Badge>
                   ))}
@@ -212,17 +218,17 @@ const Projects = () => {
 
               {/* Last Update */}
               <div className="flex items-center gap-2 text-xs text-muted-foreground">
-                <Calendar className="w-3 h-3" />
+                <Calendar className="w-4 h-4" />
                 <span>Atualizado em {new Date(project.lastUpdate).toLocaleDateString('pt-BR')}</span>
               </div>
 
               {/* Actions */}
-              <div className="flex gap-2 pt-2">
-                <Button size="sm" className="flex-1">
+              <div className="flex gap-3 pt-2">
+                <Button size="sm" className="flex-1 verdash-btn-primary">
                   <Eye className="w-4 h-4 mr-2" />
                   Abrir
                 </Button>
-                <Button variant="outline" size="sm">
+                <Button variant="outline" size="sm" className="border-border/50 hover:border-border verdash-animate">
                   <Settings className="w-4 h-4" />
                 </Button>
               </div>
@@ -233,13 +239,15 @@ const Projects = () => {
 
       {/* Empty State */}
       {filteredProjects.length === 0 && (
-        <div className="text-center py-12">
-          <BarChart3 className="w-12 h-12 text-muted-foreground mx-auto mb-4" />
-          <h3 className="text-lg font-medium text-foreground mb-2">Nenhum projeto encontrado</h3>
-          <p className="text-muted-foreground mb-4">
+        <div className="text-center py-16">
+          <div className="w-16 h-16 mx-auto mb-6 bg-gradient-to-br from-verdash-blue to-verdash-cyan rounded-xl flex items-center justify-center">
+            <BarChart3 className="w-8 h-8 text-white" />
+          </div>
+          <h3 className="text-xl font-semibold text-foreground mb-2">Nenhum projeto encontrado</h3>
+          <p className="text-muted-foreground mb-6 text-lg">
             {searchTerm ? "Tente ajustar sua pesquisa" : "Comece criando seu primeiro projeto"}
           </p>
-          <Button className="verdash-gradient">
+          <Button className="verdash-btn-primary verdash-hover-scale">
             <Plus className="w-4 h-4 mr-2" />
             Criar Projeto
           </Button>

@@ -1,89 +1,67 @@
 
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system with dark theme as default */
+/* Verdash Design System */
 
 @layer base {
   :root {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
+    /* Verdash Brand Colors */
+    --verdash-dark: 10 14 30; /* #0A0E1E */
+    --verdash-white: 255 255 255; /* #FFFFFF */
+    --verdash-blue: 16 66 246; /* #1042F6 */
+    --verdash-cyan: 0 255 176; /* #00FFB0 */
+    --verdash-coral: 255 111 27; /* #FF6F1B */
+    --verdash-red: 255 56 113; /* #FF3871 */
+    
+    /* Status Colors */
+    --verdash-error: 255 111 97; /* #FF6F61 */
+    --verdash-success: 0 255 133; /* #00FF85 */
+    --verdash-info: 0 174 239; /* #00AEEF */
+    
+    /* Semantic Colors for Dark Theme */
+    --background: var(--verdash-dark);
+    --foreground: var(--verdash-white);
 
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
+    --card: 15 20 35; /* Slightly lighter than background */
+    --card-foreground: var(--verdash-white);
 
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
+    --popover: var(--verdash-dark);
+    --popover-foreground: var(--verdash-white);
 
-    --primary: 263 70% 50%;
-    --primary-foreground: 210 40% 98%;
+    --primary: var(--verdash-blue);
+    --primary-foreground: var(--verdash-white);
 
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
+    --secondary: 25 35 55;
+    --secondary-foreground: var(--verdash-white);
 
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
+    --muted: 20 25 40;
+    --muted-foreground: 160 170 190;
 
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
+    --accent: 25 35 55;
+    --accent-foreground: var(--verdash-white);
 
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive: var(--verdash-error);
+    --destructive-foreground: var(--verdash-white);
 
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 263 70% 50%;
+    --border: 30 40 60;
+    --input: 25 35 55;
+    --ring: var(--verdash-blue);
 
     --radius: 0.75rem;
 
-    --sidebar-background: 222.2 84% 4.9%;
-    --sidebar-foreground: 210 40% 98%;
-    --sidebar-primary: 263 70% 50%;
-    --sidebar-primary-foreground: 210 40% 98%;
-    --sidebar-accent: 217.2 32.6% 17.5%;
-    --sidebar-accent-foreground: 210 40% 98%;
-    --sidebar-border: 217.2 32.6% 17.5%;
-    --sidebar-ring: 263 70% 50%;
-  }
-
-  .light {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
-
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
-
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
-
-    --primary: 263 70% 50%;
-    --primary-foreground: 210 40% 98%;
-
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
-
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
-
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
-
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
-
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 263 70% 50%;
-
-    --sidebar-background: 0 0% 98%;
-    --sidebar-foreground: 240 5.3% 26.1%;
-    --sidebar-primary: 263 70% 50%;
-    --sidebar-primary-foreground: 0 0% 98%;
-    --sidebar-accent: 240 4.8% 95.9%;
-    --sidebar-accent-foreground: 240 5.9% 10%;
-    --sidebar-border: 220 13% 91%;
-    --sidebar-ring: 263 70% 50%;
+    /* Sidebar specific colors */
+    --sidebar-background: var(--verdash-dark);
+    --sidebar-foreground: var(--verdash-white);
+    --sidebar-primary: var(--verdash-blue);
+    --sidebar-primary-foreground: var(--verdash-white);
+    --sidebar-accent: 20 25 40;
+    --sidebar-accent-foreground: var(--verdash-white);
+    --sidebar-border: 25 35 55;
+    --sidebar-ring: var(--verdash-blue);
   }
 }
 
@@ -94,25 +72,66 @@
 
   body {
     @apply bg-background text-foreground;
+    font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
     font-feature-settings: "rlig" 1, "calt" 1;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-weight: 600;
   }
 }
 
 @layer components {
+  /* Verdash Gradients */
   .verdash-gradient {
-    @apply bg-gradient-to-br from-purple-600 via-blue-600 to-indigo-700;
+    @apply bg-gradient-to-r from-[#1042F6] via-[#00FFB0] to-[#FF6F1B];
   }
   
+  .verdash-gradient-full {
+    @apply bg-gradient-to-r from-[#1042F6] via-[#00FFB0] via-[#FF6F1B] to-[#FF3871];
+  }
+  
+  .verdash-gradient-hover {
+    @apply hover:bg-gradient-to-r hover:from-[#1042F6] hover:via-[#00FFB0] hover:to-[#FF6F1B] hover:brightness-110;
+  }
+  
+  /* Verdash Cards */
   .verdash-card {
-    @apply bg-card/50 backdrop-blur-sm border border-border/50 rounded-lg;
+    @apply bg-card/80 backdrop-blur-sm border border-border/50 rounded-xl shadow-lg;
   }
   
+  .verdash-card-hover {
+    @apply hover:shadow-xl hover:border-border/70 transition-all duration-300;
+  }
+  
+  /* Verdash Glass Effect */
   .verdash-glass {
-    @apply bg-background/10 backdrop-blur-md border border-white/10;
+    @apply bg-background/10 backdrop-blur-md border border-white/10 rounded-xl;
+  }
+
+  /* Verdash Buttons */
+  .verdash-btn-primary {
+    @apply verdash-gradient text-white font-semibold px-6 py-2.5 rounded-lg hover:brightness-110 transition-all duration-200;
+  }
+
+  /* Verdash KPI Cards */
+  .verdash-kpi {
+    @apply bg-gradient-to-br from-card/50 to-card/30 border border-border/30 rounded-xl p-6 backdrop-blur-sm;
+  }
+
+  /* Verdash Animations */
+  .verdash-animate {
+    @apply transition-all duration-300 ease-out;
+  }
+
+  /* Verdash Hover Effects */
+  .verdash-hover-scale {
+    @apply transform hover:scale-105 transition-transform duration-200;
   }
 }
 
-/* Custom scrollbar */
+/* Custom Scrollbar with Verdash Theme */
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
@@ -123,10 +142,24 @@
 }
 
 ::-webkit-scrollbar-thumb {
-  background: hsl(var(--muted-foreground));
+  background: linear-gradient(45deg, hsl(var(--verdash-blue)), hsl(var(--verdash-cyan)));
   border-radius: 3px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: hsl(var(--primary));
+  background: linear-gradient(45deg, hsl(var(--verdash-cyan)), hsl(var(--verdash-coral)));
+}
+
+/* Verdash Loading Animation */
+@keyframes verdash-pulse {
+  0%, 100% {
+    background: linear-gradient(45deg, #1042F6, #00FFB0);
+  }
+  50% {
+    background: linear-gradient(45deg, #00FFB0, #FF6F1B);
+  }
+}
+
+.verdash-loading {
+  animation: verdash-pulse 2s ease-in-out infinite;
 }

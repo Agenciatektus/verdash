@@ -31,7 +31,7 @@ const kpis = [
     change: "+12.5%",
     trend: "up",
     icon: DollarSign,
-    color: "text-green-500"
+    gradient: "from-verdash-blue to-verdash-cyan"
   },
   {
     title: "Usuários Ativos",
@@ -39,7 +39,7 @@ const kpis = [
     change: "+8.2%",
     trend: "up", 
     icon: Users,
-    color: "text-blue-500"
+    gradient: "from-verdash-cyan to-verdash-coral"
   },
   {
     title: "Taxa de Conversão",
@@ -47,7 +47,7 @@ const kpis = [
     change: "-2.1%",
     trend: "down",
     icon: Target,
-    color: "text-red-500"
+    gradient: "from-verdash-coral to-verdash-red"
   },
   {
     title: "Sessões",
@@ -55,7 +55,7 @@ const kpis = [
     change: "+15.3%",
     trend: "up",
     icon: Activity,
-    color: "text-purple-500"
+    gradient: "from-verdash-red to-verdash-blue"
   }
 ];
 
@@ -68,19 +68,19 @@ const recentMetrics = [
 
 const Dashboard = () => {
   return (
-    <div className="space-y-6 animate-fade-in">
+    <div className="space-y-8 animate-verdash-fade-in font-jakarta">
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold text-foreground">Dashboard</h1>
-          <p className="text-muted-foreground">Visão geral dos seus dados e métricas</p>
+          <h1 className="text-4xl font-bold text-foreground mb-2">Dashboard</h1>
+          <p className="text-muted-foreground text-lg">Visão geral dos seus dados e métricas</p>
         </div>
         <div className="flex gap-3">
-          <Button variant="outline">
+          <Button variant="outline" className="border-border/50 hover:border-border verdash-animate">
             <Eye className="w-4 h-4 mr-2" />
             Visualizar
           </Button>
-          <Button className="verdash-gradient">
+          <Button className="verdash-btn-primary verdash-hover-scale">
             <Plus className="w-4 h-4 mr-2" />
             Novo Dashboard
           </Button>
@@ -90,27 +90,29 @@ const Dashboard = () => {
       {/* KPIs Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         {kpis.map((kpi, index) => (
-          <Card key={index} className="verdash-card hover:shadow-lg transition-shadow">
+          <Card key={index} className="verdash-card verdash-card-hover verdash-hover-scale">
             <CardContent className="p-6">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-sm font-medium text-muted-foreground">{kpi.title}</p>
-                  <p className="text-2xl font-bold text-foreground">{kpi.value}</p>
+              <div className="flex items-center justify-between mb-4">
+                <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${kpi.gradient} flex items-center justify-center`}>
+                  <kpi.icon className="w-6 h-6 text-white" />
                 </div>
-                <kpi.icon className={`w-8 h-8 ${kpi.color}`} />
-              </div>
-              <div className="flex items-center mt-4">
                 {kpi.trend === "up" ? (
-                  <TrendingUp className="w-4 h-4 text-green-500 mr-1" />
+                  <TrendingUp className="w-5 h-5 text-verdash-success" />
                 ) : (
-                  <TrendingDown className="w-4 h-4 text-red-500 mr-1" />
+                  <TrendingDown className="w-5 h-5 text-verdash-error" />
                 )}
-                <span className={`text-sm font-medium ${
-                  kpi.trend === "up" ? "text-green-500" : "text-red-500"
-                }`}>
-                  {kpi.change}
-                </span>
-                <span className="text-sm text-muted-foreground ml-1">vs. mês anterior</span>
+              </div>
+              <div>
+                <p className="text-sm font-medium text-muted-foreground mb-1">{kpi.title}</p>
+                <p className="text-3xl font-bold text-foreground mb-2">{kpi.value}</p>
+                <div className="flex items-center">
+                  <span className={`text-sm font-semibold ${
+                    kpi.trend === "up" ? "text-verdash-success" : "text-verdash-error"
+                  }`}>
+                    {kpi.change}
+                  </span>
+                  <span className="text-sm text-muted-foreground ml-2">vs. mês anterior</span>
+                </div>
               </div>
             </CardContent>
           </Card>
@@ -121,11 +123,13 @@ const Dashboard = () => {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <Card className="verdash-card">
           <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <BarChart3 className="w-5 h-5 text-primary" />
+            <CardTitle className="flex items-center gap-3 text-xl font-semibold">
+              <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-verdash-blue to-verdash-cyan flex items-center justify-center">
+                <BarChart3 className="w-4 h-4 text-white" />
+              </div>
               Tendência de Receita
             </CardTitle>
-            <CardDescription>Evolução mensal da receita</CardDescription>
+            <CardDescription className="text-muted-foreground">Evolução mensal da receita</CardDescription>
           </CardHeader>
           <CardContent>
             <ResponsiveContainer width="100%" height={300}>
@@ -137,16 +141,24 @@ const Dashboard = () => {
                   contentStyle={{ 
                     backgroundColor: 'hsl(var(--card))', 
                     border: '1px solid hsl(var(--border))',
-                    borderRadius: '8px'
+                    borderRadius: '12px',
+                    color: 'hsl(var(--foreground))'
                   }} 
                 />
                 <Line 
                   type="monotone" 
                   dataKey="revenue" 
-                  stroke="hsl(var(--primary))" 
+                  stroke="url(#verdashGradient)" 
                   strokeWidth={3}
-                  dot={{ fill: 'hsl(var(--primary))', strokeWidth: 2 }}
+                  dot={{ fill: '#1042F6', strokeWidth: 2, r: 6 }}
                 />
+                <defs>
+                  <linearGradient id="verdashGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" stopColor="#1042F6" />
+                    <stop offset="50%" stopColor="#00FFB0" />
+                    <stop offset="100%" stopColor="#FF6F1B" />
+                  </linearGradient>
+                </defs>
               </LineChart>
             </ResponsiveContainer>
           </CardContent>
@@ -154,11 +166,13 @@ const Dashboard = () => {
 
         <Card className="verdash-card">
           <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <Users className="w-5 h-5 text-primary" />
+            <CardTitle className="flex items-center gap-3 text-xl font-semibold">
+              <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-verdash-cyan to-verdash-coral flex items-center justify-center">
+                <Users className="w-4 h-4 text-white" />
+              </div>
               Usuários por Mês
             </CardTitle>
-            <CardDescription>Crescimento da base de usuários</CardDescription>
+            <CardDescription className="text-muted-foreground">Crescimento da base de usuários</CardDescription>
           </CardHeader>
           <CardContent>
             <ResponsiveContainer width="100%" height={300}>
@@ -170,10 +184,17 @@ const Dashboard = () => {
                   contentStyle={{ 
                     backgroundColor: 'hsl(var(--card))', 
                     border: '1px solid hsl(var(--border))',
-                    borderRadius: '8px'
+                    borderRadius: '12px',
+                    color: 'hsl(var(--foreground))'
                   }} 
                 />
-                <Bar dataKey="value" fill="hsl(var(--primary))" radius={[4, 4, 0, 0]} />
+                <Bar dataKey="value" fill="url(#barGradient)" radius={[6, 6, 0, 0]} />
+                <defs>
+                  <linearGradient id="barGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                    <stop offset="0%" stopColor="#00FFB0" />
+                    <stop offset="100%" stopColor="#1042F6" />
+                  </linearGradient>
+                </defs>
               </BarChart>
             </ResponsiveContainer>
           </CardContent>
@@ -185,10 +206,10 @@ const Dashboard = () => {
         <CardHeader>
           <div className="flex items-center justify-between">
             <div>
-              <CardTitle>Métricas Recentes</CardTitle>
-              <CardDescription>Suas métricas personalizadas mais utilizadas</CardDescription>
+              <CardTitle className="text-2xl font-semibold mb-2">Métricas Recentes</CardTitle>
+              <CardDescription className="text-muted-foreground">Suas métricas personalizadas mais utilizadas</CardDescription>
             </div>
-            <Button variant="outline" size="sm">
+            <Button variant="outline" size="sm" className="border-border/50 hover:border-border verdash-animate">
               Ver Todas
             </Button>
           </div>
@@ -196,21 +217,24 @@ const Dashboard = () => {
         <CardContent>
           <div className="space-y-4">
             {recentMetrics.map((metric) => (
-              <div key={metric.id} className="flex items-center justify-between p-4 rounded-lg border border-border/50 hover:bg-muted/20 transition-colors">
+              <div key={metric.id} className="flex items-center justify-between p-5 rounded-xl border border-border/30 hover:border-border/50 bg-card/20 hover:bg-card/40 verdash-animate">
                 <div className="flex items-center gap-4">
-                  <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
-                    <BarChart3 className="w-5 h-5 text-primary" />
+                  <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-verdash-blue to-verdash-cyan flex items-center justify-center">
+                    <BarChart3 className="w-6 h-6 text-white" />
                   </div>
                   <div>
-                    <p className="font-medium text-foreground">{metric.name}</p>
+                    <p className="font-semibold text-foreground">{metric.name}</p>
                     <p className="text-sm text-muted-foreground">{metric.project}</p>
                   </div>
                 </div>
-                <div className="flex items-center gap-3">
-                  <span className="text-lg font-semibold text-foreground">{metric.value}</span>
+                <div className="flex items-center gap-4">
+                  <span className="text-xl font-bold text-foreground">{metric.value}</span>
                   <Badge 
                     variant={metric.status === 'active' ? 'default' : 'secondary'}
-                    className={metric.status === 'active' ? 'bg-green-500/10 text-green-500' : ''}
+                    className={metric.status === 'active' 
+                      ? 'bg-gradient-to-r from-verdash-success/20 to-verdash-cyan/20 text-verdash-success border-verdash-success/30' 
+                      : 'bg-gradient-to-r from-verdash-coral/20 to-verdash-red/20 text-verdash-coral border-verdash-coral/30'
+                    }
                   >
                     {metric.status === 'active' ? 'Ativo' : 'Atenção'}
                   </Badge>

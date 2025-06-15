@@ -1,4 +1,5 @@
 
+
 import { useState } from "react";
 import { 
   LayoutDashboard, 
@@ -82,13 +83,13 @@ export function AppSidebar() {
           <div className="flex items-center gap-4">
             <div className="w-10 h-10 rounded-xl flex items-center justify-center shadow-lg shrink-0">
               <img 
-                src="/lovable-uploads/1d5eb068-0e42-4abe-9834-2159b0718e7b.png" 
+                src="/lovable-uploads/5dc3fb4f-2dce-43e7-bb1b-aaba85daf2b3.png" 
                 alt="Verdash Logo" 
                 className="w-8 h-8 object-contain"
               />
             </div>
             <div className="group-data-[collapsible=icon]:hidden">
-              <h1 className="font-bold text-2xl text-white font-grotesk verdash-glow-text">VERDASH</h1>
+              <h1 className="font-semibold text-2xl text-white font-inter verdash-glow-text">VERDASH</h1>
               <p className="text-xs text-verdash-disabled uppercase tracking-wider">Analytics Hub</p>
             </div>
           </div>
@@ -209,3 +210,4 @@ export function AppSidebar() {
     </Sidebar>
   );
 }
+

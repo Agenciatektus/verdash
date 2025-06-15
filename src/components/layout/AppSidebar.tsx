@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { 
   LayoutDashboard, 
@@ -34,7 +35,7 @@ import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/component
 import { useAuth } from "@/contexts/AuthContext";
 
 const mainNavigation = [
-  { title: "Dashboard", url: "/dashboard", icon: LayoutDashboard },
+  { title: "Dashboard", url: "/", icon: LayoutDashboard },
   { title: "Projetos", url: "/projects", icon: FolderOpen },
   { title: "Dashboards", url: "/dashboards", icon: Brain },
   { title: "Métricas & KPIs", url: "/metrics", icon: Ruler },
@@ -63,7 +64,11 @@ export function AppSidebar() {
   const [projectsOpen, setProjectsOpen] = useState(true);
   
   const currentPath = location.pathname;
-  const isActive = (path: string) => currentPath === path;
+  const isActive = (path: string) => {
+    if (path === "/" && currentPath === "/") return true;
+    if (path === "/" && currentPath === "/dashboard") return true;
+    return currentPath === path;
+  };
   const isCollapsed = state === "collapsed";
 
   const getNavClass = (active: boolean) => 
@@ -98,7 +103,11 @@ export function AppSidebar() {
                   <SidebarMenuButton asChild>
                     <NavLink 
                       to={item.url} 
-                      className={({ isActive }) => getNavClass(isActive)}
+                      className={({ isActive: navIsActive }) => {
+                        const active = item.url === "/" ? (currentPath === "/" || currentPath === "/dashboard") : navIsActive;
+                        return getNavClass(active);
+                      }}
+                      end={item.url === "/"}
                     >
                       <item.icon className="w-5 h-5" />
                       {!isCollapsed && <span className="font-medium font-grotesk uppercase text-sm tracking-wide">{item.title}</span>}

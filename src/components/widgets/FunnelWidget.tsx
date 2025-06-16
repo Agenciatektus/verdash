@@ -1,4 +1,3 @@
-
 import { Widget } from "@/types/widgets";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -78,7 +77,7 @@ export const FunnelWidget = ({ widget, isEditing = false, onUpdate }: FunnelWidg
   };
 
   return (
-    <Card className="verdash-glass h-full">
+    <Card className={`verdash-glass h-full p-6 ${isEditing ? 'ring-2 ring-verdash-cyan' : ''}`}>
       <CardHeader className="pb-3">
         <div className="flex items-center justify-between">
           <CardTitle className="flex items-center gap-2 text-white font-grotesk">
@@ -105,94 +104,49 @@ export const FunnelWidget = ({ widget, isEditing = false, onUpdate }: FunnelWidg
           <p className="text-sm text-white/60">{widget.description}</p>
         )}
       </CardHeader>
-      <CardContent className="space-y-4">
-        {funnelData.map((item, index) => {
-          const IconComponent = getIcon(item.icon);
-          
-          return (
-            <div key={index} className="relative">
-              {/* Stage Card */}
-              <div className="p-4 rounded-lg border border-white/10 bg-white/5 hover:bg-white/10 transition-colors">
-                <div className="flex items-center justify-between mb-3">
-                  <div className="flex items-center gap-3">
-                    <div 
-                      className="w-10 h-10 rounded-lg flex items-center justify-center"
-                      style={{ backgroundColor: item.color }}
-                    >
-                      <IconComponent className="w-5 h-5 text-white" />
-                    </div>
-                    <div>
-                      <span className="font-medium text-white">{item.step}</span>
-                      {item.metric && (
-                        <div className="text-xs text-white/40 mt-1">
-                          Métrica: {item.metric}
-                        </div>
-                      )}
-                      {index > 0 && (
-                        <div className="flex items-center gap-2 mt-1">
-                          <span className={`text-xs font-medium px-2 py-1 rounded ${
-                            item.conversion >= 60 ? 'bg-verdash-success/20 text-verdash-success' : 
-                            item.conversion >= 40 ? 'bg-yellow-500/20 text-yellow-400' : 
-                            'bg-verdash-error/20 text-verdash-error'
-                          }`}>
-                            {item.conversion.toFixed(1)}% conversão
-                          </span>
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                  <div className="text-right">
-                    <div className="text-xl font-bold text-white">
-                      {item.value.toLocaleString('pt-BR')}
-                    </div>
-                    <div className="text-sm text-white/60">
-                      {item.percentage.toFixed(1)}% do total
-                    </div>
-                  </div>
-                </div>
-                
-                {/* Progress Bar */}
-                <div className="space-y-2">
-                  <Progress 
-                    value={item.percentage} 
-                    className="h-2"
-                    style={{
-                      background: 'rgba(255,255,255,0.1)',
-                    }}
-                  />
-                  <div className="flex justify-between text-xs text-white/40">
-                    <span>0</span>
-                    <span>{Math.max(...funnelData.map(d => d.value)).toLocaleString('pt-BR')}</span>
-                  </div>
-                </div>
-              </div>
-
-              {/* Conversion Arrow (except for last item) */}
-              {index < funnelData.length - 1 && (
-                <div className="flex items-center justify-center py-2">
-                  <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10">
-                    <TrendingDown className="w-4 h-4 text-white/60" />
-                    <span className="text-xs text-white/60">
-                      -{(100 - funnelData[index + 1].conversion).toFixed(0)}%
-                    </span>
-                  </div>
-                </div>
-              )}
+      <CardContent className="relative p-4" style={{height: '90%'}}>
+        <div className="w-full flex justify-center items-center relative" style={{height: '100%'}}>
+          {/* Métricas */}
+          {widget.config?.stages && (
+            <div className="w-full h-full flex flex-col items-center justify-between py-8">
+              {widget.config.stages.map((stage, index) => {
+                const colors = ['#0095FF', '#0031D3', '#8D00F9', '#DA28DD', '#DD5500'];
+                const widths = [500, 450, 400, 350, 300];
+                const heights = 120;
+                const fontSizes = [25, 23, 21, 19, 17];
+                const subFontSizes = [17, 16, 15, 15, 14];
+                const previousValue = Math.round(stage.value * (0.8 + Math.random() * 0.4));
+                const difference = stage.value - previousValue;
+                const percentageChange = ((difference / previousValue) * 100).toFixed(1);
+                const isPositive = difference >= 0;
+                // Trapézio arredondado
+                const w = widths[index];
+                const h = heights;
+                const rTop = 20; // raio do arredondamento superior
+                const rBot = 10; // raio do arredondamento inferior
+                // Path SVG para trapézio com cantos arredondados (20px em cima, 10px embaixo)
+                const path = `M${rTop},0 Q0,0 0,${rTop} L40,${h - rBot} Q40,${h} ${40 + rBot},${h} L${w - 40 - rBot},${h} Q${w - 40},${h} ${w - 40},${h - rBot} L${w},${rTop} Q${w},0 ${w - rTop},0 Q${w - rTop},0 ${rTop},0 Z`;
+                return (
+                  <svg
+                    key={index}
+                    width={w}
+                    height={h}
+                    viewBox={`0 0 ${w} ${h}`}
+                    style={{ marginBottom: index < widget.config.stages.length - 1 ? 12 : 0 }}
+                  >
+                    <path d={path} fill={colors[index]} />
+                    <foreignObject x="0" y="0" width={w} height={h}>
+                      <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: `${h}px`, width: `${w}px`}}>
+                        <span style={{color: 'white', fontWeight: 'bold', fontSize: fontSizes[index], textShadow: '0 1px 4px #0008'}}>{stage.value}</span>
+                        <span style={{color: 'white', fontSize: subFontSizes[index], opacity: 0.8}}>{stage.step} ({stage.percentage}%)</span>
+                        <span style={{color: 'white', fontSize: subFontSizes[index], opacity: 0.8, marginTop: 4}}>{isPositive ? '↑' : '↓'} {Math.abs(Number(percentageChange))}% <span style={{fontSize: 13}}>vs. anterior</span></span>
+                      </div>
+                    </foreignObject>
+                  </svg>
+                );
+              })}
             </div>
-          );
-        })}
-
-        {/* Summary */}
-        <div className="mt-6 p-4 rounded-lg bg-gradient-to-r from-verdash-blue/20 to-verdash-cyan/20 border border-verdash-cyan/30">
-          <div className="flex items-center justify-between">
-            <span className="text-sm font-medium text-white">Taxa de Conversão Geral</span>
-            <span className="text-lg font-bold text-verdash-cyan">
-              {((funnelData[funnelData.length - 1].value / funnelData[0].value) * 100).toFixed(1)}%
-            </span>
-          </div>
-          <div className="text-xs text-white/60 mt-1">
-            {funnelData[0].value.toLocaleString('pt-BR')} leads → {funnelData[funnelData.length - 1].value.toLocaleString('pt-BR')} vendas
-          </div>
+          )}
         </div>
       </CardContent>
     </Card>

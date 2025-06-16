@@ -1,4 +1,3 @@
-
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { TrendingUp, TrendingDown, Target } from "lucide-react";
@@ -40,9 +39,9 @@ export const KPIWidget = ({ widget, isEditing = false }: KPIWidgetProps) => {
   };
 
   return (
-    <Card className={`verdash-glass h-full ${isEditing ? 'ring-2 ring-verdash-cyan' : ''}`}>
-      <CardHeader className="pb-3">
-        <div className="flex items-center justify-between">
+    <Card className={`verdash-glass h-full w-full ${isEditing ? 'ring-2 ring-verdash-cyan' : ''}`}>
+      <CardHeader className="p-4 h-auto w-full">
+        <div className="flex items-center justify-between w-full">
           <CardTitle className="text-sm font-medium text-white/80 truncate">
             {widget.title}
           </CardTitle>
@@ -51,10 +50,10 @@ export const KPIWidget = ({ widget, isEditing = false }: KPIWidgetProps) => {
           )}
         </div>
       </CardHeader>
-      <CardContent className="pt-0">
-        <div className="space-y-3">
+      <CardContent className="p-4 w-full">
+        <div className="space-y-3 w-full flex flex-col">
           <div>
-            <div className="text-3xl font-bold text-white">
+            <div className="text-3xl font-bold text-white break-words leading-tight">
               {formatValue(value)}
             </div>
             {target && (
@@ -63,7 +62,6 @@ export const KPIWidget = ({ widget, isEditing = false }: KPIWidgetProps) => {
               </div>
             )}
           </div>
-          
           {previousValue > 0 && (
             <div className="flex items-center gap-2">
               {getTrendIcon()}
@@ -76,10 +74,6 @@ export const KPIWidget = ({ widget, isEditing = false }: KPIWidgetProps) => {
               </span>
               <span className="text-xs text-white/60">vs. período anterior</span>
             </div>
-          )}
-          
-          {widget.description && (
-            <p className="text-xs text-white/50">{widget.description}</p>
           )}
         </div>
       </CardContent>

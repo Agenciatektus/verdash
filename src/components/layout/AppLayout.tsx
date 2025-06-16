@@ -3,11 +3,38 @@ import { Header } from "./Header";
 import { useAuth } from "@/contexts/AuthContext";
 import { Navigate, Outlet } from "react-router-dom";
 import { Skeleton } from "@/components/ui/skeleton";
-import { SidebarProvider } from "@/components/ui/sidebar";
+import { SidebarProvider, useSidebar } from "@/components/ui/sidebar";
+import { cn } from "@/lib/utils";
 
 interface AppLayoutProps {
   children?: React.ReactNode;
 }
+
+const SIDEBAR_WIDTH_EXPANDED = "14rem"; // 224px
+const SIDEBAR_WIDTH_COLLAPSED = "5rem"; // 80px
+
+const AppLayoutContent: React.FC = () => {
+  const { state } = useSidebar();
+  
+  return (
+    <div className="flex w-full min-h-screen">
+      <AppSidebar />
+      <div
+        className={cn(
+          "flex-1 flex flex-col bg-background transition-all duration-200",
+          state === "expanded"
+            ? `ml-[${SIDEBAR_WIDTH_EXPANDED}]`
+            : `ml-[${SIDEBAR_WIDTH_COLLAPSED}]`
+        )}
+      >
+        <Header />
+        <main className="flex-1 p-6 overflow-auto">
+          <Outlet />
+        </main>
+      </div>
+    </div>
+  );
+};
 
 const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
   const { user, isLoading } = useAuth();
@@ -30,15 +57,7 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
 
   return (
     <SidebarProvider>
-      <div className="flex w-full min-h-screen">
-        <AppSidebar />
-        <div className="flex-1 flex flex-col bg-background">
-          <Header />
-          <main className="flex-1 p-6 overflow-auto">
-            <Outlet />
-          </main>
-        </div>
-      </div>
+      <AppLayoutContent />
     </SidebarProvider>
   );
 };

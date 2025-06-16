@@ -1,4 +1,3 @@
-
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer, Legend } from "recharts";
 import { Widget } from "@/types/widgets";
@@ -23,7 +22,7 @@ export const PieChartWidget = ({ widget, data, isEditing = false }: PieChartWidg
           <p className="text-xs text-white/60">{widget.description}</p>
         )}
       </CardHeader>
-      <CardContent className="pt-0">
+      <CardContent>
         <div className="h-64">
           <ResponsiveContainer width="100%" height="100%">
             <PieChart>

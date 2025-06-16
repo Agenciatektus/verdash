@@ -1,4 +1,3 @@
-
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer, Legend } from "recharts";
 import { Widget } from "@/types/widgets";
@@ -14,7 +13,7 @@ export const DonutChartWidget = ({ widget, data, isEditing = false }: DonutChart
   const colors = config.colors || ['#1042F6', '#00FFB0', '#FF6F1B', '#FF4757', '#9c88ff', '#feca57'];
 
   return (
-    <Card className={`verdash-glass h-full ${isEditing ? 'ring-2 ring-verdash-cyan' : ''}`}>
+    <Card className={`verdash-glass h-full p-6 ${isEditing ? 'ring-2 ring-verdash-cyan' : ''}`}>
       <CardHeader className="pb-3">
         <CardTitle className="text-white text-base truncate">
           {widget.title}
@@ -23,7 +22,7 @@ export const DonutChartWidget = ({ widget, data, isEditing = false }: DonutChart
           <p className="text-xs text-white/60">{widget.description}</p>
         )}
       </CardHeader>
-      <CardContent className="pt-0">
+      <CardContent>
         <div className="h-64">
           <ResponsiveContainer width="100%" height="100%">
             <PieChart>
@@ -31,11 +30,12 @@ export const DonutChartWidget = ({ widget, data, isEditing = false }: DonutChart
                 data={data}
                 cx="50%"
                 cy="50%"
-                innerRadius={40}
+                innerRadius={60}
                 outerRadius={80}
                 fill="#8884d8"
                 dataKey={config.dataKey || 'value'}
                 label={({ name, percent }) => `${name} ${(percent * 100).toFixed(0)}%`}
+                stroke="none"
               >
                 {data.map((entry, index) => (
                   <Cell key={`cell-${index}`} fill={colors[index % colors.length]} />
@@ -46,10 +46,13 @@ export const DonutChartWidget = ({ widget, data, isEditing = false }: DonutChart
                   backgroundColor: 'rgba(30, 30, 30, 0.95)', 
                   border: '1px solid rgba(255,255,255,0.1)',
                   borderRadius: '8px',
-                  color: 'white'
+                  color: 'white',
+                  fontSize: 14
                 }} 
+                itemStyle={{ color: 'white', fontSize: 14 }}
+                labelStyle={{ color: 'white', fontSize: 14 }}
               />
-              {config.showLegend && <Legend />}
+              {config.showLegend && <Legend wrapperStyle={{ fontSize: 12, color: 'white', marginTop: 8 }} iconSize={12} />}
             </PieChart>
           </ResponsiveContainer>
         </div>

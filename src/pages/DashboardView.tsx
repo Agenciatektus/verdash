@@ -1,4 +1,3 @@
-
 import { useParams, useNavigate } from "react-router-dom";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -22,6 +21,15 @@ import {
   Brain
 } from "lucide-react";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, BarChart, Bar, PieChart, Pie, Cell, AreaChart, Area } from "recharts";
+import { DonutChartWidget } from "@/components/widgets/DonutChartWidget";
+import { BarChartWidget } from "@/components/widgets/BarChartWidget";
+import { LineChartWidget } from "@/components/widgets/LineChartWidget";
+import { AreaChartWidget } from "@/components/widgets/AreaChartWidget";
+import { PieChartWidget } from "@/components/widgets/PieChartWidget";
+import { TableWidget } from "@/components/widgets/TableWidget";
+import { FunnelWidget } from "@/components/widgets/FunnelWidget";
+import { KPIWidget } from "@/components/widgets/KPIWidget";
+import { mockWidgets, mockWidgetData } from "@/data/mockWidgetData";
 
 const revenueData = [
   { name: 'Jan', value: 450000, target: 400000 },
@@ -210,236 +218,20 @@ const DashboardView = () => {
 
       {/* Main Charts Row */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        {/* Revenue Evolution */}
-        <Card className="verdash-card lg:col-span-2">
-          <CardHeader>
-            <CardTitle className="flex items-center gap-3 text-xl font-semibold">
-              <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-verdash-blue to-verdash-cyan flex items-center justify-center">
-                <BarChart3 className="w-4 h-4 text-white" />
-              </div>
-              Evolução da Receita vs Meta
-            </CardTitle>
-            <CardDescription className="text-muted-foreground">Performance mensal comparada com metas estabelecidas</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <ResponsiveContainer width="100%" height={350}>
-              <LineChart data={revenueData}>
-                <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.1)" />
-                <XAxis 
-                  dataKey="name" 
-                  stroke="white"
-                  fontSize={12}
-                  tick={{ fill: 'white' }}
-                />
-                <YAxis 
-                  stroke="white"
-                  fontSize={12}
-                  tick={{ fill: 'white' }}
-                  tickFormatter={(value) => `R$ ${(value / 1000).toFixed(0)}k`}
-                />
-                <Tooltip 
-                  contentStyle={{ 
-                    backgroundColor: 'rgba(16, 24, 44, 0.95)', 
-                    border: '1px solid rgba(255,255,255,0.1)',
-                    borderRadius: '12px',
-                    color: 'white'
-                  }}
-                  formatter={(value: any, name: string) => [
-                    `R$ ${Number(value).toLocaleString('pt-BR')}`, 
-                    name === 'value' ? 'Receita' : 'Meta'
-                  ]}
-                />
-                <Line 
-                  type="monotone" 
-                  dataKey="value" 
-                  stroke="#00FFB0" 
-                  strokeWidth={3}
-                  dot={{ fill: '#00FFB0', strokeWidth: 2, r: 6 }}
-                  name="Receita Realizada"
-                />
-                <Line 
-                  type="monotone" 
-                  dataKey="target" 
-                  stroke="#FF6F1B" 
-                  strokeWidth={2}
-                  strokeDasharray="5 5"
-                  dot={{ fill: '#FF6F1B', strokeWidth: 2, r: 4 }}
-                  name="Meta"
-                />
-              </LineChart>
-            </ResponsiveContainer>
-          </CardContent>
-        </Card>
-
-        {/* Channel Distribution */}
-        <Card className="verdash-card">
-          <CardHeader>
-            <CardTitle className="flex items-center gap-3 text-xl font-semibold">
-              <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-verdash-blue to-verdash-cyan flex items-center justify-center">
-                <Target className="w-4 h-4 text-white" />
-              </div>
-              Receita por Canal
-            </CardTitle>
-            <CardDescription className="text-muted-foreground">Distribuição percentual por canal de vendas</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <ResponsiveContainer width="100%" height={300}>
-              <PieChart>
-                <Pie
-                  data={channelData}
-                  cx="50%"
-                  cy="50%"
-                  innerRadius={60}
-                  outerRadius={100}
-                  paddingAngle={5}
-                  dataKey="value"
-                >
-                  {channelData.map((entry, index) => (
-                    <Cell key={`cell-${index}`} fill={entry.color} />
-                  ))}
-                </Pie>
-                <Tooltip 
-                  contentStyle={{ 
-                    backgroundColor: 'rgba(16, 24, 44, 0.95)', 
-                    border: '1px solid rgba(255,255,255,0.1)',
-                    borderRadius: '12px',
-                    color: 'white'
-                  }}
-                  formatter={(value: any) => [`${value}%`, 'Participação']}
-                />
-              </PieChart>
-            </ResponsiveContainer>
-            <div className="mt-4 space-y-2">
-              {channelData.map((item, index) => (
-                <div key={index} className="flex items-center justify-between text-sm">
-                  <div className="flex items-center gap-2">
-                    <div 
-                      className="w-3 h-3 rounded-full" 
-                      style={{ backgroundColor: item.color }}
-                    />
-                    <span className="text-white/80">{item.name}</span>
-                  </div>
-                  <span className="text-white font-medium">{item.value}%</span>
-                </div>
-              ))}
-            </div>
-          </CardContent>
-        </Card>
+        {/* Evolução da Receita (LineChart) */}
+        <div className="lg:col-span-2">
+          <LineChartWidget widget={mockWidgets.find(w => w.type === 'line-chart')!} data={mockWidgetData['6']} />
+        </div>
+        {/* Receita por Canal (DonutChart) */}
+        <DonutChartWidget widget={mockWidgets.find(w => w.type === 'donut-chart')!} data={mockWidgetData['7']} />
       </div>
 
       {/* Secondary Charts Row */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {/* Sales Performance */}
-        <Card className="verdash-card">
-          <CardHeader>
-            <CardTitle className="flex items-center gap-3 text-xl font-semibold">
-              <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-verdash-blue to-verdash-cyan flex items-center justify-center">
-                <Users className="w-4 h-4 text-white" />
-              </div>
-              Performance por Vendedor
-            </CardTitle>
-            <CardDescription className="text-muted-foreground">Vendas realizadas vs meta individual</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <ResponsiveContainer width="100%" height={300}>
-              <BarChart data={performanceData}>
-                <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.1)" />
-                <XAxis 
-                  dataKey="name" 
-                  stroke="white"
-                  fontSize={11}
-                  tick={{ fill: 'white' }}
-                  angle={-45}
-                  textAnchor="end"
-                  height={80}
-                />
-                <YAxis 
-                  stroke="white"
-                  fontSize={12}
-                  tick={{ fill: 'white' }}
-                />
-                <Tooltip 
-                  contentStyle={{ 
-                    backgroundColor: 'rgba(16, 24, 44, 0.95)', 
-                    border: '1px solid rgba(255,255,255,0.1)',
-                    borderRadius: '12px',
-                    color: 'white'
-                  }}
-                />
-                <Bar dataKey="vendas" fill="#00FFB0" radius={[4, 4, 0, 0]} name="Vendas" />
-                <Bar dataKey="meta" fill="#FF6F1B" radius={[4, 4, 0, 0]} name="Meta" />
-              </BarChart>
-            </ResponsiveContainer>
-          </CardContent>
-        </Card>
-
-        {/* User Engagement */}
-        <Card className="verdash-card">
-          <CardHeader>
-            <CardTitle className="flex items-center gap-3 text-xl font-semibold">
-              <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-verdash-blue to-verdash-cyan flex items-center justify-center">
-                <Activity className="w-4 h-4 text-white" />
-              </div>
-              Engajamento de Usuários
-            </CardTitle>
-            <CardDescription className="text-muted-foreground">DAU, MAU e sessões ao longo do tempo</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <ResponsiveContainer width="100%" height={300}>
-              <AreaChart data={userEngagementData}>
-                <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.1)" />
-                <XAxis 
-                  dataKey="month" 
-                  stroke="white"
-                  fontSize={12}
-                  tick={{ fill: 'white' }}
-                />
-                <YAxis 
-                  stroke="white"
-                  fontSize={12}
-                  tick={{ fill: 'white' }}
-                  tickFormatter={(value) => `${(value / 1000).toFixed(0)}k`}
-                />
-                <Tooltip 
-                  contentStyle={{ 
-                    backgroundColor: 'rgba(16, 24, 44, 0.95)', 
-                    border: '1px solid rgba(255,255,255,0.1)',
-                    borderRadius: '12px',
-                    color: 'white'
-                  }}
-                  formatter={(value: any, name: string) => [
-                    Number(value).toLocaleString('pt-BR'), 
-                    name === 'dau' ? 'DAU' : name === 'mau' ? 'MAU' : 'Sessões'
-                  ]}
-                />
-                <Area 
-                  type="monotone" 
-                  dataKey="sessions" 
-                  stackId="1"
-                  stroke="#9c88ff" 
-                  fill="#9c88ff"
-                  fillOpacity={0.3}
-                />
-                <Area 
-                  type="monotone" 
-                  dataKey="mau" 
-                  stackId="2"
-                  stroke="#FF6F1B" 
-                  fill="#FF6F1B"
-                  fillOpacity={0.4}
-                />
-                <Area 
-                  type="monotone" 
-                  dataKey="dau" 
-                  stackId="3"
-                  stroke="#00FFB0" 
-                  fill="#00FFB0"
-                  fillOpacity={0.6}
-                />
-              </AreaChart>
-            </ResponsiveContainer>
-          </CardContent>
-        </Card>
+        {/* Performance por Vendedor (BarChart) */}
+        <BarChartWidget widget={mockWidgets.find(w => w.type === 'bar-chart')!} data={mockWidgetData['8']} />
+        {/* Top Produtos (TableWidget) */}
+        <TableWidget widget={mockWidgets.find(w => w.type === 'table')!} data={mockWidgetData['9']} />
       </div>
     </div>
   );

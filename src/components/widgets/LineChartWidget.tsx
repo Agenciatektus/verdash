@@ -1,4 +1,3 @@
-
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
 import { Widget } from "@/types/widgets";
@@ -13,7 +12,7 @@ export const LineChartWidget = ({ widget, data, isEditing = false }: LineChartWi
   const { config } = widget;
 
   return (
-    <Card className={`verdash-glass h-full ${isEditing ? 'ring-2 ring-verdash-cyan' : ''}`}>
+    <Card className={`verdash-glass h-full p-6 ${isEditing ? 'ring-2 ring-verdash-cyan' : ''}`}>
       <CardHeader className="pb-3">
         <CardTitle className="text-white text-base truncate">
           {widget.title}
@@ -22,7 +21,7 @@ export const LineChartWidget = ({ widget, data, isEditing = false }: LineChartWi
           <p className="text-xs text-white/60">{widget.description}</p>
         )}
       </CardHeader>
-      <CardContent className="pt-0">
+      <CardContent>
         <div className="h-64">
           <ResponsiveContainer width="100%" height="100%">
             <LineChart data={data}>

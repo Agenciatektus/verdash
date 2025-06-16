@@ -1,4 +1,3 @@
-
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Widget } from '@/types/widgets';
@@ -192,7 +191,12 @@ export const WidgetPalette = ({ onWidgetAdd, isVisible }: WidgetPaletteProps) =>
         
         <div className="space-y-4">
           {widgetTemplates.map((template, index) => (
-            <Card key={index} className="verdash-glass cursor-pointer hover:bg-accent/10 transition-colors border-border">
+            <Card key={index} className="verdash-glass cursor-pointer hover:bg-accent/10 transition-colors border-border"
+              draggable
+              onDragStart={e => {
+                e.dataTransfer.setData('application/widget-template', JSON.stringify(template));
+              }}
+            >
               <CardContent className="p-4">
                 <div className="flex items-start gap-3 mb-3">
                   <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-verdash-blue to-verdash-cyan flex items-center justify-center flex-shrink-0">

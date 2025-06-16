@@ -1,4 +1,3 @@
-
 import { Widget, WidgetData } from "@/types/widgets";
 import { KPIWidget } from "./KPIWidget";
 import { LineChartWidget } from "./LineChartWidget";
@@ -78,7 +77,7 @@ export const WidgetContainer = ({
 
   return (
     <div 
-      className="widget-container"
+      className="widget-container h-full w-full min-h-full p-4"
       style={{
         gridColumn: `span ${widget.position.width}`,
         gridRow: `span ${widget.position.height}`,

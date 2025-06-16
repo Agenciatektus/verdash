@@ -1,5 +1,4 @@
-
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -13,7 +12,8 @@ import {
   Calendar,
   Settings,
   Eye,
-  Trash2
+  Trash2,
+  Loader2
 } from "lucide-react";
 import {
   DropdownMenu,
@@ -25,63 +25,30 @@ import {
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import { NewProjectDialog } from "@/components/projects/NewProjectDialog";
-
-const mockProjects = [
-  {
-    id: '1',
-    name: 'E-commerce Principal',
-    description: 'Dashboard completo para análise de vendas online',
-    dashboards: 5,
-    users: 12,
-    status: 'active',
-    lastUpdate: '2024-01-15',
-    metrics: ['Receita', 'Conversão', 'CAC', 'LTV'],
-    gradient: 'from-verdash-blue to-verdash-cyan'
-  },
-  {
-    id: '2', 
-    name: 'Marketing Digital',
-    description: 'Análise de campanhas e performance de marketing',
-    dashboards: 8,
-    users: 6,
-    status: 'active',
-    lastUpdate: '2024-01-14',
-    metrics: ['ROAS', 'CPC', 'CTR', 'Impressões'],
-    gradient: 'from-verdash-cyan to-verdash-coral'
-  },
-  {
-    id: '3',
-    name: 'Vendas B2B',
-    description: 'Acompanhamento do pipeline e conversões B2B',
-    dashboards: 3,
-    users: 8,
-    status: 'inactive',
-    lastUpdate: '2024-01-10',
-    metrics: ['Pipeline', 'Oportunidades', 'Fechamento'],
-    gradient: 'from-verdash-coral to-verdash-red'
-  },
-  {
-    id: '4',
-    name: 'Suporte ao Cliente',
-    description: 'Métricas de atendimento e satisfação',
-    dashboards: 2,
-    users: 15,
-    status: 'active',
-    lastUpdate: '2024-01-13',
-    metrics: ['Tickets', 'SLA', 'CSAT', 'NPS'],
-    gradient: 'from-verdash-red to-verdash-blue'
-  }
-];
+import { useProjects } from "@/mcp/projects/provider";
 
 const Projects = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [filter, setFilter] = useState("all");
   const [isNewProjectDialogOpen, setIsNewProjectDialogOpen] = useState(false);
   const navigate = useNavigate();
+  
+  const { 
+    projects, 
+    loading, 
+    error, 
+    createProject, 
+    deleteProject, 
+    listProjects 
+  } = useProjects();
 
-  const filteredProjects = mockProjects.filter(project => {
+  useEffect(() => {
+    listProjects();
+  }, [listProjects]);
+
+  const filteredProjects = projects.filter(project => {
     const matchesSearch = project.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         project.description.toLowerCase().includes(searchTerm.toLowerCase());
+                         project.description?.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesFilter = filter === "all" || project.status === filter;
     return matchesSearch && matchesFilter;
   });
@@ -89,31 +56,60 @@ const Projects = () => {
   const handleOpenProject = (projectId: string, projectName: string) => {
     console.log(`Opening project: ${projectId}`);
     toast.success(`Abrindo projeto "${projectName}"`);
-    // Navigate to individual project page
     navigate(`/projects/${projectId}`);
   };
 
   const handleProjectSettings = (projectId: string, projectName: string) => {
     console.log(`Opening settings for project: ${projectId}`);
     toast.success(`Configurações do projeto "${projectName}"`);
-    // Navigate to individual project page (for now, could be a settings tab later)
     navigate(`/projects/${projectId}`);
   };
 
-  const handleDeleteProject = (projectId: string, projectName: string) => {
-    console.log(`Deleting project: ${projectId}`);
-    toast.success(`Projeto "${projectName}" removido`);
-    // In a real app, this would call an API to delete the project
+  const handleDeleteProject = async (projectId: string, projectName: string) => {
+    try {
+      await deleteProject(projectId);
+      toast.success(`Projeto "${projectName}" removido`);
+    } catch (error) {
+      toast.error(`Erro ao remover projeto "${projectName}"`);
+    }
   };
 
-  const handleCreateProject = (projectData: any) => {
-    console.log('Creating new project:', projectData);
-    toast.success(`Projeto "${projectData.name}" criado com sucesso!`);
-    setIsNewProjectDialogOpen(false);
-    // In a real app, this would call an API to create the project
-    // and then navigate to the new project
-    navigate('/dashboard');
+  const handleCreateProject = async (projectData: any) => {
+    try {
+      await createProject({
+        name: projectData.name,
+        description: projectData.description,
+        ownerId: 'user123', // Em um caso real, isso viria do contexto de autenticação
+        members: ['user123'],
+        status: 'active',
+        settings: {
+          visibility: 'private',
+          notifications: true,
+        },
+      });
+      toast.success(`Projeto "${projectData.name}" criado com sucesso!`);
+      setIsNewProjectDialogOpen(false);
+      navigate('/dashboard');
+    } catch (error) {
+      toast.error(`Erro ao criar projeto "${projectData.name}"`);
+    }
   };
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center h-64">
+        <Loader2 className="h-8 w-8 animate-spin" />
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="text-red-500 p-4">
+        Erro: {error}
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-8 animate-verdash-fade-in font-jakarta">
@@ -178,7 +174,7 @@ const Projects = () => {
             <CardHeader>
               <div className="flex items-start justify-between">
                 <div className="flex items-center gap-4">
-                  <div className={`w-14 h-14 bg-gradient-to-br ${project.gradient} rounded-xl flex items-center justify-center shadow-lg`}>
+                  <div className="w-14 h-14 bg-gradient-to-br from-verdash-blue to-verdash-cyan rounded-xl flex items-center justify-center shadow-lg">
                     <BarChart3 className="w-7 h-7 text-white" />
                   </div>
                   <div>
@@ -200,24 +196,18 @@ const Projects = () => {
                       <MoreHorizontal className="w-5 h-5" />
                     </Button>
                   </DropdownMenuTrigger>
-                  <DropdownMenuContent align="end" className="bg-card border border-border/50 rounded-xl">
-                    <DropdownMenuItem 
-                      className="hover:bg-sidebar-accent/30 verdash-animate"
-                      onClick={() => handleOpenProject(project.id, project.name)}
-                    >
+                  <DropdownMenuContent align="end" className="w-48">
+                    <DropdownMenuItem onClick={() => handleOpenProject(project.id, project.name)}>
                       <Eye className="w-4 h-4 mr-2" />
-                      Visualizar
+                      Abrir
                     </DropdownMenuItem>
-                    <DropdownMenuItem 
-                      className="hover:bg-sidebar-accent/30 verdash-animate"
-                      onClick={() => handleProjectSettings(project.id, project.name)}
-                    >
+                    <DropdownMenuItem onClick={() => handleProjectSettings(project.id, project.name)}>
                       <Settings className="w-4 h-4 mr-2" />
                       Configurações
                     </DropdownMenuItem>
-                    <DropdownMenuSeparator className="bg-border/30" />
+                    <DropdownMenuSeparator />
                     <DropdownMenuItem 
-                      className="text-verdash-error hover:bg-verdash-error/10 verdash-animate"
+                      className="text-red-500 focus:text-red-500"
                       onClick={() => handleDeleteProject(project.id, project.name)}
                     >
                       <Trash2 className="w-4 h-4 mr-2" />
@@ -226,97 +216,28 @@ const Projects = () => {
                   </DropdownMenuContent>
                 </DropdownMenu>
               </div>
-              <CardDescription className="mt-3 text-muted-foreground">
-                {project.description}
-              </CardDescription>
             </CardHeader>
-            
-            <CardContent className="space-y-6">
-              {/* Stats */}
-              <div className="grid grid-cols-2 gap-4">
-                <div className="text-center p-4 bg-gradient-to-br from-card/30 to-card/10 rounded-xl border border-border/20">
-                  <div className="flex items-center justify-center gap-2 mb-2">
-                    <BarChart3 className="w-5 h-5 text-verdash-cyan" />
-                    <span className="text-2xl font-bold text-foreground">{project.dashboards}</span>
-                  </div>
-                  <p className="text-xs text-muted-foreground font-medium">Dashboards</p>
+            <CardContent>
+              <p className="text-sm text-muted-foreground mb-4">{project.description}</p>
+              <div className="flex items-center justify-between text-sm text-muted-foreground">
+                <div className="flex items-center gap-2">
+                  <Users className="w-4 h-4" />
+                  <span>{project.members.length} membros</span>
                 </div>
-                <div className="text-center p-4 bg-gradient-to-br from-card/30 to-card/10 rounded-xl border border-border/20">
-                  <div className="flex items-center justify-center gap-2 mb-2">
-                    <Users className="w-5 h-5 text-verdash-coral" />
-                    <span className="text-2xl font-bold text-foreground">{project.users}</span>
-                  </div>
-                  <p className="text-xs text-muted-foreground font-medium">Usuários</p>
+                <div className="flex items-center gap-2">
+                  <Calendar className="w-4 h-4" />
+                  <span>{new Date(project.updatedAt).toLocaleDateString()}</span>
                 </div>
-              </div>
-
-              {/* Metrics */}
-              <div>
-                <p className="text-sm font-semibold text-foreground mb-3">Métricas principais:</p>
-                <div className="flex flex-wrap gap-2">
-                  {project.metrics.map((metric, index) => (
-                    <Badge key={index} variant="outline" className="text-xs border-border/30 hover:border-verdash-cyan/50 verdash-animate">
-                      {metric}
-                    </Badge>
-                  ))}
-                </div>
-              </div>
-
-              {/* Last Update */}
-              <div className="flex items-center gap-2 text-xs text-muted-foreground">
-                <Calendar className="w-4 h-4" />
-                <span>Atualizado em {new Date(project.lastUpdate).toLocaleDateString('pt-BR')}</span>
-              </div>
-
-              {/* Actions */}
-              <div className="flex gap-3 pt-2">
-                <Button 
-                  size="sm" 
-                  className="flex-1 verdash-btn-primary"
-                  onClick={() => handleOpenProject(project.id, project.name)}
-                >
-                  <Eye className="w-4 h-4 mr-2" />
-                  Abrir
-                </Button>
-                <Button 
-                  variant="outline" 
-                  size="sm" 
-                  className="border-border/50 hover:border-border verdash-animate"
-                  onClick={() => handleProjectSettings(project.id, project.name)}
-                >
-                  <Settings className="w-4 h-4" />
-                </Button>
               </div>
             </CardContent>
           </Card>
         ))}
       </div>
 
-      {/* Empty State */}
-      {filteredProjects.length === 0 && (
-        <div className="text-center py-16">
-          <div className="w-16 h-16 mx-auto mb-6 bg-gradient-to-br from-verdash-blue to-verdash-cyan rounded-xl flex items-center justify-center">
-            <BarChart3 className="w-8 h-8 text-white" />
-          </div>
-          <h3 className="text-xl font-semibold text-foreground mb-2">Nenhum projeto encontrado</h3>
-          <p className="text-muted-foreground mb-6 text-lg">
-            {searchTerm ? "Tente ajustar sua pesquisa" : "Comece criando seu primeiro projeto"}
-          </p>
-          <Button 
-            className="verdash-btn-primary verdash-hover-scale"
-            onClick={() => setIsNewProjectDialogOpen(true)}
-          >
-            <Plus className="w-4 h-4 mr-2" />
-            Criar Projeto
-          </Button>
-        </div>
-      )}
-
-      {/* New Project Dialog */}
-      <NewProjectDialog
+      <NewProjectDialog 
         open={isNewProjectDialogOpen}
         onOpenChange={setIsNewProjectDialogOpen}
-        onCreateProject={handleCreateProject}
+        onSubmit={handleCreateProject}
       />
     </div>
   );

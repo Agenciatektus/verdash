@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -19,6 +18,31 @@ interface DashboardEditorProps {
   onSave: (widgets: Widget[]) => void;
 }
 
+// Função utilitária para encontrar a próxima posição livre no grid
+function findNextFreePosition(widgets: Widget[], gridCols = 4, gridRows = 8) {
+  const occupied: boolean[][] = Array.from({ length: gridRows }, () => Array(gridCols).fill(false));
+  widgets.forEach(widget => {
+    for (let dx = 0; dx < widget.position.width; dx++) {
+      for (let dy = 0; dy < widget.position.height; dy++) {
+        const x = widget.position.x + dx;
+        const y = widget.position.y + dy;
+        if (x < gridCols && y < gridRows) {
+          occupied[y][x] = true;
+        }
+      }
+    }
+  });
+  for (let y = 0; y < gridRows; y++) {
+    for (let x = 0; x < gridCols; x++) {
+      if (!occupied[y][x]) {
+        return { x, y };
+      }
+    }
+  }
+  // Se não houver espaço, adiciona na última posição
+  return { x: 0, y: gridRows };
+}
+
 export const DashboardEditor = ({ initialWidgets, onSave }: DashboardEditorProps) => {
   const [widgets, setWidgets] = useState<Widget[]>(initialWidgets);
   const [isEditing, setIsEditing] = useState(false);
@@ -37,13 +61,15 @@ export const DashboardEditor = ({ initialWidgets, onSave }: DashboardEditorProps
   };
 
   const handleWidgetAdd = (widgetData: Omit<Widget, 'id' | 'createdAt' | 'updatedAt'>) => {
+    // Encontrar próxima posição livre
+    const nextPos = findNextFreePosition(widgets);
     const newWidget: Widget = {
       ...widgetData,
       id: `widget-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
+      position: { ...widgetData.position, ...nextPos },
     };
-    
     setWidgets(prev => [...prev, newWidget]);
   };
 

@@ -5,6 +5,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, Navigate, Outlet } from "react-router-dom";
 import { SidebarProvider } from "@/components/ui/sidebar";
+import { ProjectProvider } from "@/mcp/projects/provider";
 import Login from "./pages/Login";
 import VerdashPrecos from "./pages/LandingPage";
 import Dashboard from "./pages/Dashboard";
@@ -39,42 +40,44 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <AuthProvider>
-        <TooltipProvider>
-          <Toaster />
-          <Sonner />
-          <BrowserRouter>
-            <Routes>
-              <Route path="/" element={<VerdashPrecos />} />
-              <Route path="/login" element={<Login />} />
-              <Route path="/app" element={
-                <ProtectedRoute>
-                  <SidebarProvider>
-                    <AppLayout />
-                  </SidebarProvider>
-                </ProtectedRoute>
-              }>
-                <Route index element={<Navigate to="dashboard" replace />} />
-                <Route path="dashboard" element={<Dashboard />} />
-                <Route path="dashboard-view/:id" element={<DashboardView />} />
-                <Route path="dashboard-editor/:id" element={<DashboardEditor />} />
-                <Route path="projects" element={<Projects />} />
-                <Route path="projects/:id" element={<ProjectView />} />
-                <Route path="dashboards" element={<Dashboards />} />
-                <Route path="metrics" element={<Metrics />} />
-                <Route path="data-admin" element={<DataAdmin />} />
-                <Route path="verdash-ai" element={<VerdashAI />} />
-                <Route path="integrations" element={<Integrations />} />
-                <Route path="clients" element={<Clients />} />
-                <Route path="support" element={<Support />} />
-                <Route path="users" element={<Users />} />
-                <Route path="settings" element={<Settings />} />
-                <Route path="billing" element={<Billing />} />
-                <Route path="widgets-demo" element={<WidgetsDemo />} />
-                <Route path="*" element={<NotFound />} />
-              </Route>
-            </Routes>
-          </BrowserRouter>
-        </TooltipProvider>
+        <ProjectProvider>
+          <TooltipProvider>
+            <Toaster />
+            <Sonner />
+            <BrowserRouter>
+              <Routes>
+                <Route path="/" element={<VerdashPrecos />} />
+                <Route path="/login" element={<Login />} />
+                <Route path="/app" element={
+                  <ProtectedRoute>
+                    <SidebarProvider>
+                      <AppLayout />
+                    </SidebarProvider>
+                  </ProtectedRoute>
+                }>
+                  <Route index element={<Navigate to="dashboard" replace />} />
+                  <Route path="dashboard" element={<Dashboard />} />
+                  <Route path="dashboard-view/:id" element={<DashboardView />} />
+                  <Route path="dashboard-editor/:id" element={<DashboardEditor />} />
+                  <Route path="projects" element={<Projects />} />
+                  <Route path="projects/:id" element={<ProjectView />} />
+                  <Route path="dashboards" element={<Dashboards />} />
+                  <Route path="metrics" element={<Metrics />} />
+                  <Route path="data-admin" element={<DataAdmin />} />
+                  <Route path="verdash-ai" element={<VerdashAI />} />
+                  <Route path="integrations" element={<Integrations />} />
+                  <Route path="clients" element={<Clients />} />
+                  <Route path="support" element={<Support />} />
+                  <Route path="users" element={<Users />} />
+                  <Route path="settings" element={<Settings />} />
+                  <Route path="billing" element={<Billing />} />
+                  <Route path="widgets-demo" element={<WidgetsDemo />} />
+                  <Route path="*" element={<NotFound />} />
+                </Route>
+              </Routes>
+            </BrowserRouter>
+          </TooltipProvider>
+        </ProjectProvider>
       </AuthProvider>
     </QueryClientProvider>
   );

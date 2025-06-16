@@ -24,6 +24,14 @@ import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContai
 import { DashboardTemplatesDialog } from "@/components/dashboard/DashboardTemplatesDialog";
 import { EnhancedDateRangeFilter } from "@/components/dashboard/EnhancedDateRangeFilter";
 import { WidgetVisibilityFilter } from "@/components/dashboard/WidgetVisibilityFilter";
+import { KPIWidget } from "@/components/widgets/KPIWidget";
+import { DonutChartWidget } from "@/components/widgets/DonutChartWidget";
+import { BarChartWidget } from "@/components/widgets/BarChartWidget";
+import { LineChartWidget } from "@/components/widgets/LineChartWidget";
+import { TableWidget } from "@/components/widgets/TableWidget";
+import { FunnelWidget } from "@/components/widgets/FunnelWidget";
+import { mockWidgets, mockWidgetData } from "@/data/mockWidgetData";
+import { AreaChartWidget } from "@/components/widgets/AreaChartWidget";
 
 // Dados mockados para os gráficos
 const revenueData = [
@@ -240,7 +248,7 @@ const Dashboard = () => {
   };
 
   return (
-    <div className="relative space-y-8 animate-verdash-fade-in font-jakarta w-full flex flex-col">
+    <div className="relative space-y-8 animate-verdash-fade-in font-jakarta w-full flex flex-col p-0">
       {/* Aero Radial Gradient Background */}
       <div 
         className="fixed inset-0 pointer-events-none z-0"
@@ -348,359 +356,83 @@ const Dashboard = () => {
           </div>
         </div>
 
-        {/* 🏆 LINHA SUPERIOR - KPIs de Impacto e Saúde do Negócio */}
-        {isWidgetVisible('kpis-impact') && (
-          <div className="space-y-8 mt-12">
-            <h2 className="text-2xl font-bold text-foreground font-grotesk flex items-center gap-3">
-              <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-verdash-blue to-verdash-cyan flex items-center justify-center">
-                <Award className="w-5 h-5 text-white" />
-              </div>
-              KPIs de Impacto e Saúde do Negócio
-            </h2>
-
-            {/* Primeira linha de KPIs - Métricas principais */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-              {mainKpis.map((kpi, index) => (
-                <Card key={index} className="bg-card/20 backdrop-blur-xl rounded-2xl shadow-2xl hover:bg-card/30 hover:shadow-[0_8px_32px_rgba(0,255,176,0.04)] transition-all duration-300 hover:transform hover:scale-[1.02]">
-                  <CardContent className="p-6">
-                    <div className="flex items-center justify-between mb-4">
-                      <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${kpi.gradient} flex items-center justify-center`}>
-                        <kpi.icon className="w-6 h-6 text-white" />
-                      </div>
-                      {kpi.trend === "up" ? (
-                        <TrendingUp className="w-5 h-5 text-verdash-cyan" />
-                      ) : (
-                        <TrendingDown className="w-5 h-5 text-verdash-red" />
-                      )}
-                    </div>
-                    <div>
-                      <p className="text-sm font-medium text-muted-foreground mb-1 font-inter">{kpi.title}</p>
-                      <p className="text-3xl font-bold text-foreground mb-2 font-grotesk">{kpi.value}</p>
-                      <div className="flex items-center justify-between">
-                        <div className="flex items-center">
-                          <span className={`text-sm font-semibold ${
-                            kpi.trend === "up" ? "text-verdash-cyan" : "text-verdash-red"
-                          }`}>
-                            {kpi.change}
-                          </span>
-                          <span className="text-sm text-muted-foreground ml-2">vs. período anterior</span>
-                        </div>
-                        {kpi.target && (
-                          <div className="text-xs text-muted-foreground">
-                            Meta: {kpi.target}
-                          </div>
-                        )}
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
-
-            {/* Segunda linha de KPIs - Métricas financeiras e conversão */}
-            {isWidgetVisible('kpis-financial') && (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {financialKpis.map((kpi, index) => (
-                  <Card key={index} className="bg-card/20 backdrop-blur-xl rounded-2xl shadow-2xl hover:bg-card/30 hover:shadow-[0_8px_32px_rgba(0,255,176,0.04)] transition-all duration-300 hover:transform hover:scale-[1.02]">
-                    <CardContent className="p-6">
-                      <div className="flex items-center justify-between mb-4">
-                        <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${kpi.gradient} flex items-center justify-center`}>
-                          <kpi.icon className="w-6 h-6 text-white" />
-                        </div>
-                        {kpi.trend === "up" ? (
-                          <TrendingUp className="w-5 h-5 text-verdash-cyan" />
-                        ) : (
-                          <TrendingDown className="w-5 h-5 text-verdash-red" />
-                        )}
-                      </div>
-                      <div>
-                        <p className="text-sm font-medium text-muted-foreground mb-1 font-inter">{kpi.title}</p>
-                        <p className="text-2xl font-bold text-foreground mb-2 font-grotesk">{kpi.value}</p>
-                        <div className="flex items-center justify-between">
-                          <div className="flex items-center">
-                            <span className={`text-sm font-semibold ${
-                              kpi.trend === "up" ? "text-verdash-cyan" : "text-verdash-red"
-                            }`}>
-                              {kpi.change}
-                            </span>
-                            <span className="text-sm text-muted-foreground ml-2">vs. período anterior</span>
-                          </div>
-                          {kpi.target && (
-                            <div className="text-xs text-muted-foreground">
-                              Meta: {kpi.target}
-                            </div>
-                          )}
-                        </div>
-                      </div>
-                    </CardContent>
-                  </Card>
-                ))}
-              </div>
-            )}
-          </div>
-        )}
-
-        {/* 📈 LINHA INTERMEDIÁRIA - Visão de Performance ao Longo do Tempo */}
-        {isWidgetVisible('performance-charts') && (
-          <div className="space-y-8 mt-16">
-            <h2 className="text-2xl font-bold text-foreground font-grotesk flex items-center gap-3">
-              <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-verdash-coral to-verdash-red flex items-center justify-center">
-                <BarChart3 className="w-5 h-5 text-white" />
-              </div>
-              Performance ao Longo do Tempo
-            </h2>
-            
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-              {/* Gráfico de Linha - Receita, Investimento, Leads e MRR */}
-              {isWidgetVisible('revenue-evolution') && (
-                <Card className="bg-card/20 backdrop-blur-xl rounded-2xl shadow-2xl hover:bg-card/30 hover:shadow-[0_8px_32px_rgba(0,255,176,0.04)] transition-all duration-300 hover:transform hover:scale-[1.02] lg:col-span-2">
-                  <CardHeader>
-                    <CardTitle className="text-white text-xl font-grotesk flex items-center gap-3">
-                      <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-verdash-blue to-verdash-cyan flex items-center justify-center">
-                        <TrendingUp className="w-4 h-4 text-white" />
-                      </div>
-                      Evolução de Receita, Investimento, Leads e MRR
-                    </CardTitle>
-                    <CardDescription className="text-white/70 font-inter">Últimos 6 meses - Visão comparativa</CardDescription>
-                  </CardHeader>
-                  <CardContent>
-                    <ResponsiveContainer width="100%" height={350}>
-                      <LineChart data={revenueData}>
-                        <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.1)" />
-                        <XAxis dataKey="month" stroke="white" fontSize={12} />
-                        <YAxis stroke="white" fontSize={12} />
-                        <Tooltip 
-                          contentStyle={{ 
-                            backgroundColor: 'rgba(16, 24, 44, 0.95)', 
-                            border: '1px solid rgba(255,255,255,0.1)',
-                            borderRadius: '12px',
-                            color: 'white'
-                          }} 
-                        />
-                        <Line 
-                          type="monotone" 
-                          dataKey="receita" 
-                          stroke="#00FFB0" 
-                          strokeWidth={3}
-                          name="Receita"
-                          dot={{ fill: '#00FFB0', strokeWidth: 2, r: 5 }}
-                        />
-                        <Line 
-                          type="monotone" 
-                          dataKey="investimento" 
-                          stroke="#FF6F1B" 
-                          strokeWidth={3}
-                          name="Investimento"
-                          dot={{ fill: '#FF6F1B', strokeWidth: 2, r: 5 }}
-                        />
-                        <Line 
-                          type="monotone" 
-                          dataKey="leads" 
-                          stroke="#1042F6" 
-                          strokeWidth={3}
-                          name="Leads"
-                          dot={{ fill: '#1042F6', strokeWidth: 2, r: 5 }}
-                        />
-                        <Line 
-                          type="monotone" 
-                          dataKey="mrr" 
-                          stroke="#FF3871" 
-                          strokeWidth={3}
-                          name="MRR"
-                          dot={{ fill: '#FF3871', strokeWidth: 2, r: 5 }}
-                        />
-                      </LineChart>
-                    </ResponsiveContainer>
-                  </CardContent>
-                </Card>
-              )}
-
-              {/* Gráfico de Barras Empilhadas - Investimento por Canal */}
-              {isWidgetVisible('investment-by-channel') && (
-                <Card className="bg-card/20 backdrop-blur-xl rounded-2xl shadow-2xl hover:bg-card/30 hover:shadow-[0_8px_32px_rgba(0,255,176,0.04)] transition-all duration-300 hover:transform hover:scale-[1.02]">
-                  <CardHeader>
-                    <CardTitle className="text-white text-lg font-grotesk">Investimento por Canal</CardTitle>
-                    <CardDescription className="text-white/70 font-inter">Distribuição mensal</CardDescription>
-                  </CardHeader>
-                  <CardContent>
-                    <ResponsiveContainer width="100%" height={300}>
-                      <BarChart data={investmentByChannel}>
-                        <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.1)" />
-                        <XAxis dataKey="month" stroke="white" fontSize={11} />
-                        <YAxis stroke="white" fontSize={11} />
-                        <Tooltip 
-                          contentStyle={{ 
-                            backgroundColor: 'rgba(16, 24, 44, 0.95)', 
-                            border: '1px solid rgba(255,255,255,0.1)',
-                            borderRadius: '8px',
-                            color: 'white'
-                          }} 
-                          cursor={{ fill: 'rgba(255, 255, 255, 0.02)' }}
-                        />
-                        <Bar dataKey="meta" stackId="a" fill="#1877F2" name="Meta Ads" />
-                        <Bar dataKey="google" stackId="a" fill="#4285F4" name="Google Ads" />
-                        <Bar dataKey="whatsapp" stackId="a" fill="#25D366" name="WhatsApp" />
-                        <Bar dataKey="organico" stackId="a" fill="#00FFB0" name="Orgânico" />
-                        <Bar dataKey="offline" stackId="a" fill="#FF6F1B" name="Offline" />
-                      </BarChart>
-                    </ResponsiveContainer>
-                  </CardContent>
-                </Card>
-              )}
-
-              {/* Gráfico de Donut - Participação na Receita */}
-              {isWidgetVisible('revenue-participation') && (
-                <Card className="bg-card/20 backdrop-blur-xl rounded-2xl shadow-2xl hover:bg-card/30 hover:shadow-[0_8px_32px_rgba(0,255,176,0.04)] transition-all duration-300 hover:transform hover:scale-[1.02]">
-                  <CardHeader>
-                    <CardTitle className="text-white text-lg font-grotesk">Participação na Receita</CardTitle>
-                    <CardDescription className="text-white/70 font-inter">Por canal de aquisição</CardDescription>
-                  </CardHeader>
-                  <CardContent>
-                    <ResponsiveContainer width="100%" height={300}>
-                      <PieChart>
-                        <Pie
-                          data={channelRevenue}
-                          cx="50%"
-                          cy="50%"
-                          innerRadius={50}
-                          outerRadius={100}
-                          paddingAngle={5}
-                          dataKey="value"
-                          stroke="none"
-                        >
-                          {channelRevenue.map((entry, index) => (
-                            <Cell key={`cell-${index}`} fill={entry.color} />
-                          ))}
-                        </Pie>
-                        <Tooltip 
-                          contentStyle={{ 
-                            backgroundColor: 'rgba(16, 24, 44, 0.95)', 
-                            border: '1px solid rgba(255,255,255,0.1)',
-                            borderRadius: '8px',
-                            color: 'white'
-                          }} 
-                          formatter={(value: any) => [`R$ ${Number(value).toLocaleString('pt-BR')}`, 'Receita']}
-                        />
-                      </PieChart>
-                    </ResponsiveContainer>
-                  </CardContent>
-                </Card>
-              )}
-            </div>
-          </div>
-        )}
-
-        {/* 🔍 LINHA INFERIOR - Operações e Funil de Vendas */}
-        <div className="space-y-8 mt-16">
+        {/* ===================== KPIs de Impacto e Saúde do Negócio ===================== */}
+        <div className="space-y-8 mt-12">
           <h2 className="text-2xl font-bold text-foreground font-grotesk flex items-center gap-3">
-            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-verdash-red to-verdash-coral flex items-center justify-center">
-              <Target className="w-5 h-5 text-white" />
+            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-verdash-blue to-verdash-cyan flex items-center justify-center">
+              <svg width="20" height="20" fill="none" viewBox="0 0 24 24"><path d="M12 2L15 8L22 9L17 14L18 21L12 18L6 21L7 14L2 9L9 8L12 2Z" fill="white"/></svg>
             </div>
-            Operações e Funil de Vendas
+            KPIs de Impacto e Saúde do Negócio
           </h2>
-
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            {/* Funil de Vendas */}
-            {isWidgetVisible('sales-funnel') && (
-              <Card className="bg-card/20 backdrop-blur-xl rounded-2xl shadow-2xl hover:bg-card/30 hover:shadow-[0_8px_32px_rgba(0,255,176,0.04)] transition-all duration-300 hover:transform hover:scale-[1.02]">
-                <CardHeader>
-                  <CardTitle className="text-white text-lg font-grotesk">Pipeline de Vendas</CardTitle>
-                  <CardDescription className="text-white/70 font-inter">Funil completo do processo comercial</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <div className="space-y-4">
-                    {funnelData.map((stage, index) => (
-                      <div key={index} className="space-y-2">
-                        <div className="flex justify-between items-center">
-                          <span className="text-sm font-medium text-white/80">{stage.stage}</span>
-                          <div className="text-right">
-                            <span className="text-lg font-bold text-white">{stage.value.toLocaleString()}</span>
-                            <span className="text-xs text-white/60 ml-2">({stage.conversion}%)</span>
-                          </div>
-                        </div>
-                        <div className="w-full bg-white/10 rounded-full h-3">
-                          <div 
-                            className="bg-gradient-to-r from-verdash-blue to-verdash-cyan h-3 rounded-full transition-all duration-300"
-                            style={{ width: `${(stage.value / funnelData[0].value) * 100}%` }}
-                          />
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </CardContent>
-              </Card>
-            )}
-
-            {/* Conversão por Canal */}
-            {isWidgetVisible('conversion-by-channel') && (
-              <Card className="bg-card/20 backdrop-blur-xl rounded-2xl shadow-2xl hover:bg-card/30 hover:shadow-[0_8px_32px_rgba(0,255,176,0.04)] transition-all duration-300 hover:transform hover:scale-[1.02]">
-                <CardHeader>
-                  <CardTitle className="text-white text-lg font-grotesk">Taxa de Conversão por Canal</CardTitle>
-                  <CardDescription className="text-white/70 font-inter">Performance de cada fonte</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <ResponsiveContainer width="100%" height={300}>
-                    <BarChart data={conversionByChannel} layout="horizontal">
-                      <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.1)" />
-                      <XAxis type="number" domain={[0, 10]} stroke="white" fontSize={11} />
-                      <YAxis dataKey="channel" type="category" stroke="white" fontSize={11} width={80} />
-                      <Tooltip 
-                        contentStyle={{ 
-                          backgroundColor: 'rgba(16, 24, 44, 0.95)', 
-                          border: '1px solid rgba(255,255,255,0.1)',
-                          borderRadius: '8px',
-                          color: 'white'
-                        }} 
-                        formatter={(value: any) => [`${value}%`, 'Taxa de Conversão']}
-                        cursor={{ fill: 'rgba(255, 255, 255, 0.02)' }}
-                      />
-                      <Bar dataKey="taxa" fill="#00FFB0" radius={[0, 4, 4, 0]} />
-                    </BarChart>
-                  </ResponsiveContainer>
-                </CardContent>
-              </Card>
-            )}
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
+            <KPIWidget widget={{ ...mockWidgets[0], title: 'Receita Total do Período', config: { ...mockWidgets[0].config, value: 267000, previousValue: 234000, target: 280000, format: 'currency' } }} />
+            <KPIWidget widget={{ ...mockWidgets[1], title: 'Investimento Total em Tráfego', config: { ...mockWidgets[1].config, value: 68000, previousValue: 62000, target: 70000, format: 'currency' } }} />
+            <KPIWidget widget={{ ...mockWidgets[2], title: 'ROI Médio no Período', config: { ...mockWidgets[2].config, value: 292, previousValue: 277, target: 300, format: 'percentage' } }} />
+            <KPIWidget widget={{ ...mockWidgets[2], title: 'Leads Gerados no Período', config: { ...mockWidgets[2].config, value: 2100, previousValue: 1850, target: 2200, format: 'number' } }} />
+            <KPIWidget widget={{ ...mockWidgets[2], title: 'Conversões (Vendas)', config: { ...mockWidgets[2].config, value: 147, previousValue: 128, target: 160, format: 'number' } }} />
+            <KPIWidget widget={{ ...mockWidgets[2], title: 'Meta vs Realizado (%)', config: { ...mockWidgets[2].config, value: 95.4, previousValue: 89.2, target: 100, format: 'percentage' } }} />
+            <KPIWidget widget={{ ...mockWidgets[4], title: 'Churn Rate (%)', config: { ...mockWidgets[4].config, value: 3.2, previousValue: 4.1, target: 2.5, format: 'percentage' } }} />
+            <KPIWidget widget={{ ...mockWidgets[2], title: 'MRR (Receita Recorrente Mensal)', config: { ...mockWidgets[2].config, value: 118000, previousValue: 112000, target: 125000, format: 'currency' } }} />
+            <KPIWidget widget={{ ...mockWidgets[2], title: 'LTV (Lifetime Value)', config: { ...mockWidgets[2].config, value: 15840, previousValue: 14200, target: 18000, format: 'currency' } }} />
+            <KPIWidget widget={{ ...mockWidgets[2], title: 'Valor em Caixa Atual', config: { ...mockWidgets[2].config, value: 485000, previousValue: 427000, target: undefined, format: 'currency' } }} />
           </div>
+        </div>
 
-          {/* KPIs Adicionais Expandidos */}
-          {isWidgetVisible('additional-kpis') && (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-              {additionalKpis.map((kpi, index) => (
-                <Card key={index} className="bg-card/20 backdrop-blur-xl rounded-2xl shadow-2xl hover:bg-card/30 hover:shadow-[0_8px_32px_rgba(0,255,176,0.04)] transition-all duration-300 hover:transform hover:scale-[1.02]">
-                  <CardContent className="p-6">
-                    <div className="flex items-center justify-between mb-4">
-                      <div className={`w-10 h-10 rounded-lg bg-gradient-to-br ${
-                        kpi.status === 'success' ? 'from-verdash-blue to-verdash-cyan' : 
-                        kpi.status === 'warning' ? 'from-verdash-coral to-verdash-red' : 
-                        'from-gray-600 to-gray-700'
-                      } flex items-center justify-center`}>
-                        <kpi.icon className="w-5 h-5 text-white" />
-                      </div>
-                      <Badge 
-                        variant={kpi.status === 'success' ? 'default' : 'secondary'}
-                        className={kpi.status === 'success' 
-                          ? 'bg-verdash-cyan/20 text-verdash-cyan border-verdash-cyan/30' 
-                          : 'bg-verdash-coral/20 text-verdash-coral border-verdash-coral/30'
-                        }
-                      >
-                        {kpi.status === 'success' ? 'Bom' : 'Atenção'}
-                      </Badge>
-                    </div>
-                    <div>
-                      <p className="text-sm font-medium text-muted-foreground mb-1 font-inter">{kpi.title}</p>
-                      <p className="text-xl font-bold text-foreground mb-2 font-grotesk">{kpi.value}</p>
-                      {kpi.change && (
-                        <p className="text-xs text-verdash-cyan font-inter">{kpi.change}</p>
-                      )}
-                      {kpi.target && (
-                        <p className="text-xs text-muted-foreground font-inter">Meta: {kpi.target}</p>
-                      )}
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
-          )}
+        {/* ===================== Linha Intermediária: Funil Comercial + KPIs do Funil ===================== */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mt-16">
+          {/* Funil Comercial SVG */}
+          <div>
+            {(() => {
+              const funnelWidget = mockWidgets.find(w => w.type === 'funnel');
+              // Dados reais do funil comercial
+              const funnelStages = [
+                { stage: 'Novos Leads', value: 3200, percentage: 100 },
+                { stage: 'MQLs', value: 1800, percentage: 56.3 },
+                { stage: 'Agendamentos', value: 950, percentage: 29.7 },
+                { stage: 'Reuniões', value: 600, percentage: 18.8 },
+                { stage: 'Vendas', value: 210, percentage: 6.6 }
+              ];
+              return funnelWidget && (
+                <FunnelWidget 
+                  widget={{
+                    ...funnelWidget,
+                    config: {
+                      ...funnelWidget.config,
+                      stages: funnelStages.map((stage, index) => ({
+                        step: stage.stage,
+                        value: stage.value,
+                        percentage: stage.percentage,
+                        conversion: index === 0 ? 0 : (stage.value / funnelStages[index - 1].value * 100),
+                        icon: 'Users',
+                        color: ['#1042F6', '#00FFB0', '#FF6F1B', '#9c88ff', '#FF4757'][index % 5],
+                        metric: 'leads'
+                      }))
+                    }
+                  }}
+                />
+              );
+            })()}
+          </div>
+          {/* KPIs do Funil */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <KPIWidget widget={{ ...mockWidgets[2], title: 'CPL (Custo por Lead)', config: { ...mockWidgets[2].config, value: 32, previousValue: 35, target: 30, format: 'currency' } }} />
+            <KPIWidget widget={{ ...mockWidgets[2], title: 'Custo por MQL', config: { ...mockWidgets[2].config, value: 57, previousValue: 60, target: 50, format: 'currency' } }} />
+            <KPIWidget widget={{ ...mockWidgets[2], title: 'Custo por Agendamento', config: { ...mockWidgets[2].config, value: 108, previousValue: 120, target: 100, format: 'currency' } }} />
+            <KPIWidget widget={{ ...mockWidgets[2], title: 'Custo por Reunião', config: { ...mockWidgets[2].config, value: 170, previousValue: 180, target: 150, format: 'currency' } }} />
+            <KPIWidget widget={{ ...mockWidgets[2], title: 'SQLs (Oportunidades)', config: { ...mockWidgets[2].config, value: 420, previousValue: 390, target: 500, format: 'number' } }} />
+            <KPIWidget widget={{ ...mockWidgets[2], title: 'CPA (Custo por Aquisição)', config: { ...mockWidgets[2].config, value: 310, previousValue: 340, target: 300, format: 'currency' } }} />
+            <KPIWidget widget={{ ...mockWidgets[2], title: 'Ticket Médio', config: { ...mockWidgets[2].config, value: 1850, previousValue: 1700, target: 2000, format: 'currency' } }} />
+            <KPIWidget widget={{ ...mockWidgets[2], title: 'Taxa de Conversão Geral (%)', config: { ...mockWidgets[2].config, value: 6.6, previousValue: 5.9, target: 8, format: 'percentage' } }} />
+            <KPIWidget widget={{ ...mockWidgets[2], title: 'ROAS', config: { ...mockWidgets[2].config, value: 4.2, previousValue: 3.8, target: 5, format: 'number' } }} />
+          </div>
+        </div>
+
+        {/* ===================== Linha Inferior: Gráficos de Performance ===================== */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-16">
+          <LineChartWidget widget={mockWidgets.find(w => w.type === 'line-chart')} data={mockWidgetData['6']} />
+          <AreaChartWidget widget={{ ...mockWidgets[6], type: 'area-chart', title: 'Receita e Leads por Canal', config: { ...mockWidgets[6].config, xAxisKey: 'date', yAxisKey: 'value', colors: ['#00FFB0', '#1042F6'], showGrid: true } }} data={mockWidgetData['6']} />
+          <BarChartWidget widget={{ ...mockWidgets[8], type: 'bar-chart', title: 'Investimento por Canal', config: { ...mockWidgets[8].config, xAxisKey: 'name', yAxisKey: 'value', colors: ['#1042F6'], showGrid: true } }} data={mockWidgetData['8']} />
+          <DonutChartWidget widget={{ ...mockWidgets[7], type: 'donut-chart', title: 'Participação dos Canais', config: { ...mockWidgets[7].config, dataKey: 'value', colors: ['#1042F6', '#00FFB0', '#FF6F1B', '#FF4757', '#9c88ff'], showLegend: true } }} data={mockWidgetData['7']} />
         </div>
       </div>
     </div>

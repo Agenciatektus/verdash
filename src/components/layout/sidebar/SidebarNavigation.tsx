@@ -43,7 +43,7 @@ export function SidebarNavigation() {
   return (
     <SidebarGroup className="px-7 py-6">
       <SidebarGroupContent>
-        <SidebarMenu className="space-y-3">
+        <SidebarMenu>
           {mainNavigation.map((item) => (
             <SidebarMenuItem key={item.title}>
               <SidebarMenuButton asChild tooltip={isCollapsed ? item.title : undefined} size="lg">
@@ -55,7 +55,7 @@ export function SidebarNavigation() {
                   }}
                   end={item.url === "/app/dashboard"}
                 >
-                  <item.icon className="w-5 h-5 shrink-0" />
+                  <item.icon className={`w-5 h-5 shrink-0 transition-all ${isCollapsed ? "ml-[-1px]" : ""}`} />
                   <span className="font-medium font-grotesk uppercase text-sm tracking-wide group-data-[collapsible=icon]:hidden">{item.title}</span>
                 </NavLink>
               </SidebarMenuButton>

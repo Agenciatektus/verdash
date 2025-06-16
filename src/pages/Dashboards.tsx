@@ -52,15 +52,15 @@ export default function Dashboards() {
   const handleViewDashboard = (dashboardId: number, dashboardName: string) => {
     console.log(`Viewing dashboard: ${dashboardId}`);
     toast.success(`Abrindo dashboard "${dashboardName}"`);
-    // Navigate to dashboard view
-    navigate(`/dashboard-view/${dashboardId}`);
+    // Navegar para dashboard view (corrigido)
+    navigate(`/app/dashboard-view/${dashboardId}`);
   };
 
   const handleEditDashboard = (dashboardId: number, dashboardName: string) => {
     console.log(`Editing dashboard: ${dashboardId}`);
     toast.success(`Editando dashboard "${dashboardName}"`);
-    // Navigate to dashboard editor in edit mode
-    navigate(`/dashboard-editor/${dashboardId}`);
+    // Navegar para dashboard editor (corrigido)
+    navigate(`/app/dashboard-editor/${dashboardId}`);
   };
 
   return (

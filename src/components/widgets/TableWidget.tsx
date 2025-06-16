@@ -1,4 +1,3 @@
-
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { ChevronUp, ChevronDown } from "lucide-react";
@@ -69,7 +68,7 @@ export const TableWidget = ({ widget, data, isEditing = false }: TableWidgetProp
           <p className="text-xs text-white/60">{widget.description}</p>
         )}
       </CardHeader>
-      <CardContent className="pt-0">
+      <CardContent>
         <div className="overflow-auto max-h-80">
           <table className="w-full text-sm">
             <thead>

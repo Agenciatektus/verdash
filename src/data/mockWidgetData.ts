@@ -1,4 +1,3 @@
-
 import { Widget, WidgetData } from "@/types/widgets";
 
 export const mockWidgets: Widget[] = [
@@ -152,6 +151,24 @@ export const mockWidgets: Widget[] = [
       unit: '%',
       colors: ['#00FFB0']
     },
+    createdAt: '2024-01-15T10:00:00Z',
+    updatedAt: '2024-01-15T10:00:00Z'
+  },
+  {
+    id: '11',
+    type: 'funnel',
+    title: 'Funil Comercial',
+    description: 'Etapas do funil de vendas',
+    position: { x: 0, y: 4, width: 2, height: 2 },
+    config: { stages: [
+      { stage: 'Visitantes', value: 10000, conversion: 100 },
+      { stage: 'Leads', value: 2500, conversion: 25 },
+      { stage: 'MQLs', value: 1000, conversion: 40 },
+      { stage: 'SQLs', value: 400, conversion: 40 },
+      { stage: 'Oportunidades', value: 200, conversion: 50 },
+      { stage: 'Propostas', value: 120, conversion: 60 },
+      { stage: 'Fechamentos', value: 60, conversion: 50 }
+    ] },
     createdAt: '2024-01-15T10:00:00Z',
     updatedAt: '2024-01-15T10:00:00Z'
   }
@@ -352,5 +369,61 @@ export const mockWidgetData: Record<string, any[]> = {
     { metric: 'Customer Satisfaction', value: 4.6, unit: '/5', target: 4.8 },
     { metric: 'Ticket Volume', value: 145, unit: 'tickets', target: 120 },
     { metric: 'First Contact Resolution', value: 78, unit: '%', target: 85 }
+  ],
+
+  // Sales funnel data
+  '11': [
+    { stage: 'Visitantes', value: 10000, conversion: 100 },
+    { stage: 'Leads', value: 2500, conversion: 25 },
+    { stage: 'MQLs', value: 1000, conversion: 40 },
+    { stage: 'SQLs', value: 400, conversion: 40 },
+    { stage: 'Oportunidades', value: 200, conversion: 50 },
+    { stage: 'Propostas', value: 120, conversion: 60 },
+    { stage: 'Fechamentos', value: 60, conversion: 50 }
   ]
 };
+
+export const mockFunnelData = [
+  { label: "Total de Clicks", value: 170 },
+  { label: "Conversas", value: 128 },
+  { label: "Orçamentos", value: 83 },
+  { label: "Compras", value: 25 }
+];
+
+export const mockBarData = [
+  { name: "Janeiro", vendas: 120, leads: 200 },
+  { name: "Fevereiro", vendas: 98, leads: 180 },
+  { name: "Março", vendas: 150, leads: 220 }
+];
+
+export const mockDonutData = [
+  { name: "E-commerce", value: 45 },
+  { name: "Vendas Diretas", value: 28 },
+  { name: "Marketplace", value: 15 },
+  { name: "Parcerias", value: 8 }
+];
+
+export const mockKPIData = [
+  { title: "Receita Total", value: 234567, format: "currency" },
+  { title: "Conversão", value: 3.4, format: "percentage" },
+  { title: "Usuários Ativos", value: 12543, format: "number" }
+];
+
+export const mockStackedBarData = [
+  { name: "Janeiro", vendas: 120, upsell: 30, cross: 20 },
+  { name: "Fevereiro", vendas: 98, upsell: 22, cross: 15 },
+  { name: "Março", vendas: 150, upsell: 40, cross: 25 }
+];
+
+export const mockLineData = [
+  { date: "01/12", value: 45000 },
+  { date: "02/12", value: 52000 },
+  { date: "03/12", value: 48000 },
+  { date: "04/12", value: 61000 },
+  { date: "05/12", value: 55000 },
+  { date: "06/12", value: 67000 },
+  { date: "07/12", value: 72000 },
+  { date: "08/12", value: 68000 },
+  { date: "09/12", value: 75000 },
+  { date: "10/12", value: 82000 }
+];

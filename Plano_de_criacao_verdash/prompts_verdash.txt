@@ -1,0 +1,608 @@
+core:
+
+
+Crie uma aplicação SaaS chamada Verdash.
+
+Objetivo: 
+Oferecer um HUB de dados que permite que empresas criem dashboards personalizados, gerenciem seus próprios clientes e visualizem dados online e offline em um único lugar.
+
+---
+
+Funcionalidades da Etapa Core:
+1. Autenticação:
+- Login e cadastro com e-mail e senha.  
+- Autenticação segura com Supabase.  
+- Recuperação de senha.
+
+2. Gestão de Usuários:  
+- Três níveis de acesso:  
+  - Admin: Acesso total — pode criar projetos, dashboards, usuários e gerir tudo.  
+  - Usuário do time:Pode acessar e editar os dashboards e projetos internos.  
+  - Cliente: Acessa apenas os dashboards atribuídos a ele, podendo reorganizar os widgets no painel de forma limitada.
+
+3. Gestão de Projetos e Dashboards:
+- O Admin pode criar projetos (cada projeto pode ser uma empresa, cliente ou unidade).  
+- Cada projeto tem seus próprios dashboards personalizados.  
+- O usuário pode criar dashboards ilimitados (seguindo o limite do plano).  
+- Os dashboards podem ser compostos por widgets de:  
+  - KPIs (números simples)  
+  - Gráficos (barra, pizza, linha)  
+  - Tabelas dinâmicas  
+
+4. Permissões e Acesso:
+- Cada cliente só enxerga os dashboards do projeto que foi atribuído.  
+- O time interno tem acesso aos projetos permitidos.  
+- Admin tem visão total de todos os dashboards, projetos e usuários.
+
+5. Gerenciamento Visual:  
+- Interface de dashboard com drag & drop (arrastar e soltar) para reorganizar os widgets.  
+- Sidebar para navegação entre projetos, dashboards e configurações.
+
+---
+
+Design:  
+- Interface moderna, dark mode como padrão.  
+- Navegação lateral (sidebar) com acesso rápido aos projetos e dashboards.  
+- Layout intuitivo: Sidebar → Projeto → Dashboard → Widgets.
+
+---
+
+Arquitetura:  
+-Frontend: React + Tailwind (ou stack nativa Lovable).  
+- Backend: Supabase para autenticação, banco de dados e storage.  
+- Banco de Dados: PostgreSQL via Supabase.  
+- Autenticação: Via Supabase Auth.  
+
+---
+
+Regras:
+- Cada cliente possui acesso apenas aos dashboards dos projetos que lhe foram atribuídos.  
+- Cada Admin pode criar quantos projetos quiser (dentro dos limites do plano).  
+- Dashboard personalizável com widgets organizados via drag & drop.
+
+---
+
+Objetivo desta etapa:
+Ter uma aplicação operacional que permite criar usuários, clientes, dashboards e projetos, com controle total de quem vê e gerencia cada coisa.
+
+
+Adicione na aplicação Verdash o módulo de Criação de Métricas, KPIs e Fórmulas Personalizadas.
+
+---
+
+Funcionalidades:  
+
+1.Criação de Métricas Personalizadas:  
+- O usuário pode criar métricas simples ou compostas.  
+- Cada métrica pode ter:  
+  - Nome da métrica  
+  - Descrição  
+  - Fonte de dados associada (ex.: Planilha, Meta Ads, Google Ads, WhatsApp, CRM ou Webhook)  
+  - Fórmula  
+
+2. Construtor de Fórmulas (Formula Builder):  
+- O usuário escolhe os campos disponíveis (ex.: Leads, Vendas, Custo, Receita).  
+- Permitir uso de operadores matemáticos: +, -, , /.  
+- Permitir funções: Soma, Média, Mínimo, Máximo, Contagem, IF, AND, OR.  
+- Permitir que uma métrica criada anteriormente seja usada como variável em outra métrica.
+
+3. Reutilização de Métricas:  
+- As métricas criadas podem ser selecionadas como base para criação de outras métricas mais avançadas.
+
+4. Validação de Fórmulas:  
+- Sistema de checagem para garantir que a fórmula inserida é válida e executável.  
+- Feedback de erro se faltar dados, campos ou operadores.
+
+5. Atribuição de Métricas:  
+- O usuário escolhe se a métrica é visível:  
+  - No nível do projeto (cliente específico)  
+  - No nível do dashboard global (todos os projetos)  
+
+6. Visualização no Dashboard:  
+- Após criada, a métrica pode ser adicionada como widget no dashboard:  
+  - KPI (número)  
+  - Gráfico (barra, pizza, linha)  
+  - Tabela dinâmica  
+
+7. Gestão de Métricas:  
+- Tela de gestão com:  
+  - Lista de métricas criadas  
+  - Filtro por projeto, dashboard ou usuário  
+  - Edição e exclusão de métricas  
+
+---
+
+Regras:  
+- As métricas podem combinar qualquer fonte de dados conectada.  
+- As métricas podem ser utilizadas dentro de outras métricas, de forma recursiva.  
+- O sistema deve ser flexível o suficiente para permitir desde uma simples contagem de leads até KPIs avançados como Custo por Venda considerando dados de tráfego e vendas offline.  
+
+---
+
+Interface:  
+- Tela de criação de métrica com:  
+  - Campo para nome  
+  - Campo para descrição  
+  - Seleção das fontes de dados  
+  - Editor visual de fórmula (com sugestões de campos e operadores)  
+
+- Tela de gestão de métricas por projeto/dashboard.  
+- Integração direta dos KPIs no sistema de dashboards com drag & drop.
+
+---
+
+Objetivo desta etapa:  
+Permitir que qualquer usuário da Verdash crie, combine e visualize métricas personalizadas e compostas, conectando dados online e offline no dashboard em tempo real.
+
+
+Adicione na aplicação Verdash o módulo de Criação de Métricas, KPIs e Fórmulas Personalizadas.
+
+---
+
+Funcionalidades:  
+
+1.Criação de Métricas Personalizadas:  
+- O usuário pode criar métricas simples ou compostas.  
+- Cada métrica pode ter:  
+  - Nome da métrica  
+  - Descrição  
+  - Fonte de dados associada (ex.: Planilha, Meta Ads, Google Ads, WhatsApp, CRM ou Webhook)  
+  - Fórmula  
+
+2. Construtor de Fórmulas (Formula Builder):  
+- O usuário escolhe os campos disponíveis (ex.: Leads, Vendas, Custo, Receita).  
+- Permitir uso de operadores matemáticos: +, -, , /.  
+- Permitir funções: Soma, Média, Mínimo, Máximo, Contagem, IF, AND, OR.  
+- Permitir que uma métrica criada anteriormente seja usada como variável em outra métrica.
+
+3. Reutilização de Métricas:  
+- As métricas criadas podem ser selecionadas como base para criação de outras métricas mais avançadas.
+
+4. Validação de Fórmulas:  
+- Sistema de checagem para garantir que a fórmula inserida é válida e executável.  
+- Feedback de erro se faltar dados, campos ou operadores.
+
+5. Atribuição de Métricas:  
+- O usuário escolhe se a métrica é visível:  
+  - No nível do projeto (cliente específico)  
+  - No nível do dashboard global (todos os projetos)  
+
+6. Visualização no Dashboard:  
+- Após criada, a métrica pode ser adicionada como widget no dashboard:  
+  - KPI (número)  
+  - Gráfico (barra, pizza, linha)  
+  - Tabela dinâmica  
+
+7. Gestão de Métricas:  
+- Tela de gestão com:  
+  - Lista de métricas criadas  
+  - Filtro por projeto, dashboard ou usuário  
+  - Edição e exclusão de métricas  
+
+---
+
+Regras:  
+- As métricas podem combinar qualquer fonte de dados conectada.  
+- As métricas podem ser utilizadas dentro de outras métricas, de forma recursiva.  
+- O sistema deve ser flexível o suficiente para permitir desde uma simples contagem de leads até KPIs avançados como Custo por Venda considerando dados de tráfego e vendas offline.  
+
+---
+
+Interface:  
+- Tela de criação de métrica com:  
+  - Campo para nome  
+  - Campo para descrição  
+  - Seleção das fontes de dados  
+  - Editor visual de fórmula (com sugestões de campos e operadores)  
+
+- Tela de gestão de métricas por projeto/dashboard.  
+- Integração direta dos KPIs no sistema de dashboards com drag & drop.
+
+---
+
+Objetivo desta etapa:  
+Permitir que qualquer usuário da Verdash crie, combine e visualize métricas personalizadas e compostas, conectando dados online e offline no dashboard em tempo real.
+
+
+
+
+Adicione ao Verdash os seguintes módulos avançados:
+
+---
+
+Compartilhamento de Dashboards — Links Públicos  
+- Cada dashboard pode gerar um link público único.  
+- Opções do link:  
+  - Somente leitura: o cliente visualiza, mas não interage.  
+  - Interativo: o cliente pode aplicar filtros e reorganizar os widgets no modo visual, sem alterar os dados.  
+  - White Label: o link pode usar domínio próprio do cliente (ex.: dashboard.empresa.com.br).  
+- Opção de adicionar senha de acesso ou tempo de expiração do link.  
+- Interface com botão “Gerar Link Público” diretamente no dashboard.
+
+---
+
+Automação de Relatórios  
+- Permitir que o usuário configure o envio automático de relatórios.  
+- Opções de frequência:  
+  - Diariamente, Semanalmente, Quinzenalmente, Mensalmente.  
+- O relatório pode ser:  
+  - PDF anexado por e-mail.  
+  - Link seguro para visualização do dashboard online (leitura ou interativo).  
+- Interface intuitiva para configurar:  
+  - Escolha do dashboard.  
+  - Frequência.  
+  - Lista de e-mails destinatários.  
+  - Mensagem personalizada no e-mail.  
+
+---
+
+White Label Completo  
+- Opção de ativar o modo White Label por projeto (cliente).  
+- Permitir customização de:  
+  - Logo do cliente (substituir a logo da Verdash).  
+  - Paleta de cores específica.  
+  - Domínio personalizado (ex.: analytics.empresa.com.br).  
+- Remoção completa de qualquer referência à Verdash na interface do cliente.  
+- A interface se ajusta visualmente para parecer uma plataforma própria do cliente.
+
+---
+
+Logs e Histórico de Atividades  
+- Registro de todas as ações dentro do sistema, incluindo:  
+  - Importações de dados (Sheets, Webhooks, CSV).  
+  - Atualizações de métricas.  
+  - Criação e edição de dashboards.  
+  - Geração de links públicos.  
+  - Envio de relatórios automáticos.  
+- Logs visíveis no painel de administração com:  
+  - Data, hora, usuário responsável, tipo de ação e detalhes.  
+- Filtro de logs por:  
+  - Usuário.  
+  - Tipo de ação.  
+  - Projeto/Cliente.  
+- Exportação de logs em CSV.
+
+---
+
+Regras e Segurança:  
+- Todos os links públicos são opcionais e controlados pelo Admin do projeto.  
+- Links podem ser revogados a qualquer momento.  
+- Automação de relatórios respeita as permissões de acesso dos dashboards.  
+- No modo White Label, os usuários finais não visualizam nenhuma referência à Verdash.
+
+---
+
+Interface:  
+- Botões claros: “Compartilhar”, “Gerar Link”, “Automatizar Relatório”.  
+- Tela de configuração de domínio e identidade visual para o modo White Label.  
+- Logs organizados em tabela, com filtros avançados e opção de exportação.
+
+---
+
+Arquitetura:  
+- Frontend: React + Tailwind (ou stack Lovable).  
+- Backend: Supabase (Banco, Auth, Storage).  
+- Serviço de envio de e-mails para relatórios (via Supabase Functions, Resend, SendGrid ou serviço equivalente).  
+- Sistema robusto de geração de links públicos com token de segurança.  
+
+---
+
+Objetivo desta etapa:  
+Transformar a Verdash em uma plataforma completa, pronta para escala, com experiência profissional para os usuários finais e seus clientes.
+
+
+Adicione ao Verdash o módulo de Gestão de Planos, Billing e Escalabilidade.
+
+---
+
+ Gestão de Planos e Assinaturas  
+- Três planos principais:  
+  - Started  
+  - Engage  
+  - Enterprise  
+
+- Cada plano controla:  
+  - Quantidade máxima de dashboards.  
+  - Quantidade máxima de fontes/API/Webhooks.  
+  - Limite de usuários do time.  
+  - Limite de clientes (projetos).  
+  - Acesso às funcionalidades avançadas (ex.: Verdash IA, White Label, Links Interativos).  
+
+- Tela de “Meus Planos” com:  
+  - Detalhes do plano atual.  
+  - Consumo dos limites (dashboards usados, clientes, usuários, integrações).  
+  - Botão para upgrade, downgrade ou cancelamento.
+
+---
+
+ Sistema de Pagamento (Billing)  
+- Integração com Stripe (ou Paddle) para cobrança recorrente.  
+- Checkout seguro, gerenciado pela própria plataforma.  
+- Faturamento mensal e anual.  
+- Emissão de fatura automática.  
+- Opção de teste grátis (se for configurado).  
+
+- Funcionalidades do Billing:  
+  - Cartão de crédito salvo.  
+  - Gestão de cobrança.  
+  - Histórico de pagamentos e faturas.  
+  - Tentativas de recuperação automática em caso de falha de pagamento.
+
+---
+
+ Gestão de Limites e Permissões por Plano  
+- O sistema automaticamente aplica restrições se o limite do plano for atingido, como:  
+  - Bloquear criação de novos dashboards, usuários ou clientes.  
+  - Notificar o usuário sobre o limite atingido.  
+  - Oferecer opção de upgrade direto na notificação.  
+
+---
+
+ Onboarding de Novos Usuários  
+- Tela inicial de boas-vindas.  
+- Passo a passo para:  
+  - Criar o primeiro projeto (cliente).  
+  - Conectar a primeira fonte de dados (API, Sheet ou Webhook).  
+  - Criar o primeiro dashboard.  
+- Checklists interativos guiando o usuário no setup.  
+- Vídeos ou textos educativos dentro da interface.
+
+---
+
+ Fluxo de Upgrade e Downgrade  
+- Upgrade de plano com efeito imediato.  
+- Downgrade aplica no fim do ciclo vigente.  
+- Mudanças automáticas nas permissões e limites após alteração de plano.  
+
+---
+
+ Regras Comerciais:  
+- Enterprise não tem checkout automático. Ao clicar, abre um formulário de contato para negociação.  
+- O sistema deve ser capaz de bloquear ou limitar acessos, se o pagamento estiver pendente ou vencido.  
+- Todos os usuários veem claramente seus limites de uso no painel da conta.  
+
+---
+
+ Interface:  
+- Menu “Minha Conta” → “Plano e Faturamento”  
+- Cards mostrando:  
+  
+Ter um sistema comercial robusto, que permite cobrança automática, controle de limites, upgrade/downgrade de planos e gestão financeira, tornando o Verdash uma plataforma SaaS escalável, sustentável e profissional.
+
+
+Adicione na interface do Verdash uma Sidebar lateral fixa e completa, com navegação intuitiva, agrupada, minimalista e funcional.
+
+---
+
+Diretrizes da Sidebar:  
+- Fundo: 0A0E1E (Dark Mode)  
+- Texto: FFFFFF (Branco)  
+- Ícones ativos e highlights: Gradiente (Azul → Verde → Coral → Vermelho, seguindo a identidade visual)  
+
+---
+
+ Estrutura da Sidebar:  
+
+1.Dashboard Geral  
+   - Ícone: 📊  
+   - Função: Visão geral de todos os dashboards criados, widgets e métricas.  
+
+2.Projetos/Clientes  
+   - Ícone: 🗂️  
+   - Função: Gerenciar projetos ou clientes.  
+   - Permitir criar, visualizar, editar e acessar os dashboards vinculados a cada cliente.  
+
+3.Dashboards  
+   - Ícone: 🧠  
+   - Acesso direto aos dashboards criados, organizados por projetos/clientes.  
+
+4.Métricas e KPIs  
+   - Ícone: 📐  
+   - Gerenciar todas as métricas personalizadas, KPIs compostos e fórmulas criadas.  
+
+5.Integrações  
+   - Ícone: 🔌  
+   - Função: Área dentro das configurações que permite configurar integrações:  
+     - Webhooks  
+     - APIs (Meta, Google Ads, CRM)  
+     - Planilhas (Google Sheets)  
+   - Acesso também via Configurações, mas como item principal na Sidebar.  
+
+6.Configurações  
+   - Ícone: ⚙️  
+   - Submenu:  
+     - Plano e Billing (visualizar, fazer upgrade, downgrade)  
+     - Integrações (atalho interno também aparece no menu principal)  
+     - Identidade Visual (modo White Label, personalização de logo, cores e domínio)  
+     - Notificações e relatórios automáticos  
+     - Permissões de usuários e equipe  
+     - Logs e histórico de atividades  
+
+7. clientes (Visão Admin)  
+   - Ícone: 🧑‍💼  
+   - Lista de clientes cadastrados.  
+   - Permite acessar os dashboards, integrações e métricas específicas de cada cliente.  
+   - Gestão de clientes, usuários associados, limites e configurações específicas.  
+
+8.Suporte e Ajuda  
+   - Ícone: 💬  
+   - Acesso ao widget de suporte direto na plataforma:  
+     - Help Center  
+     - Abrir chamado  
+     - FAQs  
+     - Documentação técnica  
+
+9.Sair da Conta  
+   - Ícone: 🔓  
+   - Função de logout simples e acessível na parte inferior da Sidebar.  
+
+---
+
+Posicionamento:  
+- Sidebar fixa na lateral esquerda.  
+- Ícones no topo, títulos expansíveis.  
+- Área inferior reservada para:  
+   - Suporte (💬)  
+   - Configurações (⚙️)  
+   - Sair da Conta (🚪)  
+
+---
+
+Comportamento:  
+- Sidebar expansível e colapsável.  
+- Hover com tooltips dos ícones quando estiver colapsada.  
+- Destaque em gradiente no item ativo.  
+- Microanimações suaves na interação dos botões.  
+
+---
+
+Objetivo:  
+Oferecer uma navegação fluida, intuitiva e organizada, permitindo ao usuário acessar qualquer parte do sistema com poucos cliques, mantendo a proposta de “HUB de Dados Inteligente” com experiência de SaaS premium.
+
+
+Adicione na plataforma Verdash um módulo chamado Verdash IA.
+
+---
+
+ Descrição:  
+O Verdash IA é um agente inteligente de dados, projetado para ajudar usuários que não sabem ler ou interpretar métricas, KPIs e dashboards.  
+
+Seu objetivo é traduzir números em ideias, conclusões e ações sugeridas, funcionando como um copiloto de dados.
+
+---
+
+ Funcionalidades:  
+
+1. Análise de Dados e Geração de Insights Automáticos:  
+- A IA lê os dados do dashboard do usuário, incluindo métricas compostas, dados de tráfego, vendas online e offline.  
+- Gera resumos em texto simples, como:  
+  - “Seu custo por venda aumentou 15% nos últimos 7 dias.”  
+  - “Você recebeu mais leads de Google Ads do que Meta nesta semana.”  
+  - “A conversão dos leads do WhatsApp está abaixo do esperado.”  
+
+2. Agente de Ideias e Recomendações:  
+- A IA não apenas descreve, mas também sugere ações:  
+  - “Considere revisar seus anúncios no Meta, já que o custo subiu.”  
+  - “O funil do WhatsApp está gerando mais conversões, investir nele pode trazer melhores resultados.”  
+
+3. Alertas Inteligentes:  
+- Configuração de alertas automáticos:  
+  - Queda ou aumento abrupto em leads, vendas, custo, conversão.  
+  - Detecção de anomalias (ex.: um anúncio que disparou no custo).  
+
+4. Resumo Diário, Semanal e Mensal:  
+- A IA gera automaticamente um relatório em texto e envia por:  
+  - Dashboard (notificação interna)  
+  - E-mail (se configurado)  
+
+5. Interação Conversacional:  
+- O usuário pode perguntar:  
+  - “Por que meu custo de lead aumentou?”  
+  - “Qual canal trouxe mais vendas este mês?”  
+- A IA responde com base nos dados do projeto e dos dashboards conectados.  
+
+6. Tradução de Métricas para Humanos:  
+- Em vez de mostrar apenas: “Taxa de conversão: 8%”  
+- A IA explica: “De cada 100 pessoas que entraram no seu funil, 8 compraram.”  
+
+7. Sugestões Baseadas em Histórico:  
+- A IA identifica padrões, tendências e sazonalidade, como:  
+  - “Em meses anteriores, seus custos subiram após o dia 20. Fique atento.”  
+
+---
+
+ Interface:  
+- Card de IA dentro de cada dashboard com:  
+  - “📈 O que está acontecendo com meus dados?”  
+  - “🔍 Me mostre insights.”  
+  - “💡 Ideias e recomendações.”  
+- Área dedicada chamada “Central de Insights” com:  
+  - Histórico de insights gerados.  
+  - Alertas ativos.  
+  - Resumos automáticos.  
+
+---
+
+ Regras:  
+- Disponível a partir do plano Engage e Enterprise.  
+- Funciona com qualquer fonte de dados conectada (online e offline).  
+- Gera respostas em linguagem natural, amigável e acessível.  
+
+---
+
+ Arquitetura:  
+- A IA consome os dados existentes no banco (Supabase).  
+- Processamento dos insights pode usar integração com OpenAI, Anthropic ou modelo interno.  
+- Interface frontend exibe insights em cards, botões interativos e notificações.  
+
+---
+
+Objetivo:  
+Transformar dados em decisões.  
+O Verdash IA permite que qualquer usuário, mesmo sem background em dados, entenda sua operação, tome decisões rápidas e transforme números em crescimento.
+
+
+Ajuste toda a identidade visual da aplicação para seguir o design da marca Verdash, que é um SaaS de dashboards e hub de dados.
+
+---
+
+Diretrizes de Design:  
+
+Cores principais:  
+- Fundo: 0A0E1E (azul-marinho quase preto — Dark Mode).  
+- Branco: FFFFFF para textos, títulos e elementos principais.  
+- Gradiente de destaque:  
+  - Começa em 1042F6 (Azul)  
+  - Passa por 00FFB0 (Verde-ciano neon)  
+  - Vai até FF6F1B (Coral) e FF3871 (Vermelho) nas barras do gráfico.  
+
+Usar esse gradiente em:  
+- Botões principais (Call To Action)  
+- Elementos de gráficos ativos  
+- Loading bars, barras de progresso e highlights.
+
+---
+
+ Fonte:  
+- Utilizar fonte Sans Serif, geométrica e arredondada.  
+- Preferência por "Plus Jakarta Sans" ou similar (Satoshi, Manrope, Outfit).  
+- Títulos em Bold ou Semi-Bold, texto em Regular.  
+
+---
+
+Componentização:  
+- Sidebar com fundo 0A0E1E.  
+- Cards de dashboards com leve sombra, borda arredondada (12px).  
+- Destaques nos gráficos com gradiente nas barras, seguindo a ordem do logo (Azul → Verde → Coral → Vermelho).  
+- Hover nos botões: aumentar brilho do gradiente.  
+- States de erro em vermelho suave FF6F61, sucesso em verde 00FF85, info em azul claro 00AEEF.  
+
+---
+
+ Tema:  
+- Dark Mode por padrão.  
+- Layout minimalista, foco na leitura dos dados e na clareza dos gráficos.  
+
+---
+
+ Estilo de Interface:  
+- Layout horizontal, com Sidebar lateral na esquerda.  
+- Cabeçalho no topo apenas com informações do usuário, plano e notificações.  
+- Painel principal com dashboards em cards ou grid flexível.  
+- Drag & Drop ativo nos widgets dos dashboards.  
+
+---
+
+ Detalhes Extras:  
+- Interações com microanimações suaves nos botões, cards e tooltips.  
+- As métricas e KPIs são apresentadas em cards com background escuro, texto branco e destaque em gradiente.  
+
+---
+
+Objetivo:  
+Garantir que toda a plataforma reflita a identidade moderna aero glassmorphism, tecnológica e clean da Verdash, transmitindo sofisticação, clareza e inteligência visual.
+
+
+
+
+

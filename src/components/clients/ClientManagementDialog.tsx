@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
@@ -95,7 +94,7 @@ export default function ClientManagementDialog({ client, isOpen, onClose }: Clie
               <div className="space-y-3">
                 {dashboards.map((dashboard) => (
                   <Card key={dashboard.id} className="verdash-glass">
-                    <CardContent className="p-4">
+                    <CardContent>
                       <div className="flex items-center justify-between">
                         <div className="flex items-center gap-3">
                           <BarChart3 className="w-5 h-5 text-verdash-cyan" />
@@ -143,7 +142,7 @@ export default function ClientManagementDialog({ client, isOpen, onClose }: Clie
               <div className="space-y-3">
                 {dataSources.map((source) => (
                   <Card key={source.id} className="verdash-glass">
-                    <CardContent className="p-4">
+                    <CardContent>
                       <div className="flex items-center justify-between">
                         <div className="flex items-center gap-3">
                           <Database className="w-5 h-5 text-verdash-info" />

@@ -1,4 +1,3 @@
-
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Widget } from "@/types/widgets";
 
@@ -10,12 +9,23 @@ interface GaugeWidgetProps {
 export const GaugeWidget = ({ widget, isEditing = false }: GaugeWidgetProps) => {
   const { config } = widget;
   const value = config.value || 0;
-  const min = config.min || 0;
-  const max = config.max || 100;
-  const unit = config.unit || '';
+  const minValue = config.minValue || 0;
+  const maxValue = config.maxValue || 100;
+  const target = config.target;
   
-  const percentage = ((value - min) / (max - min)) * 100;
-  const angle = (percentage / 100) * 180 - 90;
+  const percentage = ((value - minValue) / (maxValue - minValue)) * 100;
+  const normalizedPercentage = Math.max(0, Math.min(100, percentage));
+  
+  const radius = 70;
+  const circumference = 2 * Math.PI * radius;
+  const strokeDasharray = circumference;
+  const strokeDashoffset = circumference - (normalizedPercentage / 100) * circumference;
+  
+  const getColor = () => {
+    if (normalizedPercentage >= 80) return '#00FFB0';
+    if (normalizedPercentage >= 60) return '#FF6F1B';
+    return '#FF4757';
+  };
 
   return (
     <Card className={`verdash-glass h-full ${isEditing ? 'ring-2 ring-verdash-cyan' : ''}`}>
@@ -27,46 +37,37 @@ export const GaugeWidget = ({ widget, isEditing = false }: GaugeWidgetProps) => 
           <p className="text-xs text-white/60">{widget.description}</p>
         )}
       </CardHeader>
-      <CardContent className="pt-0 flex flex-col items-center justify-center h-full">
-        <div className="relative w-32 h-16 mb-4">
-          <svg viewBox="0 0 120 60" className="w-full h-full">
-            {/* Background arc */}
-            <path
-              d="M 10 55 A 50 50 0 0 1 110 55"
-              fill="none"
-              stroke="rgba(255,255,255,0.2)"
-              strokeWidth="8"
-              strokeLinecap="round"
-            />
-            {/* Progress arc */}
-            <path
-              d="M 10 55 A 50 50 0 0 1 110 55"
-              fill="none"
-              stroke={config.colors?.[0] || "#00FFB0"}
-              strokeWidth="8"
-              strokeLinecap="round"
-              strokeDasharray={`${(percentage / 100) * 157} 157`}
-            />
-            {/* Needle */}
-            <line
-              x1="60"
-              y1="55"
-              x2={60 + 35 * Math.cos((angle * Math.PI) / 180)}
-              y2={55 + 35 * Math.sin((angle * Math.PI) / 180)}
-              stroke="#fff"
-              strokeWidth="2"
-              strokeLinecap="round"
-            />
-            {/* Center dot */}
-            <circle cx="60" cy="55" r="3" fill="#fff" />
-          </svg>
-        </div>
-        <div className="text-center">
-          <div className="text-2xl font-bold text-white">
-            {value}{unit}
-          </div>
-          <div className="text-xs text-white/60">
-            {min}{unit} - {max}{unit}
+      <CardContent>
+        <div className="h-64 flex items-center justify-center">
+          <div className="relative">
+            <svg className="w-40 h-40 transform -rotate-90">
+              <circle
+                cx="80"
+                cy="80"
+                r={radius}
+                stroke="rgba(255,255,255,0.1)"
+                strokeWidth="10"
+                fill="none"
+              />
+              <circle
+                cx="80"
+                cy="80"
+                r={radius}
+                stroke={getColor()}
+                strokeWidth="10"
+                fill="none"
+                strokeDasharray={strokeDasharray}
+                strokeDashoffset={strokeDashoffset}
+                strokeLinecap="round"
+                className="transition-all duration-300"
+              />
+            </svg>
+            <div className="absolute inset-0 flex items-center justify-center flex-col">
+              <span className="text-3xl font-bold text-white">{value}%</span>
+              {target && (
+                <span className="text-xs text-white/60">Meta: {target}%</span>
+              )}
+            </div>
           </div>
         </div>
       </CardContent>

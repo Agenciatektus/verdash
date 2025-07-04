@@ -12,7 +12,7 @@ export const AreaChartWidget = ({ widget, data, isEditing = false }: AreaChartWi
   const { config } = widget;
 
   return (
-    <Card className={`verdash-glass h-full p-6 ${isEditing ? 'ring-2 ring-verdash-cyan' : ''}`}>
+    <Card className={`verdash-glass h-full ${isEditing ? 'ring-2 ring-verdash-cyan' : ''}`}>
       <CardHeader className="pb-3">
         <CardTitle className="text-white text-base truncate">
           {widget.title}
@@ -48,10 +48,9 @@ export const AreaChartWidget = ({ widget, data, isEditing = false }: AreaChartWi
               <Area 
                 type="monotone" 
                 dataKey={config.yAxisKey || 'value'} 
-                stroke={config.colors?.[0] || "#00FFB0"}
-                fill={config.colors?.[0] || "#00FFB0"}
-                fillOpacity={0.3}
-                strokeWidth={2}
+                stroke={config.colors?.[0] || "#1042F6"}
+                fill={config.colors?.[0] || "#1042F6"}
+                fillOpacity={0.6}
               />
             </AreaChart>
           </ResponsiveContainer>

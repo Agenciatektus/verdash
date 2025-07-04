@@ -10,7 +10,6 @@ interface PieChartWidgetProps {
 
 export const PieChartWidget = ({ widget, data, isEditing = false }: PieChartWidgetProps) => {
   const { config } = widget;
-  const colors = config.colors || ['#1042F6', '#00FFB0', '#FF6F1B', '#FF4757', '#9c88ff', '#feca57'];
 
   return (
     <Card className={`verdash-glass h-full ${isEditing ? 'ring-2 ring-verdash-cyan' : ''}`}>
@@ -31,12 +30,14 @@ export const PieChartWidget = ({ widget, data, isEditing = false }: PieChartWidg
                 cx="50%"
                 cy="50%"
                 outerRadius={80}
-                fill="#8884d8"
+                fill={config.colors?.[0] || "#1042F6"}
                 dataKey={config.dataKey || 'value'}
-                label={({ name, percent }) => `${name} ${(percent * 100).toFixed(0)}%`}
               >
                 {data.map((entry, index) => (
-                  <Cell key={`cell-${index}`} fill={colors[index % colors.length]} />
+                  <Cell 
+                    key={`cell-${index}`} 
+                    fill={config.colors?.[index % config.colors?.length] || "#1042F6"} 
+                  />
                 ))}
               </Pie>
               <Tooltip 

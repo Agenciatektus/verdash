@@ -12,7 +12,7 @@ export const LineChartWidget = ({ widget, data, isEditing = false }: LineChartWi
   const { config } = widget;
 
   return (
-    <Card className={`verdash-glass h-full p-6 ${isEditing ? 'ring-2 ring-verdash-cyan' : ''}`}>
+    <Card className={`verdash-glass h-full ${isEditing ? 'ring-2 ring-verdash-cyan' : ''}`}>
       <CardHeader className="pb-3">
         <CardTitle className="text-white text-base truncate">
           {widget.title}
@@ -48,10 +48,9 @@ export const LineChartWidget = ({ widget, data, isEditing = false }: LineChartWi
               <Line 
                 type="monotone" 
                 dataKey={config.yAxisKey || 'value'} 
-                stroke={config.colors?.[0] || "#00FFB0"}
+                stroke={config.colors?.[0] || "#1042F6"}
                 strokeWidth={2}
-                dot={{ fill: config.colors?.[0] || "#00FFB0", strokeWidth: 2, r: 4 }}
-                activeDot={{ r: 6, stroke: config.colors?.[0] || "#00FFB0", strokeWidth: 2 }}
+                dot={false}
               />
             </LineChart>
           </ResponsiveContainer>

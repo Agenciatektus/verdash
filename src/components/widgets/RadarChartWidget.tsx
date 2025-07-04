@@ -1,5 +1,5 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, Radar, ResponsiveContainer, Legend } from "recharts";
+import { RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, Radar, ResponsiveContainer } from "recharts";
 import { Widget } from "@/types/widgets";
 
 interface RadarChartWidgetProps {
@@ -25,26 +25,16 @@ export const RadarChartWidget = ({ widget, data, isEditing = false }: RadarChart
         <div className="h-64">
           <ResponsiveContainer width="100%" height="100%">
             <RadarChart data={data}>
-              <PolarGrid stroke="rgba(255,255,255,0.2)" />
-              <PolarAngleAxis 
-                dataKey="subject" 
-                className="text-xs"
-                tick={{ fill: 'rgba(255,255,255,0.8)', fontSize: 12 }}
-              />
-              <PolarRadiusAxis 
-                domain={[0, config.fullMark || 100]}
-                tick={{ fill: 'rgba(255,255,255,0.6)', fontSize: 10 }}
-                tickCount={4}
-              />
+              <PolarGrid />
+              <PolarAngleAxis dataKey="name" />
+              <PolarRadiusAxis />
               <Radar
-                name={widget.title}
+                name="Value"
                 dataKey="value"
-                stroke={config.colors?.[0] || "#00FFB0"}
-                fill={config.colors?.[0] || "#00FFB0"}
-                fillOpacity={0.3}
-                strokeWidth={2}
+                stroke={config.colors?.[0] || "#1042F6"}
+                fill={config.colors?.[0] || "#1042F6"}
+                fillOpacity={0.6}
               />
-              {config.showLegend && <Legend />}
             </RadarChart>
           </ResponsiveContainer>
         </div>

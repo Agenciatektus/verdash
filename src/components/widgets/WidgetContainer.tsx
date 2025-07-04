@@ -77,7 +77,7 @@ export const WidgetContainer = ({
 
   return (
     <div 
-      className="widget-container h-full w-full min-h-full p-4"
+      className="widget-container h-full w-full min-h-full"
       style={{
         gridColumn: `span ${widget.position.width}`,
         gridRow: `span ${widget.position.height}`,

@@ -1,6 +1,4 @@
-
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Progress } from "@/components/ui/progress";
 import { Widget } from "@/types/widgets";
 
 interface ProgressBarWidgetProps {
@@ -10,9 +8,18 @@ interface ProgressBarWidgetProps {
 
 export const ProgressBarWidget = ({ widget, isEditing = false }: ProgressBarWidgetProps) => {
   const { config } = widget;
-  const percentage = config.percentage || 0;
   const value = config.value || 0;
-  const target = config.target || 100;
+  const maxValue = config.maxValue || 100;
+  const target = config.target;
+  
+  const percentage = (value / maxValue) * 100;
+  const normalizedPercentage = Math.max(0, Math.min(100, percentage));
+  
+  const getColor = () => {
+    if (normalizedPercentage >= 80) return '#00FFB0';
+    if (normalizedPercentage >= 60) return '#FF6F1B';
+    return '#FF4757';
+  };
 
   return (
     <Card className={`verdash-glass h-full ${isEditing ? 'ring-2 ring-verdash-cyan' : ''}`}>
@@ -24,21 +31,27 @@ export const ProgressBarWidget = ({ widget, isEditing = false }: ProgressBarWidg
           <p className="text-xs text-white/60">{widget.description}</p>
         )}
       </CardHeader>
-      <CardContent className="pt-0 space-y-4">
-        <div className="space-y-2">
-          <div className="flex justify-between text-sm">
-            <span className="text-white/80">Progresso</span>
-            <span className="text-white font-medium">{percentage.toFixed(1)}%</span>
+      <CardContent>
+        <div className="space-y-4">
+          <div className="flex items-center justify-between">
+            <span className="text-2xl font-bold text-white">{value}</span>
+            {target && (
+              <span className="text-xs text-white/60">Meta: {target}</span>
+            )}
           </div>
-          <Progress 
-            value={percentage} 
-            className="h-3"
-          />
-        </div>
-        
-        <div className="flex justify-between text-xs text-white/60">
-          <span>Atual: {value.toLocaleString()}</span>
-          <span>Meta: {target.toLocaleString()}</span>
+          <div className="w-full bg-white/10 rounded-full h-3">
+            <div
+              className="h-3 rounded-full transition-all duration-300"
+              style={{
+                width: `${normalizedPercentage}%`,
+                background: getColor(),
+              }}
+            />
+          </div>
+          <div className="flex justify-between text-xs text-white/60">
+            <span>0</span>
+            <span>{maxValue}</span>
+          </div>
         </div>
       </CardContent>
     </Card>

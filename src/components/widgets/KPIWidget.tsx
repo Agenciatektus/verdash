@@ -40,7 +40,7 @@ export const KPIWidget = ({ widget, isEditing = false }: KPIWidgetProps) => {
 
   return (
     <Card className={`verdash-glass h-full w-full ${isEditing ? 'ring-2 ring-verdash-cyan' : ''}`}>
-      <CardHeader className="p-4 h-auto w-full">
+      <CardHeader className="h-auto w-full">
         <div className="flex items-center justify-between w-full">
           <CardTitle className="text-sm font-medium text-white/80 truncate">
             {widget.title}
@@ -50,7 +50,7 @@ export const KPIWidget = ({ widget, isEditing = false }: KPIWidgetProps) => {
           )}
         </div>
       </CardHeader>
-      <CardContent className="p-4 w-full">
+      <CardContent className="w-full">
         <div className="space-y-3 w-full flex flex-col">
           <div>
             <div className="text-3xl font-bold text-white break-words leading-tight">

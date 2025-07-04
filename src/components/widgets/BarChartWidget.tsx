@@ -12,7 +12,7 @@ export const BarChartWidget = ({ widget, data, isEditing = false }: BarChartWidg
   const { config } = widget;
 
   return (
-    <Card className={`verdash-glass h-full p-6 ${isEditing ? 'ring-2 ring-verdash-cyan' : ''}`}>
+    <Card className={`verdash-glass h-full ${isEditing ? 'ring-2 ring-verdash-cyan' : ''}`}>
       <CardHeader className="pb-3">
         <CardTitle className="text-white text-base truncate">
           {widget.title}

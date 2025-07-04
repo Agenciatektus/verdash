@@ -3,6 +3,7 @@ import { Badge } from "@/components/ui/badge";
 import { ChevronUp, ChevronDown } from "lucide-react";
 import { Widget } from "@/types/widgets";
 import { useState } from "react";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 
 interface TableWidgetProps {
   widget: Widget;
@@ -15,8 +16,9 @@ export const TableWidget = ({ widget, data, isEditing = false }: TableWidgetProp
   const [sortField, setSortField] = useState<string | null>(null);
   const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('asc');
 
-  const columns = config.columns || [];
+  const columns = config.columns || (data.length > 0 ? Object.keys(data[0]) : []);
   const pageSize = config.pageSize || 10;
+  const maxRows = config.maxRows || 10;
   
   const handleSort = (field: string) => {
     if (sortField === field) {
@@ -58,6 +60,8 @@ export const TableWidget = ({ widget, data, isEditing = false }: TableWidgetProp
     }
   };
 
+  const displayData = sortedData.slice(0, maxRows);
+
   return (
     <Card className={`verdash-glass h-full ${isEditing ? 'ring-2 ring-verdash-cyan' : ''}`}>
       <CardHeader className="pb-3">
@@ -69,47 +73,33 @@ export const TableWidget = ({ widget, data, isEditing = false }: TableWidgetProp
         )}
       </CardHeader>
       <CardContent>
-        <div className="overflow-auto max-h-80">
-          <table className="w-full text-sm">
-            <thead>
-              <tr className="border-b border-white/10">
+        <div className="h-64 overflow-auto">
+          <Table>
+            <TableHeader>
+              <TableRow>
                 {columns.map((column) => (
-                  <th 
-                    key={column.key}
-                    className={`text-left py-2 px-3 text-white/80 font-medium ${
-                      column.sortable ? 'cursor-pointer hover:text-white' : ''
-                    }`}
-                    onClick={() => column.sortable && handleSort(column.key)}
-                  >
-                    <div className="flex items-center gap-1">
-                      {column.title}
-                      {column.sortable && sortField === column.key && (
-                        sortDirection === 'asc' ? 
-                        <ChevronUp className="w-3 h-3" /> : 
-                        <ChevronDown className="w-3 h-3" />
-                      )}
-                    </div>
-                  </th>
+                  <TableHead key={column} className="text-white/80">
+                    {column}
+                  </TableHead>
                 ))}
-              </tr>
-            </thead>
-            <tbody>
-              {sortedData.slice(0, pageSize).map((row, index) => (
-                <tr key={index} className="border-b border-white/5 hover:bg-white/5">
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {displayData.map((row, index) => (
+                <TableRow key={index}>
                   {columns.map((column) => (
-                    <td key={column.key} className="py-2 px-3 text-white">
-                      {formatCellValue(row[column.key], column.type)}
-                    </td>
+                    <TableCell key={column} className="text-white/90">
+                      {formatCellValue(row[column], column.type)}
+                    </TableCell>
                   ))}
-                </tr>
+                </TableRow>
               ))}
-            </tbody>
-          </table>
+            </TableBody>
+          </Table>
         </div>
-        
-        {data.length > pageSize && (
-          <div className="mt-3 text-xs text-white/60 text-center">
-            Mostrando {Math.min(pageSize, data.length)} de {data.length} registros
+        {data.length > maxRows && (
+          <div className="mt-2 text-xs text-white/60">
+            Mostrando {maxRows} de {data.length} registros
           </div>
         )}
       </CardContent>
